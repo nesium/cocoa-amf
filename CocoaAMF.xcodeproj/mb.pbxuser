@@ -1,0 +1,253 @@
+// !$*UTF8*$!
+{
+	089C165DFE840E0CC02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {466, 805}}";
+			sepNavSelRange = "{45, 0}";
+			sepNavVisRange = "{0, 45}";
+			sepNavWindowFrame = "{{111, 62}, {513, 877}}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 2C8162790E9BE6DC00C11CDF /* CocoaAMF */;
+		activeTarget = 8D1107260486CEB800E47090 /* CocoaAMF */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* CocoaAMF */,
+		);
+		breakpoints = (
+			2C8164BE0E9C1E2100C11CDF /* malloc_error_break */,
+			2C8164C40E9C1E3300C11CDF /* malloc_error_break */,
+		);
+		codeSenseManager = 2C8162830E9BE6EE00C11CDF /* Code sense */;
+		executables = (
+			2C8162790E9BE6DC00C11CDF /* CocoaAMF */,
+		);
+		perUserDictionary = {
+			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXBreakpointsDataSource_BreakpointID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					198,
+					20,
+					99,
+					99,
+					29,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXBreakpointsDataSource_ActionID,
+					PBXBreakpointsDataSource_TypeID,
+					PBXBreakpointsDataSource_BreakpointID,
+					PBXBreakpointsDataSource_UseID,
+					PBXBreakpointsDataSource_LocationID,
+					PBXBreakpointsDataSource_ConditionID,
+					PBXBreakpointsDataSource_IgnoreCountID,
+					PBXBreakpointsDataSource_ContinueID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					315,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 245628904;
+			PBXWorkspaceStateSaveDate = 245628904;
+		};
+		perUserProjectItems = {
+			2C35A4920EA401D7000B2452 /* PBXTextBookmark */ = 2C35A4920EA401D7000B2452 /* PBXTextBookmark */;
+			2C35A4930EA401D7000B2452 /* PBXTextBookmark */ = 2C35A4930EA401D7000B2452 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 2C8162820E9BE6EE00C11CDF /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {614, 806}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 248}";
+			sepNavWindowFrame = "{{19, -5}, {661, 878}}";
+		};
+	};
+	2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {617, 5276}}";
+			sepNavSelRange = "{3639, 0}";
+			sepNavVisRange = "{3401, 647}";
+		};
+	};
+	2C35A4920EA401D7000B2452 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "warning: 'NSNumber' may not respond to '+numberWithLongLong:forKey:'";
+		fRef = 2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */;
+		rLen = 1;
+		rLoc = 166;
+		rType = 1;
+	};
+	2C35A4930EA401D7000B2452 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */;
+		name = "AMFKeyedArchiver.m: 163";
+		rLen = 0;
+		rLoc = 3639;
+		rType = 0;
+		vrLen = 644;
+		vrLoc = 3401;
+	};
+	2C8162790E9BE6DC00C11CDF /* CocoaAMF */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = CocoaAMF;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+			$cs = 1;
+			$ds = 1;
+			$eax = 1;
+			$ebp = 1;
+			$ebx = 1;
+			$ecx = 1;
+			$edi = 1;
+			$edx = 1;
+			$eflags = 1;
+			$eip = 1;
+			$es = 1;
+			$esi = 1;
+			$esp = 1;
+			$gs = 1;
+			$mm0 = 1;
+			$mm1 = 1;
+			$mm2 = 1;
+			$mm3 = 1;
+			$mm4 = 1;
+			$mm5 = 1;
+			$mm6 = 1;
+			$mm7 = 1;
+			$mxcsr = 1;
+			$ss = 1;
+			$xmm0 = 1;
+			$xmm1 = 1;
+			$xmm2 = 1;
+			$xmm3 = 1;
+			$xmm4 = 1;
+			$xmm5 = 1;
+			$xmm6 = 1;
+			$xmm7 = 1;
+		};
+	};
+	2C8162820E9BE6EE00C11CDF /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	2C8162830E9BE6EE00C11CDF /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	2C8162E10E9BED3700C11CDF /* Controller.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {614, 806}}";
+			sepNavSelRange = "{185, 0}";
+			sepNavVisRange = "{0, 232}";
+			sepNavWindowFrame = "{{19, -5}, {661, 878}}";
+		};
+	};
+	2C8162E20E9BED3700C11CDF /* Controller.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {4104, 840}}";
+			sepNavSelRange = "{1639, 499}";
+			sepNavVisRange = "{20, 2155}";
+			sepNavWindowFrame = "{{920, 16}, {661, 878}}";
+		};
+	};
+	2C8164BE0E9C1E2100C11CDF /* malloc_error_break */ = {
+		isa = PBXSymbolicBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 1;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		hitCount = 0;
+		ignoreCount = 0;
+		location = libSystem.B.dylib;
+		modificationTime = 245448230.901292;
+		state = 2;
+		symbolName = malloc_error_break;
+	};
+	2C8164C40E9C1E3300C11CDF /* malloc_error_break */ = {
+		isa = PBXSymbolicBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 1;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		hitCount = 0;
+		ignoreCount = 0;
+		location = libSystem.B.dylib;
+		modificationTime = 245448230.901299;
+		state = 2;
+		symbolName = malloc_error_break;
+	};
+	32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {722, 781}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 147}";
+			sepNavWindowFrame = "{{134, 65}, {769, 853}}";
+		};
+	};
+	8D1107260486CEB800E47090 /* CocoaAMF */ = {
+		activeExec = 0;
+		executables = (
+			2C8162790E9BE6DC00C11CDF /* CocoaAMF */,
+		);
+	};
+	8D1107310486CEB800E47090 /* Info.plist */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{88, 83}, {513, 877}}";
+		};
+	};
+}
