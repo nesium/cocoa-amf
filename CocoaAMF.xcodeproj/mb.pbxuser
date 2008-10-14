@@ -70,12 +70,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 245628904;
-			PBXWorkspaceStateSaveDate = 245628904;
-		};
-		perUserProjectItems = {
-			2C35A4920EA401D7000B2452 /* PBXTextBookmark */ = 2C35A4920EA401D7000B2452 /* PBXTextBookmark */;
-			2C35A4930EA401D7000B2452 /* PBXTextBookmark */ = 2C35A4930EA401D7000B2452 /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 245714053;
+			PBXWorkspaceStateSaveDate = 245714053;
 		};
 		sourceControlManager = 2C8162820E9BE6EE00C11CDF /* Source Control */;
 		userBuildSettings = {
@@ -89,30 +85,69 @@
 			sepNavWindowFrame = "{{19, -5}, {661, 878}}";
 		};
 	};
-	2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */ = {
+	2C35A4660EA401CB000B2452 /* AMF.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {617, 5276}}";
-			sepNavSelRange = "{3639, 0}";
-			sepNavVisRange = "{3401, 647}";
+			sepNavIntBoundsRect = "{{0, 0}, {733, 898}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1079}";
+			sepNavWindowFrame = "{{42, 32}, {780, 970}}";
 		};
 	};
-	2C35A4920EA401D7000B2452 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		comments = "warning: 'NSNumber' may not respond to '+numberWithLongLong:forKey:'";
-		fRef = 2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */;
-		rLen = 1;
-		rLoc = 166;
-		rType = 1;
+	2C35A4670EA401CB000B2452 /* AMF0Deserializer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 898}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 398}";
+			sepNavWindowFrame = "{{65, 11}, {780, 970}}";
+		};
 	};
-	2C35A4930EA401D7000B2452 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */;
-		name = "AMFKeyedArchiver.m: 163";
-		rLen = 0;
-		rLoc = 3639;
-		rType = 0;
-		vrLen = 644;
-		vrLoc = 3401;
+	2C35A4680EA401CB000B2452 /* AMF0Deserializer.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 3934}}";
+			sepNavSelRange = "{4758, 13}";
+			sepNavVisRange = "{3755, 1624}";
+			sepNavWindowFrame = "{{842, 30}, {780, 970}}";
+		};
+	};
+	2C35A46A0EA401CB000B2452 /* AMF0Serializer.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 1078}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1068}";
+			sepNavWindowFrame = "{{133, 51}, {780, 970}}";
+		};
+	};
+	2C35A4740EA401CB000B2452 /* AMFInputStream.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 1806}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 955}";
+			sepNavWindowFrame = "{{378, 30}, {780, 970}}";
+		};
+	};
+	2C35A4750EA401CB000B2452 /* AMFKeyedArchiver.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 898}}";
+			sepNavSelRange = "{576, 0}";
+			sepNavVisRange = "{0, 576}";
+			sepNavWindowFrame = "{{42, 32}, {780, 970}}";
+		};
+	};
+	2C35A4760EA401CB000B2452 /* AMFKeyedArchiver.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 5416}}";
+			sepNavSelRange = "{6206, 0}";
+			sepNavVisRange = "{5512, 1431}";
+			sepNavWindowFrame = "{{518, 39}, {780, 970}}";
+		};
+	};
+	2C35A4800EA401CB000B2452 /* AMFOutputStream.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {733, 1344}}";
+			sepNavSelRange = "{762, 0}";
+			sepNavVisRange = "{435, 1152}";
+			sepNavWindowFrame = "{{19, 53}, {780, 970}}";
+		};
 	};
 	2C8162790E9BE6DC00C11CDF /* CocoaAMF */ = {
 		isa = PBXExecutable;

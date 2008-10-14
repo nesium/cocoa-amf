@@ -11,6 +11,7 @@
 
 @interface AMFKeyedArchiver (Private)
 - (void)writeObject:(id)obj;
+- (BOOL)writeObjectAsReference:(id)obj;
 - (void)writeUInt8:(uint8_t)value;
 - (void)writeUInt16:(uint16_t)value;
 - (void)writeUInt29:(uint32_t)value;
@@ -51,6 +52,7 @@
 	{
 		m_data = [data retain];
 		m_currentStack = [[NSMutableArray alloc] init];
+		m_objectTable = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -59,6 +61,7 @@
 {
 	[m_data release];
 	[m_currentStack release];
+	[m_objectTable release];
 	[super dealloc];
 }
 
@@ -195,11 +198,13 @@
 	}
 	else if ([obj isKindOfClass:[NSArray class]])
 	{
-		[self writeArray:(NSArray *)obj];
+		if (![self writeObjectAsReference:obj])
+			[self writeArray:(NSArray *)obj];
 	}
 	else if ([obj isKindOfClass:[NSDictionary class]])
 	{
-		[self writeECMAArray:(NSDictionary *)obj];
+		if (![self writeObjectAsReference:obj])
+			[self writeECMAArray:(NSDictionary *)obj];
 	}
 	else if ([obj isKindOfClass:[NSDate class]])
 	{
@@ -211,12 +216,25 @@
 	}
 	else if ([obj isKindOfClass:[ASObject class]])
 	{
-		[self writeASObject:(ASObject *)obj];
+		if (![self writeObjectAsReference:obj])
+			[self writeASObject:(ASObject *)obj];
 	}
 	else
 	{
 		[self encodeObject:obj forKey:nil];
 	}
+}
+
+- (BOOL)writeObjectAsReference:(id)obj
+{
+	if (![m_objectTable containsObject:obj])
+	{
+		[m_objectTable addObject:obj];
+		return NO;
+	}
+	[self writeUInt8:kAMF0ReferenceType];
+	[self writeUInt16:[m_objectTable indexOfObject:obj]];
+	return YES;
 }
 
 - (void)writeUInt8:(uint8_t)value
@@ -264,9 +282,7 @@
 
 - (void)writeDouble:(double)value
 {
-	double *ptr1 = &value;
-	void *tmp = ptr1;
-	uint8_t *ptr2 = tmp;
+	uint8_t *ptr2 = (void *)&value;
 	[self writeUInt8:ptr2[7]];
 	[self writeUInt8:ptr2[6]];
 	[self writeUInt8:ptr2[5]];

@@ -18,6 +18,7 @@
 	NSMutableData *m_data;
 	AMFVersion m_version;
 	NSMutableArray *m_currentStack;
+	NSMutableArray *m_objectTable;
 }
 
 @property (nonatomic, assign) AMFVersion version;
