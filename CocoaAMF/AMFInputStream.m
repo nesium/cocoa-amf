@@ -27,6 +27,11 @@
 	[super dealloc];
 }
 
+- (NSUInteger)availableBytes
+{
+	return [m_data length] - m_offset;
+}
+
 - (uint8_t)readUInt8
 {
 	uint8_t buffer = 0;

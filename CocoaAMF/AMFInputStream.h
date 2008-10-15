@@ -16,6 +16,7 @@
 }
 
 - (id)initWithData:(NSData *)data;
+- (NSUInteger)availableBytes;
 
 - (uint8_t)readUInt8;
 - (uint16_t)readUInt16;

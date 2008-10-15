@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMF3Deserializer.h"
+#import "AMFInputStream.h"
+#import "SODeserializer.h"
 
 
 @interface Controller : NSObject 

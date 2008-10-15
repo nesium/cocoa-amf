@@ -55,6 +55,13 @@
 //	NSLog(@"%s", [[NSNumber numberWithInt:1] objCType]);
 	
 	//[deserializer release];
+	
+	AMFInputStream *inStream = [[AMFInputStream alloc] initWithData:
+		[NSData dataWithContentsOfFile:
+		[@"~/Library/Preferences/Macromedia/Flash Player/#SharedObjects/KS44HXBT/localhost/Projekte/Nsm/Apps/RemotingTest/bin/remotingtest.swf/c#/om.nesium.remoting.UnitTest.sol"
+			stringByExpandingTildeInPath]]];
+	SODeserializer *deserializer = [[SODeserializer alloc] initWithStream:inStream];
+	[deserializer deserialize];
 }
 
 @end
