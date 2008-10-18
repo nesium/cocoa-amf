@@ -22,6 +22,8 @@
 		2C35A48E0EA401CB000B2452 /* AMFMessageSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A47E0EA401CB000B2452 /* AMFMessageSerializer.m */; };
 		2C35A48F0EA401CB000B2452 /* AMFOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4800EA401CB000B2452 /* AMFOutputStream.m */; };
 		2C35A4900EA401CB000B2452 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		2C3A9D970EA95C3300BFE5CC /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
+		2C46CB050EAA5AF000639880 /* FileSystemRepNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C46CB040EAA5AF000639880 /* FileSystemRepNode.m */; };
 		2C8162E30E9BED3700C11CDF /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8162E20E9BED3700C11CDF /* Controller.m */; };
 		2CAA38960EA698E200157C0E /* SODeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAA38950EA698E200157C0E /* SODeserializer.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -66,6 +68,10 @@
 		2C35A4800EA401CB000B2452 /* AMFOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFOutputStream.m; sourceTree = "<group>"; };
 		2C35A4810EA401CB000B2452 /* ASObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASObject.h; sourceTree = "<group>"; };
 		2C35A4820EA401CB000B2452 /* ASObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASObject.m; sourceTree = "<group>"; };
+		2C3A9D950EA95C3300BFE5CC /* OutlineViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutlineViewDataSource.h; sourceTree = "<group>"; };
+		2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutlineViewDataSource.m; sourceTree = "<group>"; };
+		2C46CB030EAA5AF000639880 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
+		2C46CB040EAA5AF000639880 /* FileSystemRepNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemRepNode.m; sourceTree = "<group>"; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2CAA38940EA698E200157C0E /* SODeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SODeserializer.h; sourceTree = "<group>"; };
@@ -128,10 +134,14 @@
 		29B97315FDCFA39411CA2CEA /* DemoApplication */ = {
 			isa = PBXGroup;
 			children = (
+				2C3A9D950EA95C3300BFE5CC /* OutlineViewDataSource.h */,
+				2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */,
 				32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				2C8162E10E9BED3700C11CDF /* Controller.h */,
 				2C8162E20E9BED3700C11CDF /* Controller.m */,
+				2C46CB030EAA5AF000639880 /* FileSystemRepNode.h */,
+				2C46CB040EAA5AF000639880 /* FileSystemRepNode.m */,
 			);
 			path = DemoApplication;
 			sourceTree = "<group>";
@@ -266,6 +276,8 @@
 				2C35A48F0EA401CB000B2452 /* AMFOutputStream.m in Sources */,
 				2C35A4900EA401CB000B2452 /* ASObject.m in Sources */,
 				2CAA38960EA698E200157C0E /* SODeserializer.m in Sources */,
+				2C3A9D970EA95C3300BFE5CC /* OutlineViewDataSource.m in Sources */,
+				2C46CB050EAA5AF000639880 /* FileSystemRepNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

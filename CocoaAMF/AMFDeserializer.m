@@ -31,4 +31,9 @@
 	return nil;
 }
 
+- (NSString *)readString
+{
+	return nil;
+}
+
 @end

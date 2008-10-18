@@ -19,5 +19,6 @@
 @property (nonatomic, retain) NSMutableDictionary *properties;
 
 + (ASObject *)asObjectWithDictionary:(NSDictionary *)dict;
+- (NSUInteger)count;
 
 @end

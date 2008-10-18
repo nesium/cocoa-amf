@@ -54,7 +54,6 @@
 	
 	id value = nil;
 	NSUInteger intValue;
-	BOOL bFlag;
 	
 	NSLog(@"type: %d", type);
 	
@@ -77,14 +76,12 @@
 			
 		case kAMF3FalseType:
 			NSLog(@"read boolean - false");
-			bFlag = NO;
-			value = [NSValue valueWithBytes:&bFlag objCType:@encode(BOOL)];
+			value = [NSNumber numberWithBool:NO];
 			break;
 			
 		case kAMF3TrueType:
 			NSLog(@"read boolean - true");
-			bFlag = YES;
-			value = [NSValue valueWithBytes:&bFlag objCType:@encode(BOOL)];
+			value = [NSNumber numberWithBool:YES];
 			break;
 			
 		case kAMF3IntegerType:
@@ -133,11 +130,6 @@
 	return value;
 }
 
-
-
-#pragma mark -
-#pragma mark Private methods
-
 - (NSString *)readString
 {
 	NSUInteger ref = [m_stream readUInt29];
@@ -158,6 +150,11 @@
 	[m_stringTable addObject:value];
 	return value;
 }
+
+
+
+#pragma mark -
+#pragma mark Private methods
 
 - (id)readObject
 {

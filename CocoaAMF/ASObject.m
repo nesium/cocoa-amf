@@ -59,6 +59,11 @@
 	return [m_properties valueForKey:key];
 }
 
+- (NSUInteger)count
+{
+	return [m_properties count];
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@ = 0x%08X | type: %@>\n%@", 

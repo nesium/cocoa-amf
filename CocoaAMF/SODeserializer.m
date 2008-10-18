@@ -11,34 +11,39 @@
 
 @implementation SODeserializer
 
-- (id)deserialize
+- (NSDictionary *)deserialize
 {
-	uint16_t version = [m_stream readUInt16];
-	uint32_t length = [m_stream readUInt32];
-	NSData *signature = [m_stream readDataWithLength:10];
+	// padding
+	[m_stream readUInt16];
+	// length
+	[m_stream readUInt32];
+	// signature
+	[m_stream readDataWithLength:10];
 	
 	NSString *name = [m_stream readUTF8:[m_stream readUInt16]];
 	NSLog(@"name: %@", name);
 	
-	NSData *padding = [m_stream readDataWithLength:4];
-	uint16_t keyLength = [m_stream readUInt16];
+	// padding
+	[m_stream readUInt16];
+	uint16_t version = [m_stream readUInt16];
 	
-	AMF0Deserializer *deserializer = [[AMF0Deserializer alloc] initWithStream:m_stream];
+	AMFDeserializer *deserializer = version == 0 
+		? [[AMF0Deserializer alloc] initWithStream:m_stream]
+		: [[AMF3Deserializer alloc] initWithStream:m_stream];
 	
-	while (keyLength != 0)
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	
+	while ([m_stream availableBytes])
 	{
-		NSString *key = [m_stream readUTF8:keyLength];
+		NSString *key = [deserializer readString];
 		id value = [deserializer deserialize];
-		NSLog(@"key: %@, value: %@", key, value);
-		if ([m_stream availableBytes] < 2)
-		{
-			break;
-		}
-		keyLength = [m_stream readUInt16];
+		[dict setObject:value forKey:key];
+		// read padding byte
+		[m_stream readUInt8];
 	}
 	
 	[deserializer release];
-	return nil;
+	return dict;
 }
 
 @end

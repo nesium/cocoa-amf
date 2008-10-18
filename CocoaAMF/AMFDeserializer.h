@@ -17,5 +17,6 @@
 
 - (id)initWithStream:(AMFInputStream *)stream;
 - (id)deserialize;
+- (NSString *)readString;
 
 @end

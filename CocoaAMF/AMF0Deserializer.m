@@ -53,6 +53,16 @@
 	return [self deserializedObjectWithType:type];
 }
 
+- (NSString *)readString
+{
+	uint16_t len = [m_stream readUInt16];
+	if (len == 0)
+	{
+		return [NSString string];
+	}
+	return [m_stream readUTF8:len];
+}
+
 
 
 #pragma mark -
@@ -167,16 +177,6 @@
 	
 	NSLog(@"value: %@", value);
 	return value;
-}
-
-- (NSString *)readString
-{
-	uint16_t len = [m_stream readUInt16];
-	if (len == 0)
-	{
-		return [NSString string];
-	}
-	return [m_stream readUTF8:len];
 }
 
 - (NSString *)readLongString

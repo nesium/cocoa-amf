@@ -19,4 +19,6 @@
 	AMF3Deserializer *m_avmPlusDeserializer;
 }
 
+- (NSString *)readString;
+
 @end
