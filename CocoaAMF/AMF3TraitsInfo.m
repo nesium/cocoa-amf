@@ -25,7 +25,7 @@
 {
 	if (self = [super init])
 	{
-		m_properties = [[NSMutableSet alloc] init];
+		m_properties = [[NSMutableArray alloc] init];
 		m_dynamic = NO;
 		m_externalizable = NO;
 	}

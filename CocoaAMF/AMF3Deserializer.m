@@ -16,6 +16,7 @@
 - (NSData *)readByteArray;
 - (NSString *)readXML;
 - (AMF3TraitsInfo *)readTraits:(NSUInteger)infoBits;
+- (void)readExternalizableWithClassName:(NSString *)aClassName object:(NSObject *)object;
 @end
 
 
@@ -197,6 +198,12 @@
 	
 	[m_objectTable addObject:object];
 	
+	if (traitsInfo.externalizable)
+	{
+		[self readExternalizableWithClassName:traitsInfo.className object:object];
+		return object;
+	}
+	
 	NSEnumerator *propertiesEnumerator = [traitsInfo.properties objectEnumerator];
 	NSString *property;
 	while (property = [propertiesEnumerator nextObject])
@@ -337,6 +344,11 @@
 	[info release];
 	
 	return info;
+}
+
+- (void)readExternalizableWithClassName:(NSString *)aClassName object:(NSObject *)object
+{
+	NSLog(@"should read externalizable for class %@", aClassName);
 }
 
 @end
