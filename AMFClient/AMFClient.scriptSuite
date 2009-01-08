@@ -1,0 +1,12 @@
+{
+    Name = AMFClient;
+    AppleEventCode = "AMFC";
+
+    Commands = {
+        "GetURL" = {
+            CommandClass = AMFClientGetURLScriptCommand;
+            AppleEventCode = GURL;
+            AppleEventClassCode = GURL;
+         };
+    };
+}

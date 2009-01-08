@@ -1,0 +1,11 @@
+{  
+    Name = "AMFClient suite";
+    Description = "AppleScript commands for AMFClient";
+    
+    Commands = {
+        "GetURL" = {
+            "Name" = "get URL";
+            "Description" = "Open a URL";
+        };
+    };    
+}

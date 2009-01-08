@@ -1,0 +1,100 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 49B3B1D60EE6941C00498A01 /* AMFClient */;
+		activeTarget = 2C8500910EDF39560058EBE0 /* AMFClient */;
+		codeSenseManager = 49B3B1E10EE6942300498A01 /* Code sense */;
+		executables = (
+			49B3B1D50EE6941C00498A01 /* SharedObject Browser */,
+			49B3B1D60EE6941C00498A01 /* AMFClient */,
+		);
+		perUserDictionary = {
+			PBXPerProjectTemplateStateSaveDate = 249992220;
+			PBXWorkspaceStateSaveDate = 249992220;
+		};
+		sourceControlManager = 49B3B1E00EE6942300498A01 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	2C109BE00EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {811, 320}}";
+			sepNavSelRange = "{238, 0}";
+			sepNavVisRange = "{150, 209}";
+			sepNavWindowFrame = "{{19, 391}, {870, 1182}}";
+		};
+	};
+	2C8500910EDF39560058EBE0 /* AMFClient */ = {
+		activeExec = 0;
+		executables = (
+			49B3B1D60EE6941C00498A01 /* AMFClient */,
+		);
+	};
+	49B3B1D50EE6941C00498A01 /* SharedObject Browser */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "SharedObject Browser";
+		sourceDirectories = (
+		);
+	};
+	49B3B1D60EE6941C00498A01 /* AMFClient */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = AMFClient;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	49B3B1E00EE6942300498A01 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	49B3B1E10EE6942300498A01 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	8D1107260486CEB800E47090 /* SharedObject Browser */ = {
+		activeExec = 0;
+		executables = (
+			49B3B1D50EE6941C00498A01 /* SharedObject Browser */,
+		);
+	};
+}
