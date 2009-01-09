@@ -42,6 +42,13 @@
 		2CB077B90EE0D2DC0059C799 /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
 		2CB078590EE0E3260059C799 /* BGHUDAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
 		2CB0785E0EE0E3410059C799 /* BGHUDAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
+		2CB5B4970F16C89300C71818 /* AMF0Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C47403F0F16C2890062D1FD /* AMF0Test.m */; };
+		2CB5B4C70F16D24E00C71818 /* AbstractAMFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */; };
+		2CB5B4CA0F16D26E00C71818 /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */; };
+		2CB5B4CB0F16D26F00C71818 /* AMF3KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E70EDF42DF0058EBE0 /* AMF3KeyedArchiver.m */; };
+		2CB5B4CC0F16D27000C71818 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
+		2CB5B4CD0F16D27200C71818 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -83,6 +90,8 @@
 		2C38B4A20EE4A04A0083BCF5 /* CAMFFieldEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAMFFieldEditor.m; sourceTree = "<group>"; };
 		2C3A9D950EA95C3300BFE5CC /* OutlineViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutlineViewDataSource.h; sourceTree = "<group>"; };
 		2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutlineViewDataSource.m; sourceTree = "<group>"; };
+		2C47403E0F16C2890062D1FD /* AMF0Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF0Test.h; sourceTree = "<group>"; };
+		2C47403F0F16C2890062D1FD /* AMF0Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF0Test.m; sourceTree = "<group>"; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2C8500860EDF38820058EBE0 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
@@ -118,6 +127,10 @@
 		2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF0KeyedArchiver.m; sourceTree = "<group>"; };
 		2C85010C0EDF43D10058EBE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
+		2CB5B48C0F16C7D200C71818 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CB5B48D0F16C7D200C71818 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.mxml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
+		2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractAMFTest.h; sourceTree = "<group>"; };
+		2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractAMFTest.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAMF_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CocoaAMF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaAMF.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +143,13 @@
 			files = (
 				2C8500FC0EDF43380058EBE0 /* Cocoa.framework in Frameworks */,
 				2CB078590EE0E3260059C799 /* BGHUDAppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB5B4890F16C7D200C71818 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +187,7 @@
 			children = (
 				8D1107320486CEB800E47090 /* CocoaAMF.app */,
 				2C8500920EDF39560058EBE0 /* AMFClient.app */,
+				2CB5B48C0F16C7D200C71818 /* Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,8 +198,10 @@
 				2C35A4650EA401CB000B2452 /* CocoaAMF */,
 				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
 				2C85008D0EDF39490058EBE0 /* AMFClient */,
+				2C47403C0F16C2050062D1FD /* Tests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				2CB5B48D0F16C7D200C71818 /* Tests-Info.plist */,
 			);
 			name = CocoaAMF;
 			sourceTree = "<group>";
@@ -219,6 +242,17 @@
 				2C35A4820EA401CB000B2452 /* ASObject.m */,
 			);
 			path = CocoaAMF;
+			sourceTree = "<group>";
+		};
+		2C47403C0F16C2050062D1FD /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2C47403E0F16C2890062D1FD /* AMF0Test.h */,
+				2C47403F0F16C2890062D1FD /* AMF0Test.m */,
+				2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */,
+				2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		2C85008B0EDF39100058EBE0 /* Classes */ = {
@@ -360,6 +394,24 @@
 			productReference = 2C8500920EDF39560058EBE0 /* AMFClient.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2CB5B48B0F16C7D200C71818 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CB5B4920F16C7D700C71818 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				2CB5B4870F16C7D200C71818 /* Resources */,
+				2CB5B4880F16C7D200C71818 /* Sources */,
+				2CB5B4890F16C7D200C71818 /* Frameworks */,
+				2CB5B48A0F16C7D200C71818 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = 2CB5B48C0F16C7D200C71818 /* Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		8D1107260486CEB800E47090 /* SharedObject Browser */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SharedObject Browser" */;
@@ -392,6 +444,7 @@
 			targets = (
 				8D1107260486CEB800E47090 /* SharedObject Browser */,
 				2C8500910EDF39560058EBE0 /* AMFClient */,
+				2CB5B48B0F16C7D200C71818 /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -407,6 +460,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2CB5B4870F16C7D200C71818 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -417,6 +477,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2CB5B48A0F16C7D200C71818 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2C85008F0EDF39560058EBE0 /* Sources */ = {
@@ -442,6 +518,20 @@
 				2C109BA40EE347B600AF1643 /* NSString+URLEncode.m in Sources */,
 				2C109BE10EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m in Sources */,
 				2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB5B4880F16C7D200C71818 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CB5B4970F16C89300C71818 /* AMF0Test.m in Sources */,
+				2CB5B4C70F16D24E00C71818 /* AbstractAMFTest.m in Sources */,
+				2CB5B4CA0F16D26E00C71818 /* AMF0KeyedArchiver.m in Sources */,
+				2CB5B4CB0F16D26F00C71818 /* AMF3KeyedArchiver.m in Sources */,
+				2CB5B4CC0F16D27000C71818 /* AMFActionMessage.m in Sources */,
+				2CB5B4CD0F16D27200C71818 /* AMFByteArray.m in Sources */,
+				2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +632,60 @@
 			};
 			name = Release;
 		};
+		2CB5B4900F16C7D700C71818 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2CB5B4910F16C7D700C71818 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -607,6 +751,15 @@
 			buildConfigurations = (
 				2C8500950EDF395E0058EBE0 /* Debug */,
 				2C8500960EDF395E0058EBE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CB5B4920F16C7D700C71818 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CB5B4900F16C7D700C71818 /* Debug */,
+				2CB5B4910F16C7D700C71818 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
