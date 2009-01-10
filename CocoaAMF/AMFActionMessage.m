@@ -109,7 +109,6 @@
 			encoding:m_version];
 		if (m_version == kAMF3Version)
 		{
-			NSLog(@"V3");
 			[bodyBa writeUnsignedByte:kAMF0AVMPlusObjectType];
 		}
 		[bodyBa writeObject:body.data];

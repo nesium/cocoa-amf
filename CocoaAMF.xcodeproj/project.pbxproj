@@ -17,6 +17,14 @@
 		2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C38B4A20EE4A04A0083BCF5 /* CAMFFieldEditor.m */; };
 		2C3A9D970EA95C3300BFE5CC /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
 		2C73A8180F193CD200EA16AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8170F193CD200EA16AD /* main.m */; };
+		2C73A87C0F19423F00EA16AD /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
+		2C73A87F0F19427700EA16AD /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */; };
+		2C73A8800F19427800EA16AD /* AMF3KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E70EDF42DF0058EBE0 /* AMF3KeyedArchiver.m */; };
+		2C73A8810F19427A00EA16AD /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
+		2C73A8820F19427B00EA16AD /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C73A8830F19427C00EA16AD /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
+		2C73A8840F19427D00EA16AD /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8920F1942FE00EA16AD /* DirectoryService.m */; };
 		2C8162E30E9BED3700C11CDF /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8162E20E9BED3700C11CDF /* Controller.m */; };
 		2C8500880EDF38820058EBE0 /* FileSystemRepNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500870EDF38820058EBE0 /* FileSystemRepNode.m */; };
 		2C8500A40EDF39AE0058EBE0 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
@@ -96,6 +104,13 @@
 		2C73A8090F193C2F00EA16AD /* ServerExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ServerExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C73A8170F193CD200EA16AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C73A82F0F193EC000EA16AD /* Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.mxml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
+		2C73A8780F19423F00EA16AD /* AsyncSocket Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "AsyncSocket Documentation.html"; sourceTree = "<group>"; };
+		2C73A8790F19423F00EA16AD /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		2C73A87A0F19423F00EA16AD /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		2C73A87B0F19423F00EA16AD /* changes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changes.txt; sourceTree = "<group>"; };
+		2C73A8910F1942FE00EA16AD /* DirectoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoryService.h; sourceTree = "<group>"; };
+		2C73A8920F1942FE00EA16AD /* DirectoryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoryService.m; sourceTree = "<group>"; };
+		2C73A8E80F19536400EA16AD /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; wrapsLines = 1; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2C8500860EDF38820058EBE0 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
@@ -207,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				2C35A4650EA401CB000B2452 /* CocoaAMF */,
+				2C73A8760F19423F00EA16AD /* Libraries */,
 				2C47403C0F16C2050062D1FD /* Tests */,
 				2C73A8350F193EFA00EA16AD /* Examples */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -270,6 +286,9 @@
 			isa = PBXGroup;
 			children = (
 				2C73A8170F193CD200EA16AD /* main.m */,
+				2C73A8910F1942FE00EA16AD /* DirectoryService.h */,
+				2C73A8920F1942FE00EA16AD /* DirectoryService.m */,
+				2C73A8E80F19536400EA16AD /* README.txt */,
 			);
 			name = ServerExample;
 			path = Examples/ServerExample;
@@ -283,6 +302,25 @@
 				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
 			);
 			name = Examples;
+			sourceTree = "<group>";
+		};
+		2C73A8760F19423F00EA16AD /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				2C73A8770F19423F00EA16AD /* CocoaAsyncSocket */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		2C73A8770F19423F00EA16AD /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				2C73A8780F19423F00EA16AD /* AsyncSocket Documentation.html */,
+				2C73A8790F19423F00EA16AD /* AsyncSocket.h */,
+				2C73A87A0F19423F00EA16AD /* AsyncSocket.m */,
+				2C73A87B0F19423F00EA16AD /* changes.txt */,
+			);
+			path = CocoaAsyncSocket;
 			sourceTree = "<group>";
 		};
 		2C85008B0EDF39100058EBE0 /* Classes */ = {
@@ -548,6 +586,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C73A8180F193CD200EA16AD /* main.m in Sources */,
+				2C73A87C0F19423F00EA16AD /* AsyncSocket.m in Sources */,
+				2C73A87F0F19427700EA16AD /* AMF0KeyedArchiver.m in Sources */,
+				2C73A8800F19427800EA16AD /* AMF3KeyedArchiver.m in Sources */,
+				2C73A8810F19427A00EA16AD /* AMFActionMessage.m in Sources */,
+				2C73A8820F19427B00EA16AD /* AMFByteArray.m in Sources */,
+				2C73A8830F19427C00EA16AD /* AMFGateway.m in Sources */,
+				2C73A8840F19427D00EA16AD /* ASObject.m in Sources */,
+				2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

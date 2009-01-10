@@ -256,8 +256,6 @@
 		NSData *responseData = [(NSData *)CFHTTPMessageCopySerializedMessage(response) autorelease];
 		[socket writeData:responseData withTimeout:WRITE_HEAD_TIMEOUT tag:HTTP_PARTIAL_RESPONSE];
 		[socket writeData:amfResponseData withTimeout:WRITE_BODY_TIMEOUT tag:HTTP_RESPONSE];
-		[(NSData *)messageBody writeToFile:@"/Users/marc/Desktop/in.amf" atomically:NO];
-		[amfResponseData writeToFile:@"/Users/marc/Desktop/out.amf" atomically:NO];
 		
 		[amfResponse release];
 		CFRelease(messageBody);
