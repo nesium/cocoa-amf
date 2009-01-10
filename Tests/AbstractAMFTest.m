@@ -16,8 +16,27 @@
 	AMFByteArray *byteArray = [[AMFByteArray alloc] 
 		initWithData:[NSData dataWithBytes:data length:length] encoding:kAMF0Version];
 	id deserializedObj = [byteArray readObject];
-	STAssertTrue((deserializedObj == obj || [deserializedObj isEqual:obj]), @"%@ should be %@", 
-		deserializedObj, obj);
+	
+	if (obj == [NSNull null])
+	{
+		STAssertTrue(deserializedObj == obj, @"%@ should be %@", 
+			deserializedObj, obj);	
+	}
+	else if ([obj isKindOfClass:[NSArray class]])
+	{
+		STAssertTrue([deserializedObj isEqualToArray:obj], @"%@ should be %@", 
+			deserializedObj, obj);
+	}
+	else if ([obj isKindOfClass:[NSDictionary class]])
+	{
+		STAssertTrue([deserializedObj isEqualToDictionary:obj], @"%@ should be %@", 
+			deserializedObj, obj);
+	}
+	else
+	{
+		STAssertTrue([deserializedObj isEqual:obj], @"%@ should be %@", 
+			deserializedObj, obj);
+	}
 	[byteArray release];
 }
 

@@ -11,7 +11,7 @@
 
 @implementation AMF0Test
 
-- (void)testNumbers
+- (void)testReadNumber
 {	
 	[self assertAMF0Data:"\x00\x00\x00\x00\x00\x00\x00\x00\x00" length:9 
 		equalsObject:[NSNumber numberWithInt:0]];
@@ -27,7 +27,7 @@
 		equalsObject:[NSNumber numberWithDouble:1.23456789]];
 }
 
-- (void)testBoolean
+- (void)testReadBoolean
 {
 	[self assertAMF0Data:"\x01\x01" length:2 
 		equalsObject:[NSNumber numberWithBool:YES]];
@@ -35,7 +35,7 @@
 		equalsObject:[NSNumber numberWithBool:NO]];
 }
 
-- (void)testString
+- (void)testReadString
 {
 	[self assertAMF0Data:"\x02\x00\x00" length:3 
 		equalsObject:@""];
@@ -44,5 +44,31 @@
 	[self assertAMF0Data:"\x02\x00\t\xe1\x9a\xa0\xe1\x9b\x87\xe1\x9a\xbb" length:12 
 		equalsObject:@"ᚠᛇᚻ"];
 }
+
+- (void)testReadNull
+{
+	[self assertAMF0Data:"\x05" length:1 equalsObject:[NSNull null]];
+}
+
+- (void)testReadUndefined
+{
+	[self assertAMF0Data:"\x06" length:1 equalsObject:[NSNull null]];
+}
+
+- (void)testReadArray
+{
+	[self assertAMF0Data:"\x0a\x00\x00\x00\x00" length:5 equalsObject:[NSArray array]];
+	[self assertAMF0Data:"\x0a\x00\x00\x00\x03\x00\x3f\xf0\x00\x00\x00\x00\x00\x00\x00\x40\x00\
+\x00\x00\x00\x00\x00\x00\x00\x40\x08\x00\x00\x00\x00\x00\x00" length:32 
+		equalsObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:1], 
+			[NSNumber numberWithInt:2], [NSNumber numberWithInt:3], nil]];
+}
+
+- (void)testReadDictionary
+{
+	[self assertAMF0Data:"\x03\x00\x01a\x02\x00\x01a\x00\x00\t" length:11 
+		equalsObject:[NSDictionary dictionaryWithObject:@"a" forKey:@"a"]];
+}
+
 
 @end
