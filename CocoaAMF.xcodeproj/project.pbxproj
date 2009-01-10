@@ -93,8 +93,9 @@
 		2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutlineViewDataSource.m; sourceTree = "<group>"; };
 		2C47403E0F16C2890062D1FD /* AMF0Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF0Test.h; sourceTree = "<group>"; };
 		2C47403F0F16C2890062D1FD /* AMF0Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF0Test.m; sourceTree = "<group>"; };
-		2C73A8090F193C2F00EA16AD /* ServerExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = ServerExample; path = build/Debug/ServerExample; sourceTree = "<group>"; };
+		2C73A8090F193C2F00EA16AD /* ServerExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ServerExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C73A8170F193CD200EA16AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C73A82F0F193EC000EA16AD /* Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.mxml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2C8500860EDF38820058EBE0 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
@@ -131,7 +132,6 @@
 		2C85010C0EDF43D10058EBE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
 		2CB5B48C0F16C7D200C71818 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CB5B48D0F16C7D200C71818 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.mxml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractAMFTest.h; sourceTree = "<group>"; };
 		2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractAMFTest.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAMF_Prefix.pch; sourceTree = "<group>"; };
@@ -207,13 +207,10 @@
 			isa = PBXGroup;
 			children = (
 				2C35A4650EA401CB000B2452 /* CocoaAMF */,
-				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
-				2C85008D0EDF39490058EBE0 /* AMFClient */,
 				2C47403C0F16C2050062D1FD /* Tests */,
-				2C73A8050F193C0400EA16AD /* ServerExample */,
+				2C73A8350F193EFA00EA16AD /* Examples */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				2CB5B48D0F16C7D200C71818 /* Tests-Info.plist */,
 			);
 			name = CocoaAMF;
 			sourceTree = "<group>";
@@ -224,7 +221,8 @@
 				2C85008B0EDF39100058EBE0 /* Classes */,
 				2C85008C0EDF391C0058EBE0 /* Resources */,
 			);
-			path = "SharedObject Browser";
+			name = "SharedObject Browser";
+			path = "Examples/SharedObject Browser";
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
@@ -239,15 +237,15 @@
 		2C35A4650EA401CB000B2452 /* CocoaAMF */ = {
 			isa = PBXGroup;
 			children = (
+				2C35A4660EA401CB000B2452 /* AMF.h */,
 				2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */,
-				2C8500E20EDF42DF0058EBE0 /* AMF3KeyedArchiver.h */,
+				2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */,
 				2C8500E30EDF42DF0058EBE0 /* AMFByteArray.h */,
 				2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */,
-				2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */,
 				2C8500E50EDF42DF0058EBE0 /* AMF0KeyedArchiver.h */,
-				2C8500E70EDF42DF0058EBE0 /* AMF3KeyedArchiver.m */,
 				2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */,
-				2C35A4660EA401CB000B2452 /* AMF.h */,
+				2C8500E20EDF42DF0058EBE0 /* AMF3KeyedArchiver.h */,
+				2C8500E70EDF42DF0058EBE0 /* AMF3KeyedArchiver.m */,
 				2C35A46F0EA401CB000B2452 /* AMFActionMessage.h */,
 				2C35A4700EA401CB000B2452 /* AMFActionMessage.m */,
 				2C35A4810EA401CB000B2452 /* ASObject.h */,
@@ -259,6 +257,7 @@
 		2C47403C0F16C2050062D1FD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				2C73A82F0F193EC000EA16AD /* Tests-Info.plist */,
 				2C47403E0F16C2890062D1FD /* AMF0Test.h */,
 				2C47403F0F16C2890062D1FD /* AMF0Test.m */,
 				2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */,
@@ -272,7 +271,18 @@
 			children = (
 				2C73A8170F193CD200EA16AD /* main.m */,
 			);
-			path = ServerExample;
+			name = ServerExample;
+			path = Examples/ServerExample;
+			sourceTree = "<group>";
+		};
+		2C73A8350F193EFA00EA16AD /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				2C85008D0EDF39490058EBE0 /* AMFClient */,
+				2C73A8050F193C0400EA16AD /* ServerExample */,
+				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
+			);
+			name = Examples;
 			sourceTree = "<group>";
 		};
 		2C85008B0EDF39100058EBE0 /* Classes */ = {
@@ -308,7 +318,8 @@
 				2CB078570EE0E3260059C799 /* Frameworks */,
 				2C8500990EDF39700058EBE0 /* Resources */,
 			);
-			path = AMFClient;
+			name = AMFClient;
+			path = Examples/AMFClient;
 			sourceTree = "<group>";
 		};
 		2C8500980EDF39690058EBE0 /* Classes */ = {
@@ -674,7 +685,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/AMFClient/Frameworks\"",
+					"\"$(SRCROOT)/Examples/AMFClient/Frameworks\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -682,7 +693,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "AMFClient/AMFClient-Info.plist";
+				INFOPLIST_FILE = "Examples/AMFClient/AMFClient-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -703,13 +714,13 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/AMFClient/Frameworks\"",
+					"\"$(SRCROOT)/Examples/AMFClient/Frameworks\"",
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "AMFClient/AMFClient-Info.plist";
+				INFOPLIST_FILE = "Examples/AMFClient/AMFClient-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -736,7 +747,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Tests-Info.plist";
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -762,7 +773,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Tests-Info.plist";
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
