@@ -43,6 +43,6 @@ If you have any questions or ideas, let me know at mb@nesium.com.
 
 ### Thanks
 
-Deusty Designs for CocoaAsyncSocket (<http://code.google.com/p/cocoaasyncsocket/>)
-Binary God for BGHUDAppKit (<http://code.google.com/p/bghudappkit/>)
-The PyAMF Team for PyAMF (<http://pyamf.org/>) and therefor letting me have a reference and unit tests which I can steal shamelessly
+- Deusty Designs for CocoaAsyncSocket (<http://code.google.com/p/cocoaasyncsocket/>)
+- Binary God for BGHUDAppKit (<http://code.google.com/p/bghudappkit/>)
+- The PyAMF Team for PyAMF (<http://pyamf.org/>) and therefor letting me have a reference and unit tests which I can steal shamelessly
