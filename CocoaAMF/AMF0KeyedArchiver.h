@@ -13,6 +13,10 @@
 #import "ASObject.h"
 #import "AMFByteArray.h"
 
+#if TARGET_OS_IPHONE
+#import "NSObject-iPhoneExtensions.h"
+#endif
+
 
 @interface AMF0KeyedArchiver : NSCoder 
 {

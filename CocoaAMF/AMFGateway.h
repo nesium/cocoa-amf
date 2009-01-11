@@ -6,13 +6,17 @@
 //  Copyright 2008 nesiumdotcom. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
 #import "AMFByteArray.h"
 #import "AMFActionMessage.h"
 
+#if TARGET_OS_IPHONE
+#import <CFNetwork/CFNetwork.h>
+#endif
 
-@interface AMFGateway : NSObject 
+
+@interface AMFGateway : NSObject
 {
 	AsyncSocket *m_socket;
 	NSMutableArray *m_services;

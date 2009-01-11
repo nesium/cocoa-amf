@@ -6,7 +6,7 @@
 //  Copyright 2008 nesiumdotcom. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "AMF.h"
 #import "AMFByteArray.h"
 

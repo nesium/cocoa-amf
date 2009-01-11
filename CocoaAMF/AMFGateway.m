@@ -36,6 +36,10 @@
 
 #import "AMFGateway.h"
 
+#if TARGET_OS_IPHONE
+#import "NSObject-iPhoneExtensions.h"
+#endif
+
 // Define the various timeouts (in seconds) for various parts of the HTTP process
 #define READ_TIMEOUT        -1
 #define WRITE_HEAD_TIMEOUT  30
