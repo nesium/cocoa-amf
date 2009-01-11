@@ -21,7 +21,9 @@ If you're comfortable with Flash's ByteArray class it should be pretty easy to u
 
 ### iPhone Support
 
-I haven't tested the code on the iPhone yet, it may run, but in any case I plan to make it work on the iPhone too.
+01/11/09 I have added an example for remoting calls from the iPhone. See the XCode project CocoaAMF-iPhone.
+
+Usage of the iPhone as an AMF Server is still untested.
 
 
 ### Disclaimer
