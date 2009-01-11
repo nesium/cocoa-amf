@@ -1,0 +1,337 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2CE53EF10F1A69EC0000AD55 /* AsyncSocket Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */; };
+		2CE53EF20F1A69EC0000AD55 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */; };
+		2CE53EF30F1A69EC0000AD55 /* changes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EF00F1A69EC0000AD55 /* changes.txt */; };
+		2CE53EFE0F1A6A050000AD55 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */; };
+		2CE53EFF0F1A6A050000AD55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EFB0F1A6A050000AD55 /* main.m */; };
+		2CE53F000F1A6A050000AD55 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EFC0F1A6A050000AD55 /* MainWindow.xib */; };
+		2CE53F1D0F1A6AB40000AD55 /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F0E0F1A6AB40000AD55 /* AMF0KeyedArchiver.m */; };
+		2CE53F1E0F1A6AB40000AD55 /* AMF3KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F100F1A6AB40000AD55 /* AMF3KeyedArchiver.m */; };
+		2CE53F1F0F1A6AB40000AD55 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */; };
+		2CE53F200F1A6AB40000AD55 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F140F1A6AB40000AD55 /* AMFByteArray.m */; };
+		2CE53F210F1A6AB40000AD55 /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F160F1A6AB40000AD55 /* AMFGateway.m */; };
+		2CE53F220F1A6AB40000AD55 /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */; };
+		2CE53F230F1A6AB40000AD55 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F1A0F1A6AB40000AD55 /* ASObject.m */; };
+		2CE53F340F1A6B550000AD55 /* NSObject-iPhoneExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */; };
+		2CE53F470F1A6C8E0000AD55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */; };
+		2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5403B0F1A76260000AD55 /* DemoCaller.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* CocoaAMF-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CocoaAMF-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "AsyncSocket Documentation.html"; sourceTree = "<group>"; };
+		2CE53EEE0F1A69EC0000AD55 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		2CE53EF00F1A69EC0000AD55 /* changes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changes.txt; sourceTree = "<group>"; };
+		2CE53EF90F1A6A050000AD55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2CE53EFB0F1A6A050000AD55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2CE53EFC0F1A6A050000AD55 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		2CE53F020F1A6A920000AD55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.mxml; path = Info.plist; sourceTree = "<group>"; };
+		2CE53F0C0F1A6AB40000AD55 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
+		2CE53F0D0F1A6AB40000AD55 /* AMF0KeyedArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF0KeyedArchiver.h; sourceTree = "<group>"; };
+		2CE53F0E0F1A6AB40000AD55 /* AMF0KeyedArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF0KeyedArchiver.m; sourceTree = "<group>"; };
+		2CE53F0F0F1A6AB40000AD55 /* AMF3KeyedArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF3KeyedArchiver.h; sourceTree = "<group>"; };
+		2CE53F100F1A6AB40000AD55 /* AMF3KeyedArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF3KeyedArchiver.m; sourceTree = "<group>"; };
+		2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFActionMessage.h; sourceTree = "<group>"; };
+		2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFActionMessage.m; sourceTree = "<group>"; };
+		2CE53F130F1A6AB40000AD55 /* AMFByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFByteArray.h; sourceTree = "<group>"; };
+		2CE53F140F1A6AB40000AD55 /* AMFByteArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFByteArray.m; sourceTree = "<group>"; };
+		2CE53F150F1A6AB40000AD55 /* AMFGateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFGateway.h; sourceTree = "<group>"; };
+		2CE53F160F1A6AB40000AD55 /* AMFGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFGateway.m; sourceTree = "<group>"; };
+		2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFRemotingCall.h; sourceTree = "<group>"; };
+		2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFRemotingCall.m; sourceTree = "<group>"; };
+		2CE53F190F1A6AB40000AD55 /* ASObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASObject.h; sourceTree = "<group>"; };
+		2CE53F1A0F1A6AB40000AD55 /* ASObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASObject.m; sourceTree = "<group>"; };
+		2CE53F320F1A6B550000AD55 /* NSObject-iPhoneExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-iPhoneExtensions.h"; sourceTree = "<group>"; };
+		2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-iPhoneExtensions.m"; sourceTree = "<group>"; };
+		2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		2CE5403A0F1A76260000AD55 /* DemoCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCaller.h; sourceTree = "<group>"; };
+		2CE5403B0F1A76260000AD55 /* DemoCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoCaller.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				2CE53F470F1A6C8E0000AD55 /* CFNetwork.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* CocoaAMF-iPhone.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F0B0F1A6AB40000AD55 /* CocoaAMF */,
+				2CE53EF50F1A69F80000AD55 /* Examples */,
+				2CE53EEB0F1A69EC0000AD55 /* Libraries */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CE53EEB0F1A69EC0000AD55 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53EEC0F1A69EC0000AD55 /* CocoaAsyncSocket */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		2CE53EEC0F1A69EC0000AD55 /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */,
+				2CE53EEE0F1A69EC0000AD55 /* AsyncSocket.h */,
+				2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */,
+				2CE53EF00F1A69EC0000AD55 /* changes.txt */,
+			);
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		2CE53EF50F1A69F80000AD55 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53EF80F1A6A050000AD55 /* SimpleRemotingCallExample-iPhone */,
+			);
+			name = Examples;
+			sourceTree = "<group>";
+		};
+		2CE53EF80F1A6A050000AD55 /* SimpleRemotingCallExample-iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F020F1A6A920000AD55 /* Info.plist */,
+				2CE53EF90F1A6A050000AD55 /* AppDelegate.h */,
+				2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */,
+				2CE53EFB0F1A6A050000AD55 /* main.m */,
+				2CE53EFC0F1A6A050000AD55 /* MainWindow.xib */,
+				2CE5403A0F1A76260000AD55 /* DemoCaller.h */,
+				2CE5403B0F1A76260000AD55 /* DemoCaller.m */,
+			);
+			name = "SimpleRemotingCallExample-iPhone";
+			path = "Examples/SimpleRemotingCallExample-iPhone";
+			sourceTree = "<group>";
+		};
+		2CE53F0B0F1A6AB40000AD55 /* CocoaAMF */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F0C0F1A6AB40000AD55 /* AMF.h */,
+				2CE53F0D0F1A6AB40000AD55 /* AMF0KeyedArchiver.h */,
+				2CE53F0E0F1A6AB40000AD55 /* AMF0KeyedArchiver.m */,
+				2CE53F0F0F1A6AB40000AD55 /* AMF3KeyedArchiver.h */,
+				2CE53F100F1A6AB40000AD55 /* AMF3KeyedArchiver.m */,
+				2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */,
+				2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */,
+				2CE53F130F1A6AB40000AD55 /* AMFByteArray.h */,
+				2CE53F140F1A6AB40000AD55 /* AMFByteArray.m */,
+				2CE53F150F1A6AB40000AD55 /* AMFGateway.h */,
+				2CE53F160F1A6AB40000AD55 /* AMFGateway.m */,
+				2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */,
+				2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */,
+				2CE53F190F1A6AB40000AD55 /* ASObject.h */,
+				2CE53F1A0F1A6AB40000AD55 /* ASObject.m */,
+				2CE53F320F1A6B550000AD55 /* NSObject-iPhoneExtensions.h */,
+				2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */,
+			);
+			path = CocoaAMF;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* CocoaAMF-iPhone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CocoaAMF-iPhone" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CocoaAMF-iPhone";
+			productName = "CocoaAMF-iPhone";
+			productReference = 1D6058910D05DD3D006BFB54 /* CocoaAMF-iPhone.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CocoaAMF-iPhone" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* CocoaAMF-iPhone */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CE53EF10F1A69EC0000AD55 /* AsyncSocket Documentation.html in Resources */,
+				2CE53EF30F1A69EC0000AD55 /* changes.txt in Resources */,
+				2CE53F000F1A6A050000AD55 /* MainWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CE53EF20F1A69EC0000AD55 /* AsyncSocket.m in Sources */,
+				2CE53EFE0F1A6A050000AD55 /* AppDelegate.m in Sources */,
+				2CE53EFF0F1A6A050000AD55 /* main.m in Sources */,
+				2CE53F1D0F1A6AB40000AD55 /* AMF0KeyedArchiver.m in Sources */,
+				2CE53F1E0F1A6AB40000AD55 /* AMF3KeyedArchiver.m in Sources */,
+				2CE53F1F0F1A6AB40000AD55 /* AMFActionMessage.m in Sources */,
+				2CE53F200F1A6AB40000AD55 /* AMFByteArray.m in Sources */,
+				2CE53F210F1A6AB40000AD55 /* AMFGateway.m in Sources */,
+				2CE53F220F1A6AB40000AD55 /* AMFRemotingCall.m in Sources */,
+				2CE53F230F1A6AB40000AD55 /* ASObject.m in Sources */,
+				2CE53F340F1A6B550000AD55 /* NSObject-iPhoneExtensions.m in Sources */,
+				2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Examples/SimpleRemotingCallExample-iPhone/Info.plist";
+				PRODUCT_NAME = "CocoaAMF-iPhone";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Examples/SimpleRemotingCallExample-iPhone/Info.plist";
+				PRODUCT_NAME = "CocoaAMF-iPhone";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marc Bauer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "779C2665-738E-452C-8B5A-30583BAD5BE9";
+				SDKROOT = iphoneos2.2;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marc Bauer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "779C2665-738E-452C-8B5A-30583BAD5BE9";
+				SDKROOT = iphoneos2.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CocoaAMF-iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CocoaAMF-iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
