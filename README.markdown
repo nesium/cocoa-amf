@@ -14,7 +14,7 @@ For testing an existing AMF server a more complex tool is provided, namely AMFCl
 
 If you want to send custom classes from Cocoa make sure to implement encodeWithCoder: where you'll receive a keyed archiver.
 
-If you send custom classes from Flash, CocoaAMF first looks if a class with that name exists via objc_getClass (so don't use name spaces when registering classes for AMF serialization in Flash) and if that's the case it'll create an instance of that class and assign the properties of the received object to that newly instanciated class. So there is no need to implement initWithCoder:. If no class with the classname of the received object is found, CocoaAMF creates an instance of ASObject which will contain all attributes of that object and its classname as the ivar 'type'.
+If you send custom classes from Flash, CocoaAMF first looks if a class with that name exists via objc\_getClass (so don't use name spaces when registering classes for AMF serialization in Flash) and if that's the case it'll create an instance of that class and assign the properties of the received object to that newly instanciated class. So there is no need to implement initWithCoder:. If no class with the classname of the received object is found, CocoaAMF creates an instance of ASObject which will contain all attributes of that object and its classname as the ivar 'type'.
 
 If you're comfortable with Flash's ByteArray class it should be pretty easy to use AMFByteArray if you need to, for example in combination with a socket connection.
 
