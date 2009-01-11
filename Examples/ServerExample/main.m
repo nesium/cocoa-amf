@@ -1,3 +1,12 @@
+//
+//  main.m
+//  CocoaAMF
+//
+//  Created by Marc Bauer on 11.01.09.
+//  Copyright 2009 nesiumdotcom. All rights reserved.
+//
+
+
 #import <Foundation/Foundation.h>
 #import "AMFGateway.h"
 #import "DirectoryService.h"

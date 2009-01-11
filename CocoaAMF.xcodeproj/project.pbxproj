@@ -25,6 +25,16 @@
 		2C73A8830F19427C00EA16AD /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
 		2C73A8840F19427D00EA16AD /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8920F1942FE00EA16AD /* DirectoryService.m */; };
+		2C73A8ED0F1954E100EA16AD /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
+		2C73A90B0F19681200EA16AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A90A0F19681200EA16AD /* main.m */; };
+		2C73A90D0F19687D00EA16AD /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */; };
+		2C73A90E0F19687E00EA16AD /* AMF3KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E70EDF42DF0058EBE0 /* AMF3KeyedArchiver.m */; };
+		2C73A90F0F19687F00EA16AD /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
+		2C73A9100F19688000EA16AD /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C73A9110F19688100EA16AD /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
+		2C73A9120F19688200EA16AD /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
+		2C73A9130F19688300EA16AD /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		2C73A9240F196A2E00EA16AD /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
 		2C8162E30E9BED3700C11CDF /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8162E20E9BED3700C11CDF /* Controller.m */; };
 		2C8500880EDF38820058EBE0 /* FileSystemRepNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500870EDF38820058EBE0 /* FileSystemRepNode.m */; };
 		2C8500A40EDF39AE0058EBE0 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
@@ -111,6 +121,10 @@
 		2C73A8910F1942FE00EA16AD /* DirectoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoryService.h; sourceTree = "<group>"; };
 		2C73A8920F1942FE00EA16AD /* DirectoryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoryService.m; sourceTree = "<group>"; };
 		2C73A8E80F19536400EA16AD /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; wrapsLines = 1; };
+		2C73A8EB0F1954E100EA16AD /* AMFRemotingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFRemotingCall.h; sourceTree = "<group>"; };
+		2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFRemotingCall.m; sourceTree = "<group>"; };
+		2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = SimpleRemotingCallExample; path = build/Debug/SimpleRemotingCallExample; sourceTree = "<group>"; };
+		2C73A90A0F19681200EA16AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2C8500860EDF38820058EBE0 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
@@ -156,6 +170,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		2C73A8070F193C2F00EA16AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C73A9040F1967E200EA16AD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -214,6 +235,7 @@
 				2C8500920EDF39560058EBE0 /* AMFClient.app */,
 				2CB5B48C0F16C7D200C71818 /* Tests.octest */,
 				2C73A8090F193C2F00EA16AD /* ServerExample */,
+				2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,6 +288,8 @@
 				2C35A4700EA401CB000B2452 /* AMFActionMessage.m */,
 				2C35A4810EA401CB000B2452 /* ASObject.h */,
 				2C35A4820EA401CB000B2452 /* ASObject.m */,
+				2C73A8EB0F1954E100EA16AD /* AMFRemotingCall.h */,
+				2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */,
 			);
 			path = CocoaAMF;
 			sourceTree = "<group>";
@@ -299,6 +323,7 @@
 			children = (
 				2C85008D0EDF39490058EBE0 /* AMFClient */,
 				2C73A8050F193C0400EA16AD /* ServerExample */,
+				2C73A9020F1967C600EA16AD /* SimpleRemotingCallExample */,
 				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
 			);
 			name = Examples;
@@ -321,6 +346,15 @@
 				2C73A87B0F19423F00EA16AD /* changes.txt */,
 			);
 			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		2C73A9020F1967C600EA16AD /* SimpleRemotingCallExample */ = {
+			isa = PBXGroup;
+			children = (
+				2C73A90A0F19681200EA16AD /* main.m */,
+			);
+			name = SimpleRemotingCallExample;
+			path = Examples/SimpleRemotingCallExample;
 			sourceTree = "<group>";
 		};
 		2C85008B0EDF39100058EBE0 /* Classes */ = {
@@ -461,6 +495,22 @@
 			productReference = 2C73A8090F193C2F00EA16AD /* ServerExample */;
 			productType = "com.apple.product-type.tool";
 		};
+		2C73A9050F1967E200EA16AD /* SimpleRemotingCallExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C73A90C0F19681300EA16AD /* Build configuration list for PBXNativeTarget "SimpleRemotingCallExample" */;
+			buildPhases = (
+				2C73A9030F1967E200EA16AD /* Sources */,
+				2C73A9040F1967E200EA16AD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleRemotingCallExample;
+			productName = SimpleRemotingCallExample;
+			productReference = 2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */;
+			productType = "com.apple.product-type.tool";
+		};
 		2C8500910EDF39560058EBE0 /* AMFClient */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C8500970EDF395E0058EBE0 /* Build configuration list for PBXNativeTarget "AMFClient" */;
@@ -531,6 +581,7 @@
 				2C8500910EDF39560058EBE0 /* AMFClient */,
 				2CB5B48B0F16C7D200C71818 /* Tests */,
 				2C73A8080F193C2F00EA16AD /* ServerExample */,
+				2C73A9050F1967E200EA16AD /* SimpleRemotingCallExample */,
 			);
 		};
 /* End PBXProject section */
@@ -594,6 +645,23 @@
 				2C73A8830F19427C00EA16AD /* AMFGateway.m in Sources */,
 				2C73A8840F19427D00EA16AD /* ASObject.m in Sources */,
 				2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */,
+				2C73A8ED0F1954E100EA16AD /* AMFRemotingCall.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C73A9030F1967E200EA16AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C73A90B0F19681200EA16AD /* main.m in Sources */,
+				2C73A90D0F19687D00EA16AD /* AMF0KeyedArchiver.m in Sources */,
+				2C73A90E0F19687E00EA16AD /* AMF3KeyedArchiver.m in Sources */,
+				2C73A90F0F19687F00EA16AD /* AMFActionMessage.m in Sources */,
+				2C73A9100F19688000EA16AD /* AMFByteArray.m in Sources */,
+				2C73A9110F19688100EA16AD /* AMFGateway.m in Sources */,
+				2C73A9120F19688200EA16AD /* AMFRemotingCall.m in Sources */,
+				2C73A9130F19688300EA16AD /* ASObject.m in Sources */,
+				2C73A9240F196A2E00EA16AD /* AsyncSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,6 +788,52 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ServerExample;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		2C73A9080F1967E700EA16AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SimpleRemotingCallExample;
+			};
+			name = Debug;
+		};
+		2C73A9090F1967E700EA16AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SimpleRemotingCallExample;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -899,6 +1013,15 @@
 			buildConfigurations = (
 				2C73A80B0F193C3600EA16AD /* Debug */,
 				2C73A80C0F193C3600EA16AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C73A90C0F19681300EA16AD /* Build configuration list for PBXNativeTarget "SimpleRemotingCallExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C73A9080F1967E700EA16AD /* Debug */,
+				2C73A9090F1967E700EA16AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
