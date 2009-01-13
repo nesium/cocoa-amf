@@ -15,7 +15,7 @@
 {
 	AMFByteArray *byteArray = [[AMFByteArray alloc] 
 		initWithData:[NSData dataWithBytes:data length:length] encoding:kAMF0Version];
-	id deserializedObj = [byteArray readObject];
+	id deserializedObj = [byteArray _decodeObject];
 	
 	if (obj == [NSNull null])
 	{

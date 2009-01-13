@@ -8,6 +8,8 @@
 
 #import "AMFMutableByteArray.h"
 
+@class AMF3TraitsInfo;
+
 @interface AMF3ByteArray (Private)
 - (void)writeTraits:(AMF3TraitsInfo *)traits;
 @end
@@ -130,10 +132,10 @@
 
 - (void)writeObject:(NSObject *)value
 {
-	AMF0KeyedArchiver *archiver = [[AMF0KeyedArchiver alloc] initForWritingWithByteArray:self];
-	[archiver encodeRootObject:value];
-	[archiver finishEncoding];
-	[archiver release];
+//	AMF0KeyedArchiver *archiver = [[AMF0KeyedArchiver alloc] initForWritingWithByteArray:self];
+//	[archiver encodeRootObject:value];
+//	[archiver finishEncoding];
+//	[archiver release];
 }
 
 - (void)writeUTF:(NSString *)value
@@ -310,10 +312,10 @@
 
 - (void)writeObject:(NSObject *)value
 {
-	AMF3KeyedArchiver *archiver = [[AMF3KeyedArchiver alloc] initForWritingWithByteArray:self];
-	[archiver encodeRootObject:value];
-	[archiver finishEncoding];
-	[archiver release];
+//	AMF3KeyedArchiver *archiver = [[AMF3KeyedArchiver alloc] initForWritingWithByteArray:self];
+//	[archiver encodeRootObject:value];
+//	[archiver finishEncoding];
+//	[archiver release];
 }
 
 - (void)writeUTF:(NSString *)value

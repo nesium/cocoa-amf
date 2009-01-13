@@ -14,37 +14,39 @@
 #import "NSObject-iPhoneExtensions.h"
 #endif
 
+#define AMFInvalidArchiveOperationException @"AMFInvalidArchiveOperationException"
 
 @interface AMFByteArray : NSObject 
 {
 	NSMutableData *m_data;
 	AMFVersion m_objectEncoding;
 	uint32_t m_position;
+	const uint8_t *m_bytes;
 }
 
 @property (nonatomic, readonly) AMFVersion objectEncoding;
-@property (nonatomic, readonly) uint32_t length;
-@property (nonatomic, readonly) uint32_t bytesAvailable;
-@property (nonatomic, assign) uint32_t position;
 @property (nonatomic, readonly) NSData *data;
 
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding;
 
++ (id)unarchiveObjectWithData:(NSData *)data encoding:(AMFVersion)encoding;
++ (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFVersion)encoding;
+
 //- (void)compress;
 - (BOOL)readBoolean;
-- (int8_t)readByte;
+- (int8_t)_decodeChar;
 - (NSData *)readBytes:(uint32_t)length;
-- (double)readDouble;
-- (float)readFloat;
-- (int32_t)readInt;
+- (double)_decodeDouble;
+- (float)_decodeFloat;
+- (int32_t)_decodeInt;
 - (NSString *)readMultiByte:(uint32_t)length encoding:(NSStringEncoding)encoding;
-- (NSObject *)readObject;
-- (int16_t)readShort;
-- (uint8_t)readUnsignedByte;
-- (uint32_t)readUnsignedInt;
-- (uint16_t)readUnsignedShort;
-- (NSString *)readUTF;
-- (NSString *)readUTFBytes:(uint32_t)length;
+- (NSObject *)_decodeObject;
+- (int16_t)_decodeShort;
+- (uint8_t)_decodeUnsignedChar;
+- (uint32_t)_decodeUnsignedInt;
+- (uint16_t)_decodeUnsignedShort;
+- (NSString *)_decodeUTF;
+- (NSString *)_decodeUTFBytes:(uint32_t)length;
 // - (void)uncompress;
 
 @end
@@ -67,5 +69,25 @@
 }
 
 - (uint32_t)readUInt29;
+
+@end
+
+
+@interface AMF3TraitsInfo : NSObject 
+{
+	NSString *m_className;
+	BOOL m_dynamic;
+	BOOL m_externalizable;
+	NSUInteger m_count;
+	NSMutableArray *m_properties;
+}
+
+@property (nonatomic, retain) NSString *className;
+@property (nonatomic, assign) BOOL dynamic;
+@property (nonatomic, assign) BOOL externalizable;
+@property (nonatomic, assign) NSUInteger count;
+@property (nonatomic, retain) NSMutableArray *properties;
+
+- (void)addProperty:(NSString *)property;
 
 @end

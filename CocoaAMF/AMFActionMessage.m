@@ -34,32 +34,32 @@
 	if (self = [super init])
 	{
 		AMFByteArray *ba = [[AMFByteArray alloc] initWithData:data encoding:kAMF0Version];
-		m_version = [ba readUnsignedShort];
-		uint16_t numHeaders = [ba readUnsignedShort];
+		m_version = [ba _decodeUnsignedShort];
+		uint16_t numHeaders = [ba _decodeUnsignedShort];
 		NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];
 		for (uint16_t i = 0; i < numHeaders; i++)
 		{
 			AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
-			header.name = [ba readUTF];
+			header.name = [ba _decodeUTF];
 			header.mustUnderstand = [ba readBoolean];
 			// Header length
-			[ba readUnsignedInt];
-			header.data = [ba readObject];
+			[ba _decodeUnsignedInt];
+			header.data = [ba _decodeObject];
 			[headers addObject:header];
 			[header release];
 		}
 		m_headers = [headers copy];
 		
-		uint16_t numBodies = [ba readUnsignedShort];
+		uint16_t numBodies = [ba _decodeUnsignedShort];
 		NSMutableArray *bodies = [NSMutableArray arrayWithCapacity:numBodies];
 		for (uint16_t i = 0; i < numBodies; i++)
 		{
 			AMFMessageBody *body = [[AMFMessageBody alloc] init];
-			body.targetURI = [ba readUTF];
-			body.responseURI = [ba readUTF];
+			body.targetURI = [ba _decodeUTF];
+			body.responseURI = [ba _decodeUTF];
 			// Body length
-			[ba readUnsignedInt];
-			body.data = [ba readObject];
+			[ba _decodeUnsignedInt];
+			body.data = [ba _decodeObject];
 			[bodies addObject:body];
 		}
 		m_bodies = [bodies copy];
