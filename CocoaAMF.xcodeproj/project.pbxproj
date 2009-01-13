@@ -35,6 +35,7 @@
 		2C73A9120F19688200EA16AD /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
 		2C73A9130F19688300EA16AD /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2C73A9240F196A2E00EA16AD /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
+		2C80A6800F1C1FA700D761BB /* AMFMutableByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */; };
 		2C8162E30E9BED3700C11CDF /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8162E20E9BED3700C11CDF /* Controller.m */; };
 		2C8500880EDF38820058EBE0 /* FileSystemRepNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500870EDF38820058EBE0 /* FileSystemRepNode.m */; };
 		2C8500A40EDF39AE0058EBE0 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
@@ -125,6 +126,8 @@
 		2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFRemotingCall.m; sourceTree = "<group>"; };
 		2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRemotingCallExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C73A90A0F19681200EA16AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C80A67E0F1C1FA700D761BB /* AMFMutableByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFMutableByteArray.h; sourceTree = "<group>"; };
+		2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFMutableByteArray.m; sourceTree = "<group>"; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2C8500860EDF38820058EBE0 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
@@ -280,6 +283,8 @@
 				2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */,
 				2C8500E30EDF42DF0058EBE0 /* AMFByteArray.h */,
 				2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */,
+				2C80A67E0F1C1FA700D761BB /* AMFMutableByteArray.h */,
+				2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */,
 				2C8500E50EDF42DF0058EBE0 /* AMF0KeyedArchiver.h */,
 				2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */,
 				2C8500E20EDF42DF0058EBE0 /* AMF3KeyedArchiver.h */,
@@ -688,6 +693,7 @@
 				2C109BA40EE347B600AF1643 /* NSString+URLEncode.m in Sources */,
 				2C109BE10EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m in Sources */,
 				2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */,
+				2C80A6800F1C1FA700D761BB /* AMFMutableByteArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
