@@ -16,6 +16,19 @@
 		2C35A4900EA401CB000B2452 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C38B4A20EE4A04A0083BCF5 /* CAMFFieldEditor.m */; };
 		2C3A9D970EA95C3300BFE5CC /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
+		2C5E12490F3117B3008755E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E12480F3117B3008755E9 /* main.m */; };
+		2C5E124F0F3117EF008755E9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C5E124E0F3117EF008755E9 /* MainMenu.xib */; };
+		2C5E12560F311823008755E9 /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E12550F311823008755E9 /* Server.m */; };
+		2C5E125B0F311896008755E9 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
+		2C5E126C0F3119AD008755E9 /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E126B0F3119AD008755E9 /* Client.m */; };
+		2C5E12740F311D5F008755E9 /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */; };
+		2C5E12750F311D60008755E9 /* AMF3KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E70EDF42DF0058EBE0 /* AMF3KeyedArchiver.m */; };
+		2C5E12760F311D61008755E9 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
+		2C5E12770F311D63008755E9 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C5E12780F311D63008755E9 /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
+		2C5E12790F311D64008755E9 /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
+		2C5E127A0F311D65008755E9 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		2C5E12DB0F31223A008755E9 /* SimpleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5E12DA0F31223A008755E9 /* SimpleMessage.m */; };
 		2C73A8180F193CD200EA16AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8170F193CD200EA16AD /* main.m */; };
 		2C73A87C0F19423F00EA16AD /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
 		2C73A87F0F19427700EA16AD /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */; };
@@ -111,6 +124,16 @@
 		2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutlineViewDataSource.m; sourceTree = "<group>"; };
 		2C47403E0F16C2890062D1FD /* AMF0Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF0Test.h; sourceTree = "<group>"; };
 		2C47403F0F16C2890062D1FD /* AMF0Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF0Test.m; sourceTree = "<group>"; };
+		2C5E123E0F311741008755E9 /* SocketExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocketExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C5E12400F311741008755E9 /* SocketExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.mxml; path = "SocketExample-Info.plist"; sourceTree = "<group>"; };
+		2C5E12480F3117B3008755E9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C5E124E0F3117EF008755E9 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		2C5E12540F311823008755E9 /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
+		2C5E12550F311823008755E9 /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Server.m; sourceTree = "<group>"; };
+		2C5E126A0F3119AD008755E9 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
+		2C5E126B0F3119AD008755E9 /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
+		2C5E12D90F31223A008755E9 /* SimpleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessage.h; sourceTree = "<group>"; };
+		2C5E12DA0F31223A008755E9 /* SimpleMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessage.m; sourceTree = "<group>"; };
 		2C73A8090F193C2F00EA16AD /* ServerExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ServerExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C73A8170F193CD200EA16AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C73A82F0F193EC000EA16AD /* Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.mxml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
@@ -169,6 +192,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2C5E123C0F311741008755E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C73A8070F193C2F00EA16AD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -236,6 +266,7 @@
 				2CB5B48C0F16C7D200C71818 /* Tests.octest */,
 				2C73A8090F193C2F00EA16AD /* ServerExample */,
 				2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */,
+				2C5E123E0F311741008755E9 /* SocketExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -306,6 +337,23 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		2C5E12390F31172F008755E9 /* SocketExample */ = {
+			isa = PBXGroup;
+			children = (
+				2C5E12400F311741008755E9 /* SocketExample-Info.plist */,
+				2C5E12480F3117B3008755E9 /* main.m */,
+				2C5E124E0F3117EF008755E9 /* MainMenu.xib */,
+				2C5E12540F311823008755E9 /* Server.h */,
+				2C5E12550F311823008755E9 /* Server.m */,
+				2C5E126A0F3119AD008755E9 /* Client.h */,
+				2C5E126B0F3119AD008755E9 /* Client.m */,
+				2C5E12D90F31223A008755E9 /* SimpleMessage.h */,
+				2C5E12DA0F31223A008755E9 /* SimpleMessage.m */,
+			);
+			name = SocketExample;
+			path = Examples/SocketExample;
+			sourceTree = "<group>";
+		};
 		2C73A8050F193C0400EA16AD /* ServerExample */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +373,7 @@
 				2C73A8050F193C0400EA16AD /* ServerExample */,
 				2C73A9020F1967C600EA16AD /* SimpleRemotingCallExample */,
 				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
+				2C5E12390F31172F008755E9 /* SocketExample */,
 			);
 			name = Examples;
 			sourceTree = "<group>";
@@ -479,6 +528,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2C5E123D0F311741008755E9 /* SocketExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C5E12430F311743008755E9 /* Build configuration list for PBXNativeTarget "SocketExample" */;
+			buildPhases = (
+				2C5E123A0F311741008755E9 /* Resources */,
+				2C5E123B0F311741008755E9 /* Sources */,
+				2C5E123C0F311741008755E9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SocketExample;
+			productName = SocketExample;
+			productReference = 2C5E123E0F311741008755E9 /* SocketExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 		2C73A8080F193C2F00EA16AD /* ServerExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C73A8100F193C5300EA16AD /* Build configuration list for PBXNativeTarget "ServerExample" */;
@@ -582,11 +648,20 @@
 				2CB5B48B0F16C7D200C71818 /* Tests */,
 				2C73A8080F193C2F00EA16AD /* ServerExample */,
 				2C73A9050F1967E200EA16AD /* SimpleRemotingCallExample */,
+				2C5E123D0F311741008755E9 /* SocketExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2C5E123A0F311741008755E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C5E124F0F3117EF008755E9 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C85008E0EDF39560058EBE0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -632,6 +707,25 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2C5E123B0F311741008755E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C5E12490F3117B3008755E9 /* main.m in Sources */,
+				2C5E12560F311823008755E9 /* Server.m in Sources */,
+				2C5E125B0F311896008755E9 /* AsyncSocket.m in Sources */,
+				2C5E126C0F3119AD008755E9 /* Client.m in Sources */,
+				2C5E12740F311D5F008755E9 /* AMF0KeyedArchiver.m in Sources */,
+				2C5E12750F311D60008755E9 /* AMF3KeyedArchiver.m in Sources */,
+				2C5E12760F311D61008755E9 /* AMFActionMessage.m in Sources */,
+				2C5E12770F311D63008755E9 /* AMFByteArray.m in Sources */,
+				2C5E12780F311D63008755E9 /* AMFGateway.m in Sources */,
+				2C5E12790F311D64008755E9 /* AMFRemotingCall.m in Sources */,
+				2C5E127A0F311D65008755E9 /* ASObject.m in Sources */,
+				2C5E12DB0F31223A008755E9 /* SimpleMessage.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C73A8060F193C2F00EA16AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -746,6 +840,54 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2C5E12410F311743008755E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Examples/SocketExample/SocketExample-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SocketExample;
+			};
+			name = Debug;
+		};
+		2C5E12420F311743008755E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Examples/SocketExample/SocketExample-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SocketExample;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		2C73A80B0F193C3600EA16AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1008,6 +1150,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2C5E12430F311743008755E9 /* Build configuration list for PBXNativeTarget "SocketExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C5E12410F311743008755E9 /* Debug */,
+				2C5E12420F311743008755E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2C73A8100F193C5300EA16AD /* Build configuration list for PBXNativeTarget "ServerExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
