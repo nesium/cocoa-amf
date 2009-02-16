@@ -12,58 +12,62 @@
 
 @interface AMFMutableByteArray : AMFByteArray 
 {
-
+	NSMutableData *m_data;
 }
 
-- (void)writeUnsignedByte:(uint8_t)value;
-- (void)writeUnsignedShort:(uint16_t)value;
+//--------------------------------------------------------------------------------------------------
+//	Usual NSCoder methods
+//--------------------------------------------------------------------------------------------------
 
-- (void)writeBoolean:(BOOL)value;
-- (void)writeByte:(int8_t)value;
-- (void)writeBytes:(NSData *)value;
-- (void)writeDouble:(double)value;
-- (void)writeFloat:(float)value;
-- (void)writeInt:(int32_t)value;
-- (void)writeMultiByte:(NSString *)value encoding:(NSStringEncoding)encoding;
-- (void)writeObject:(NSObject *)value;
-- (void)writeShort:(int16_t)value;
-- (void)writeUnsignedInt:(uint32_t)value;
-- (void)writeUTF:(NSString *)value;
-- (void)writeUTFBytes:(NSString *)value;
+- (id)initForWritingWithMutableData:(NSMutableData *)data encoding:(AMFVersion)encoding;
++ (NSData *)archivedDataWithRootObject:(id)rootObject;
++ (BOOL)archiveRootObject:(id)rootObject toFile:(NSString *)path;
 
+- (void)encodeBool:(BOOL)value forKey:(NSString *)key;
+- (void)encodeBytes:(const void *)address length:(NSUInteger)length forKey:(NSString *)key;
+- (void)encodeDouble:(double)value forKey:(NSString *)key;
+- (void)encodeFloat:(float)value forKey:(NSString *)key;
+- (void)encodeInt32:(int32_t)value forKey:(NSString *)key;
+- (void)encodeInt64:(int64_t)value forKey:(NSString *)key;
+- (void)encodeInt:(int)value forKey:(NSString *)key;
+- (void)encodeObject:(id)value forKey:(NSString *)key;
+- (void)encodeValueOfObjCType:(const char *)valueType at:(const void *)address;
+- (void)encodeValuesOfObjCTypes:(const char *)valueTypes, ...;
+
+//--------------------------------------------------------------------------------------------------
+//	AMF Extensions for writing specific data and serializing externalizable classes
+//--------------------------------------------------------------------------------------------------
+
+- (void)encodeBoolean:(BOOL)value;
+- (void)encodeChar:(int8_t)value;
+- (void)encodeDouble:(double)value;
+- (void)encodeFloat:(float)value;
+- (void)encodeInt:(int32_t)value;
+- (void)encodeShort:(int16_t)value;
+- (void)encodeUnsignedChar:(uint8_t)value;
+- (void)encodeUnsignedInt:(uint32_t)value;
+- (void)encodeUnsignedShort:(uint16_t)value;
+- (void)encodeUnsignedInt29:(uint32_t)value;
+- (void)encodeBytes:(NSData *)value;
+- (void)encodeMultiByteString:(NSString *)value encoding:(NSStringEncoding)encoding;
+- (void)encodeObject:(NSObject *)value;
+- (void)encodeUTF:(NSString *)value;
+- (void)encodeUTFBytes:(NSString *)value;
 @end
 
 
-@interface AMF0MutableByteArray : AMFByteArray
+@interface AMF0MutableByteArray : AMFMutableByteArray
 {
 	NSMutableArray *m_objectTable;
 	AMFByteArray *m_avmPlusByteArray;
 }
-
-- (void)writeString:(NSString *)value omitType:(BOOL)omitType;
-- (void)writeArray:(NSArray *)value;
-- (void)writeECMAArray:(NSDictionary *)value;
-- (void)writeASObject:(ASObject *)obj;
-- (void)writeNumber:(NSNumber *)value;
-- (void)writeDate:(NSDate *)value;
-
 @end
 
 
-@interface AMF3MutableByteArray : AMFByteArray
+@interface AMF3MutableByteArray : AMFMutableByteArray
 {
 	NSMutableArray *m_stringTable;
 	NSMutableArray *m_objectTable;
 	NSMutableArray *m_traitsTable;
 }
-
-- (uint32_t)readUInt29;
-- (void)writeUInt29:(uint32_t)value;
-- (void)writeArray:(NSArray *)value;
-- (void)writeString:(NSString *)value omitType:(BOOL)omitType;
-- (void)writeDictionary:(NSDictionary *)value;
-- (void)writeDate:(NSDate *)value;
-- (void)writeNumber:(NSNumber *)value;
-- (void)writeASObject:(ASObject *)value;
-
 @end

@@ -14,41 +14,29 @@
 @interface AMFByteArray (Protected)
 - (void)_ensureLength:(unsigned)length;
 - (void)_cannotDecodeType:(const char *)type;
+- (NSNumber *)_decodeNumberForKey:(NSString *)key;
 @end
 
-
-
-#pragma mark -
-
-
-
 @interface AMF0ByteArray (Private)
-- (NSObject *)readObjectWithType:(AMF0Type)type;
-- (NSArray *)readArray;
-- (NSObject *)readTypedObject;
-- (NSObject *)readASObject:(NSString *)className;
-- (NSString *)readLongString;
-- (NSString *)readXML;
-- (NSDate *)readDate;
-- (NSDictionary *)readECMAArray;
+- (NSObject *)_decodeObjectWithType:(AMF0Type)type;
+- (NSArray *)_decodeArray;
+- (NSObject *)_decodeTypedObject;
+- (NSObject *)_decodeASObject:(NSString *)className;
+- (NSString *)_decodeLongString;
+- (NSString *)_decodeXML;
+- (NSDate *)_decodeDate;
+- (NSDictionary *)_decodeECMAArray;
 - (NSObject *)readReference;
 @end
 
-
-
-#pragma mark -
-
-
-
 @interface AMF3ByteArray (Private)
-- (NSObject *)readObjectWithType:(AMF0Type)type;
-- (NSObject *)readASObject;
-- (NSObject *)readArray;
-- (AMF3TraitsInfo *)readTraits:(uint32_t)infoBits;
-- (void)readExternalizableWithClassName:(NSString *)aClassName object:(NSObject *)object;
-- (NSString *)readXML;
-- (NSData *)readByteArray;
-- (NSDate *)readDate;
+- (NSObject *)_decodeObjectWithType:(AMF3Type)type;
+- (NSObject *)_decodeASObject;
+- (NSObject *)_decodeArray;
+- (NSString *)_decodeXML;
+- (NSData *)_decodeByteArray;
+- (NSDate *)_decodeDate;
+- (AMF3TraitsInfo *)_decodeTraits:(uint32_t)infoBits;
 @end
 
 
@@ -80,6 +68,9 @@
 	{
 		m_data = [data retain];
 		m_bytes = [data bytes];
+		m_objectTable = [[NSMutableArray alloc] init];
+		m_registeredClasses = [[NSMutableDictionary alloc] init];
+		m_currentDeserializedObject = nil;
 		m_position = 0;
 	}
 	return self;
@@ -92,7 +83,7 @@
 		[NSException raise:@"AMFInvalidArchiveOperationException" format:@"Invalid data"];
 	}
 	AMFByteArray *byteArray = [[AMFByteArray alloc] initWithData:data encoding:encoding];
-	id object = [[byteArray _decodeObject] retain];
+	id object = [[byteArray decodeObject] retain];
 	[byteArray release];
 	return [object autorelease];
 }
@@ -106,6 +97,8 @@
 - (void)dealloc
 {
 	[m_data release];
+	[m_objectTable release];
+	[m_registeredClasses release];
 	[super dealloc];
 }
 
@@ -114,13 +107,34 @@
 #pragma mark -
 #pragma mark Public methods
 
+- (BOOL)allowsKeyedCoding
+{
+	return !(!m_currentDeserializedObject || m_currentDeserializedObject.isExternalizable);
+}
+
 - (BOOL)containsValueForKey:(NSString *)key
 {
-	return NO;
+	return [m_currentDeserializedObject.properties objectForKey:key] != nil;
+}
+
+- (void)finishDecoding
+{
+}
+
+- (Class)classForClassName:(NSString *)codedName
+{
+	return [m_registeredClasses objectForKey:codedName];
+}
+
+- (void)setClass:(Class)cls forClassName:(NSString *)codedName
+{
+	[m_registeredClasses setObject:cls forKey:codedName];
 }
 
 - (BOOL)decodeBoolForKey:(NSString *)key
 {
+	NSNumber *num = [self _decodeNumberForKey:key];
+	if (num) return [num boolValue];
 	return NO;
 }
 
@@ -131,48 +145,42 @@
 
 - (double)decodeDoubleForKey:(NSString *)key
 {
+	NSNumber *num = [self _decodeNumberForKey:key];
+	if (num) return [num doubleValue];
 	return 0.0;
 }
 
 - (float)decodeFloatForKey:(NSString *)key
 {
-	// If the archived value was encoded as double precision, the type is coerced, 
-	// loosing precision. If the archived value is too large for single precision, 
-	// the method raises an NSRangeException.
+	NSNumber *num = [self _decodeNumberForKey:key];
+	if (num) return [num floatValue];
 	return 0.0f;
 }
 
 - (int32_t)decodeInt32ForKey:(NSString *)key
 {
+	NSNumber *num = [self _decodeNumberForKey:key];
+	if (num) return [num intValue];
 	return 0;
 }
 
 - (int64_t)decodeInt64ForKey:(NSString *)key
 {
+	NSNumber *num = [self _decodeNumberForKey:key];
+	if (num) return [num integerValue];
 	return 0;
 }
 
 - (int)decodeIntForKey:(NSString *)key
 {
+	NSNumber *num = [self _decodeNumberForKey:key];
+	if (num) return [num intValue];
 	return 0;
 }
 
 - (id)decodeObjectForKey:(NSString *)key
 {
-	return nil;
-}
-
-- (void)finishDecoding
-{
-}
-
-- (Class)classForClassName:(NSString *)codedName
-{
-	return NULL;
-}
-
-- (void)setClass:(Class)cls forClassName:(NSString *)codedName
-{
+	return [m_currentDeserializedObject.properties objectForKey:key];
 }
 
 - (void)decodeValueOfObjCType:(const char *)valueType at:(void *)data
@@ -182,61 +190,61 @@
 		case 'c':
 		{
 			int8_t *value = data;
-			*value = [self _decodeChar];
+			*value = [self decodeChar];
 		}
 		break;
 		case 'C':
 		{
 			uint8_t *value = data;
-			*value = [self _decodeUnsignedChar];
+			*value = [self decodeUnsignedChar];
 		}
 		break;
 		case 'i':
 		{
 			int32_t *value = data;
-			*value = [self _decodeInt];
+			*value = [self decodeInt];
 		}
 		break;
 		case 'I':
 		{
 			uint32_t *value = data;
-			*value = [self _decodeUnsignedInt];
+			*value = [self decodeUnsignedInt];
 		}
 		break;
 		case 's':
 		{
 			int16_t *value = data;
-			*value = [self _decodeShort];
+			*value = [self decodeShort];
 		}
 		break;
 		case 'S':
 		{
 			uint16_t *value = data;
-			*value = [self _decodeUnsignedShort];
+			*value = [self decodeUnsignedShort];
 		}
 		break;
 		case 'f':
 		{
 			float *value = data;
-			*value = [self _decodeFloat];
+			*value = [self decodeFloat];
 		}
 		break;
 		case 'd':
 		{
 			double *value = data;
-			*value = [self _decodeDouble];
+			*value = [self decodeDouble];
 		}
 		break;
 		case 'B':
 		{
 			uint8_t *value = data;
-			*value = [self _decodeUnsignedChar];
+			*value = [self decodeUnsignedChar];
 		}
 		break;
 		case '*':
 		{
 			const char **cString = data;
-			NSString *string = [self _decodeUTF];
+			NSString *string = [self decodeUTF];
 			*cString = NSZoneMalloc(NSDefaultMallocZone(), 
 				[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding] + 1);
 			*cString = [string cStringUsingEncoding:NSUTF8StringEncoding];
@@ -245,7 +253,7 @@
 		case '@':
 		{
 			id *obj = data;
-			*obj = [self _decodeObject];
+			*obj = [self decodeObject];
 		}
 		break;
 		default:
@@ -253,58 +261,21 @@
 	}
 }
 
-- (BOOL)readBoolean
+- (BOOL)decodeBool
 {
-	return ([self _decodeUnsignedChar] != 0);
-}
-
-//- (void)decodeObject
-//{
-//	unsigned ref = [self _extractWordFour];
-//	id result;
-//	
-//	if (ref == 0)
-//		return nil;
-//	else if ((result = NSMapGet(_objects, (void *)ref)) != nil)
-//		[result retain];
-//	else
-//	{
-//		Class class = [self _extractClass];
-//	}
-//
-//    result=[class allocWithZone:NULL];
-//    NSMapInsert(_objects,(void *)ref,result);
-//    result=[result initWithCoder:self];
-//    result=[result awakeAfterUsingCoder:self];
-//
-//    NSMapInsert(_objects,(void *)ref,result);
-//
-//    [_allObjects addObject:result];
-//   }
-//
-//   return result;
-//}
-
-
-
-
-
-- (uint32_t)bytesAvailable
-{
-	return ([m_data length] - m_position);
+	return ([self decodeUnsignedChar] != 0);
 }
 
 //- (void)compress;
+//- (void)uncompress;
 
-- (int8_t)_decodeChar
+- (int8_t)decodeChar
 {
 	[self _ensureLength:1];
-	int8_t byte;
-	[m_data getBytes:&byte range:(NSRange){m_position++, 1}];
-	return byte;
+	return (int8_t)m_bytes[m_position++];
 }
 
-- (NSData *)readBytes:(uint32_t)length
+- (NSData *)decodeBytes:(uint32_t)length
 {
 	[self _ensureLength:length];
 	NSData *subdata = [m_data subdataWithRange:(NSRange){m_position, length}];
@@ -312,7 +283,7 @@
 	return subdata;
 }
 
-- (double)_decodeDouble
+- (double)decodeDouble
 {
 	[self _ensureLength:8];
 	uint8_t data[8];
@@ -327,7 +298,7 @@
 	return *((double *)data);
 }
 
-- (float)_decodeFloat
+- (float)decodeFloat
 {
 	[self _ensureLength:4];
 	uint8_t data[4];
@@ -338,41 +309,36 @@
 	return *((float *)data);
 }
 
-- (int32_t)_decodeInt
+- (int32_t)decodeInt
 {
 	[self _ensureLength:4];
-	uint8_t ch1 = [self _decodeChar];
-	uint8_t ch2 = [self _decodeChar];
-	uint8_t ch3 = [self _decodeChar];
-	uint8_t ch4 = [self _decodeChar];
+	uint8_t ch1 = [self decodeChar];
+	uint8_t ch2 = [self decodeChar];
+	uint8_t ch3 = [self decodeChar];
+	uint8_t ch4 = [self decodeChar];
 	return (ch1 << 24) + (ch2 << 16) + (ch3 << 8) + ch4;
 }
 
-- (NSString *)readMultiByte:(uint32_t)length encoding:(NSStringEncoding)encoding
-{
-	return [[[NSString alloc] initWithData:[self readBytes:length] encoding:encoding] autorelease];
-}
-
-- (NSObject *)_decodeObject
+- (NSObject *)decodeObject
 {
 	return nil;
 }
 
-- (int16_t)_decodeShort
+- (int16_t)decodeShort
 {
 	[self _ensureLength:2];
-	int8_t ch1 = [self _decodeChar];
-	int8_t ch2 = [self _decodeChar];
+	int8_t ch1 = [self decodeChar];
+	int8_t ch2 = [self decodeChar];
 	return (ch1 << 8) + ch2;
 }
 
-- (uint8_t)_decodeUnsignedChar
+- (uint8_t)decodeUnsignedChar
 {
 	[self _ensureLength:1];
 	return m_bytes[m_position++];
 }
 
-- (uint32_t)_decodeUnsignedInt
+- (uint32_t)decodeUnsignedInt
 {
 	[self _ensureLength:4];
 	uint8_t ch1 = m_bytes[m_position++];
@@ -382,35 +348,104 @@
 	return ((ch1 & 0xFF) << 24) | ((ch2 & 0xFF) << 16) | ((ch3 & 0xFF) << 8) | (ch4 & 0xFF);
 }
 
-- (uint16_t)_decodeUnsignedShort
+- (uint16_t)decodeUnsignedShort
 {
 	[self _ensureLength:2];
-	int8_t ch1 = [self _decodeChar];
-	int8_t ch2 = [self _decodeChar];
+	int8_t ch1 = [self decodeChar];
+	int8_t ch2 = [self decodeChar];
 	return ((ch1 & 0xFF) << 8) | (ch2 & 0xFF);
 }
 
-- (NSString *)_decodeUTF
+- (uint32_t)decodeUnsignedInt29
 {
-	return [self _decodeUTFBytes:[self _decodeUnsignedShort]];
+	uint32_t value;
+	uint8_t ch = [self decodeUnsignedChar] & 0xFF;
+	
+	if (ch < 128)
+	{
+		return ch;
+	}
+	
+	value = (ch & 0x7F) << 7;
+	ch = [self decodeUnsignedChar] & 0xFF;
+	if (ch < 128)
+	{
+		return value | ch;
+	}
+	
+	value = (value | (ch & 0x7F)) << 7;
+	ch = [self decodeUnsignedChar] & 0xFF;
+	if (ch < 128)
+	{
+		return value | ch;
+	}
+	
+	value = (value | (ch & 0x7F)) << 8;
+	ch = [self decodeUnsignedChar] & 0xFF;
+	return value | ch;
 }
 
-- (NSString *)_decodeUTFBytes:(uint32_t)length
+- (NSString *)decodeUTF
+{
+	return [self decodeUTFBytes:[self decodeUnsignedShort]];
+}
+
+- (NSString *)decodeUTFBytes:(uint32_t)length
 {
 	if (length == 0)
 	{
 		return [NSString string];
 	}
 	[self _ensureLength:length];
-	return [[[NSString alloc] initWithData:[self readBytes:length] 
+	return [[[NSString alloc] initWithData:[self decodeBytes:length] 
 		encoding:NSUTF8StringEncoding] autorelease];
 }
 
-// - (void)uncompress;
+- (NSString *)decodeMultiByteString:(uint32_t)length encoding:(NSStringEncoding)encoding
+{
+	return [[[NSString alloc] initWithData:[self decodeBytes:length] encoding:encoding] autorelease];
+}
+
 
 
 #pragma mark -
 #pragma mark Private methods
+
+- (NSObject *)_deserializeObject:(ASObject *)object
+{
+	if (!object.type)
+	{
+		return object;
+	}
+	NSString *className = m_currentDeserializedObject.type;
+	Class cls;
+	if (!(cls = [m_registeredClasses objectForKey:className]))
+	{
+		if (!(cls = objc_getClass([className cStringUsingEncoding:NSUTF8StringEncoding])))
+		{
+			return object;
+		}
+	}
+	m_currentDeserializedObject = object;
+	NSObject <NSCoding> *desObject = [cls allocWithZone:NULL];
+	desObject = [desObject initWithCoder:self];
+	desObject = [desObject awakeAfterUsingCoder:self];
+	
+	[m_objectTable addObject:desObject];
+	m_currentDeserializedObject = nil;
+	
+	return [desObject autorelease];
+}
+
+- (NSNumber *)_decodeNumberForKey:(NSString *)key
+{
+	NSNumber *num = [m_currentDeserializedObject.properties objectForKey:key];
+	if (![num isKindOfClass:[NSNumber class]])
+	{
+		return nil;
+	}
+	return num;
+}
 
 - (void)_ensureLength:(unsigned)length
 {
@@ -426,8 +461,6 @@
 	[NSException raise:@"NSUnarchiverCannotDecodeException"
 		format:@"%@ cannot decode type=%s", [self className], type];
 }
-
-
 @end
 
 
@@ -464,10 +497,10 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (NSObject *)_decodeObject
+- (NSObject *)decodeObject
 {
-	AMF0Type type = (AMF0Type)[self _decodeUnsignedChar];
-	return [self readObjectWithType:type];
+	AMF0Type type = (AMF0Type)[self decodeUnsignedChar];
+	return [self _decodeObjectWithType:type];
 }
 
 
@@ -475,21 +508,21 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (NSObject *)readObjectWithType:(AMF0Type)type
+- (NSObject *)_decodeObjectWithType:(AMF0Type)type
 {
 	id value = nil;
 	switch (type)
 	{
 		case kAMF0NumberType:
-			value = [NSNumber numberWithDouble:[self _decodeDouble]];
+			value = [NSNumber numberWithDouble:[self decodeDouble]];
 			break;
 			
 		case kAMF0BooleanType:
-			value = [NSNumber numberWithBool:[self readBoolean]];
+			value = [NSNumber numberWithBool:[self decodeBool]];
 			break;
 			
 		case kAMF0StringType:
-			value = [self _decodeUTF];
+			value = [self decodeUTF];
 			break;
 			
 		case kAMF0AVMPlusObjectType:
@@ -503,23 +536,23 @@
 			break;
 			
 		case kAMF0StrictArrayType:
-			value = [self readArray];
+			value = [self _decodeArray];
 			break;
 			
 		case kAMF0TypedObjectType:
-			value = [self readTypedObject];
+			value = [self _decodeTypedObject];
 			break;
 			
 		case kAMF0LongStringType:
-			value = [self readLongString];
+			value = [self _decodeLongString];
 			break;
 			
 		case kAMF0ObjectType:
-			value = [self readASObject:nil];
+			value = [self _decodeASObject:nil];
 			break;
 			
 		case kAMF0XMLObjectType:
-			value = [self readXML];
+			value = [self _decodeXML];
 			break;
 			
 		case kAMF0NullType:
@@ -527,11 +560,11 @@
 			break;
 			
 		case kAMF0DateType:
-			value = [self readDate];
+			value = [self _decodeDate];
 			break;
 			
 		case kAMF0ECMAArrayType:
-			value = [self readECMAArray];
+			value = [self _decodeECMAArray];
 			break;
 			
 		case kAMF0ReferenceType:
@@ -560,13 +593,13 @@
 	return value;
 }
 
-- (NSArray *)readArray
+- (NSArray *)_decodeArray
 {
-	uint32_t size = [self _decodeUnsignedInt];
+	uint32_t size = [self decodeUnsignedInt];
 	NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:size];
 	for (uint32_t i = 0; i < size; i++)
 	{
-		NSObject *obj = [self _decodeObject];
+		NSObject *obj = [self decodeObject];
 		if (obj != nil)
 		{
 			[array addObject:obj];
@@ -577,99 +610,80 @@
 	return array;
 }
 
-- (NSObject *)readTypedObject
+- (NSObject *)_decodeTypedObject
 {
-	NSString *className = [self _decodeUTF];
-	return [self readASObject:className];
+	NSString *className = [self decodeUTF];
+	return [self _decodeASObject:className];
 }
 
-- (NSObject *)readASObject:(NSString *)className
+- (NSObject *)_decodeASObject:(NSString *)className
 {
-	NSObject *object;
-	if (className == nil || [className length] == 0)
-	{
-		object = [[ASObject alloc] init];
-	}
-	else if ([[className substringToIndex:1] isEqualToString:@">"])
-	{
-		object = [[ASObject alloc] init];
-		[(ASObject *)object setType:className];
-	}
-	else
-	{
-		Class deserializedObjectClass = objc_getClass([className 
-			cStringUsingEncoding:NSUTF8StringEncoding]);
-		if (deserializedObjectClass == nil)
-		{
-			object = [[ASObject alloc] init];
-			[(ASObject *)object setType:className];
-		}
-		else
-		{
-			object = [[deserializedObjectClass alloc] init];
-		}
-	}
+	ASObject *object = [[ASObject alloc] init];
+	object.type = className;
 	
-	[m_objectTable addObject:object];
-	[object release];
-	
-	NSString *propertyName = [self _decodeUTF];
-	AMF0Type type = [self _decodeUnsignedChar];
+	NSString *propertyName = [self decodeUTF];
+	AMF0Type type = [self decodeUnsignedChar];
 	while (type != kAMF0ObjectEndType)
 	{
-		[object setValue:[self readObjectWithType:type] forKey:propertyName];
-		propertyName = [self _decodeUTF];
-		type = [self _decodeUnsignedChar];
+		[object setValue:[self _decodeObjectWithType:type] forKey:propertyName];
+		propertyName = [self decodeUTF];
+		type = [self decodeUnsignedChar];
 	}
 	
-	return object;
+	NSObject *desObject = [self _deserializeObject:object];
+	if (desObject == object)
+	{
+		return [object autorelease];
+	}
+	[object release];
+	return [desObject autorelease];
 }
 
-- (NSString *)readLongString
+- (NSString *)_decodeLongString
 {
-	uint32_t length = [self _decodeUnsignedInt];
+	uint32_t length = [self decodeUnsignedInt];
 	if (length == 0)
 	{
 		return [NSString string];
 	}
-	return [self _decodeUTFBytes:length];
+	return [self decodeUTFBytes:length];
 }
 
-- (NSString *)readXML
+- (NSString *)_decodeXML
 {
 	//@FIXME
-	return [self readLongString];
+	return [self _decodeLongString];
 }
 
-- (NSDate *)readDate
+- (NSDate *)_decodeDate
 {
-	NSTimeInterval time = [self _decodeDouble];
+	NSTimeInterval time = [self decodeDouble];
 	// timezone
-	[self _decodeUnsignedShort];
+	[self decodeUnsignedShort];
 	return [NSDate dateWithTimeIntervalSince1970:(time / 1000)];
 }
 
-- (NSDictionary *)readECMAArray
+- (NSDictionary *)_decodeECMAArray
 {
-	uint32_t size = [self _decodeUnsignedInt];
+	uint32_t size = [self decodeUnsignedInt];
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:size];
 	[m_objectTable addObject:dict];
 	[dict release];
 	
-	NSString *propertyName = [self _decodeUTF];
-	AMF0Type type = [self _decodeUnsignedChar];
+	NSString *propertyName = [self decodeUTF];
+	AMF0Type type = [self decodeUnsignedChar];
 	while (type != kAMF0ObjectEndType)
 	{
-		[dict setValue:[self readObjectWithType:type] forKey:propertyName];
-		propertyName = [self _decodeUTF];
-		type = [self _decodeUnsignedChar];
+		[dict setValue:[self _decodeObjectWithType:type] forKey:propertyName];
+		propertyName = [self decodeUTF];
+		type = [self decodeUnsignedChar];
 	}
 	return dict;
 }
 
 - (NSObject *)readReference
 {
-	uint16_t index = [self _decodeUnsignedShort];
+	uint16_t index = [self decodeUnsignedShort];
 	if (index >= [m_objectTable count])
 	{
 		return nil;
@@ -694,7 +708,6 @@
 {
 	if (self = [super initForReadingWithData:data])
 	{
-		m_objectTable = [[NSMutableArray alloc] init];
 		m_stringTable = [[NSMutableArray alloc] init];
 		m_traitsTable = [[NSMutableArray alloc] init];
 		m_objectEncoding = kAMF3Version;
@@ -704,7 +717,6 @@
 
 - (void)dealloc
 {
-	[m_objectTable release];
 	[m_stringTable release];
 	[m_traitsTable release];
 	[super dealloc];
@@ -715,44 +727,17 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (uint32_t)readUInt29
+
+
+- (NSObject *)decodeObject
 {
-	uint32_t value;
-	uint8_t ch = [self _decodeUnsignedChar] & 0xFF;
-	
-	if (ch < 128)
-	{
-		return ch;
-	}
-	
-	value = (ch & 0x7F) << 7;
-	ch = [self _decodeUnsignedChar] & 0xFF;
-	if (ch < 128)
-	{
-		return value | ch;
-	}
-	
-	value = (value | (ch & 0x7F)) << 7;
-	ch = [self _decodeUnsignedChar] & 0xFF;
-	if (ch < 128)
-	{
-		return value | ch;
-	}
-	
-	value = (value | (ch & 0x7F)) << 8;
-	ch = [self _decodeUnsignedChar] & 0xFF;
-	return value | ch;
+	AMF3Type type = (AMF3Type)[self decodeUnsignedChar];
+	return [self _decodeObjectWithType:type];
 }
 
-- (NSObject *)_decodeObject
+- (NSString *)decodeUTF
 {
-	AMF3Type type = (AMF3Type)[self _decodeUnsignedChar];
-	return [self readObjectWithType:type];
-}
-
-- (NSString *)_decodeUTF
-{
-	uint32_t ref = [self readUInt29];
+	uint32_t ref = [self decodeUnsignedInt29];
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
@@ -768,7 +753,7 @@
 	{
 		return [NSString string];
 	}
-	NSString *value = [self _decodeUTFBytes:length];
+	NSString *value = [self decodeUTFBytes:length];
 	[m_stringTable addObject:value];
 	return value;
 }
@@ -778,21 +763,21 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (NSObject *)readObjectWithType:(AMF0Type)type
+- (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
 	id value = nil;
 	switch (type)
 	{
 		case kAMF3StringType:
-			value = [self _decodeUTF];
+			value = [self decodeUTF];
 			break;
 		
 		case kAMF3ObjectType:
-			value = [self readASObject];
+			value = [self _decodeASObject];
 			break;
 			
 		case kAMF3ArrayType:
-			value = [self readArray];
+			value = [self _decodeArray];
 			break;
 			
 		case kAMF3FalseType:
@@ -804,11 +789,11 @@
 			break;
 			
 		case kAMF3IntegerType:
-			value = [NSNumber numberWithInt:[self readUInt29]];
+			value = [NSNumber numberWithInt:[self decodeUnsignedInt29]];
 			break;
 			
 		case kAMF3DoubleType:
-			value = [NSNumber numberWithDouble:[self _decodeDouble]];
+			value = [NSNumber numberWithDouble:[self decodeDouble]];
 			break;
 			
 		case kAMF3UndefinedType:
@@ -821,28 +806,27 @@
 			
 		case kAMF3XMLType:
 		case kAMF3XMLDocType:
-			value = [self readXML];
+			value = [self _decodeXML];
 			break;
 			
 		case kAMF3DateType:
-			value = [self readDate];
+			value = [self _decodeDate];
 			break;
 			
 		case kAMF3ByteArrayType:
-			value = [self readByteArray];
+			value = [self _decodeByteArray];
 			break;
 			
 		default:
-			NSLog(@"Can not decode unknown type");
-			// throw exception here
+			[self _cannotDecodeType:"Unknown type"];
 			break;
 	}
 	return value;
 }
 
-- (NSObject *)readASObject
+- (NSObject *)_decodeASObject
 {
-	uint32_t ref = [self readUInt29];
+	uint32_t ref = [self decodeUnsignedInt29];
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
@@ -854,63 +838,43 @@
 		return [[[ASObject alloc] init] autorelease];
 	}
 	
-	AMF3TraitsInfo *traitsInfo = [self readTraits:ref];
-	NSObject *object;
-	if (traitsInfo.className == nil || [traitsInfo.className length] == 0)
+	AMF3TraitsInfo *traitsInfo = [self _decodeTraits:ref];
+	ASObject *object = [[ASObject alloc] init];
+	if (traitsInfo.className && [traitsInfo.className length] > 0)
 	{
-		object = [[ASObject alloc] init];
+		object.type = traitsInfo.className;
 	}
-	else if ([[traitsInfo.className substringToIndex:1] isEqualToString:@">"])
-	{
-		object = [[ASObject alloc] init];
-		[(ASObject *)object setType:traitsInfo.className];
-	}
-	else
-	{
-		Class deserializedObjectClass = objc_getClass([traitsInfo.className 
-			cStringUsingEncoding:NSUTF8StringEncoding]);
-		if (deserializedObjectClass == nil)
-		{
-			object = [[ASObject alloc] init];
-			[(ASObject *)object setType:traitsInfo.className];
-		}
-		else
-		{
-			object = [[deserializedObjectClass alloc] init];
-		}
-	}
-	
-	[m_objectTable addObject:object];
-	[object release];
-	
-	if (traitsInfo.externalizable)
-	{
-		[self readExternalizableWithClassName:traitsInfo.className object:object];
-		return object;
-	}
+	object.isExternalizable = traitsInfo.externalizable;
 	
 	NSEnumerator *propertiesEnumerator = [traitsInfo.properties objectEnumerator];
 	NSString *property;
 	while (property = [propertiesEnumerator nextObject])
 	{
-		[object setValue:[self _decodeObject] forKey:property];
+		[object setValue:[self decodeObject] forKey:property];
 	}
 	
 	if (traitsInfo.dynamic)
 	{
-		property = [self _decodeUTF];
+		property = [self decodeUTF];
 		while (property != nil && [property length] > 0)
 		{
-			[object setValue:[self _decodeObject] forKey:property];
-			property = [self _decodeUTF];
+			[object setValue:[self decodeObject] forKey:property];
+			property = [self decodeUTF];
 		}
 	}
-	return object;
+	
+	NSObject *desObject = [self _deserializeObject:object];
+	if (desObject == object)
+	{
+		return [object autorelease];
+	}
+	[object release];
+	return desObject;
 }
 
-- (NSObject *)readArray
+- (NSObject *)_decodeArray
 {
-	uint32_t ref = [self readUInt29];
+	uint32_t ref = [self decodeUnsignedInt29];
 	
 	if ((ref & 1) == 0)
 	{
@@ -927,7 +891,7 @@
 	NSObject *array = nil;
 	for (;;)
 	{
-		NSString *name = [self _decodeUTF];
+		NSString *name = [self decodeUTF];
 		if (name == nil || [name length] == 0) 
 		{
 			break;
@@ -937,7 +901,7 @@
 		{
 			array = [NSMutableDictionary dictionary];
 		}
-		[(NSMutableDictionary *)array setObject:[self _decodeObject] forKey:name];
+		[(NSMutableDictionary *)array setObject:[self decodeObject] forKey:name];
 	}
 	
 	if (array == nil)
@@ -945,14 +909,14 @@
 		array = [NSMutableArray array];
 		for (uint32_t i = 0; i < length; i++)
 		{
-			[(NSMutableArray *)array addObject:[self _decodeObject]];
+			[(NSMutableArray *)array addObject:[self decodeObject]];
 		}
 	}
 	else
 	{
 		for (uint32_t i = 0; i < length; i++)
 		{
-			[(NSMutableDictionary *)array setObject:[self _decodeObject] 
+			[(NSMutableDictionary *)array setObject:[self decodeObject] 
 				forKey:[NSNumber numberWithInt:i]];
 		}
 	}
@@ -961,7 +925,7 @@
 	return array;
 }
 
-- (AMF3TraitsInfo *)readTraits:(uint32_t)infoBits
+- (AMF3TraitsInfo *)_decodeTraits:(uint32_t)infoBits
 {
 	if ((infoBits & 3) == 1)
 	{
@@ -976,7 +940,7 @@
 	BOOL externalizable = (infoBits & 4) == 4;
 	BOOL dynamic = (infoBits & 8) == 8;
 	NSUInteger count = infoBits >> 4;
-	NSString *className = [self _decodeUTF];
+	NSString *className = [self decodeUTF];
 	
 	AMF3TraitsInfo *info = [[AMF3TraitsInfo alloc] init];
 	info.className = className;
@@ -985,28 +949,22 @@
 	info.count = count;
 	while (count--)
 	{
-		[info addProperty:[self _decodeUTF]];
+		[info addProperty:[self decodeUTF]];
 	}
 	[m_traitsTable addObject:info];
 	[info release];
 	return info;
 }
 
-- (void)readExternalizableWithClassName:(NSString *)aClassName object:(NSObject *)object
+- (NSString *)_decodeXML
 {
 	// @FIXME
-	NSLog(@"Should read externalizable for class %@", aClassName);
+	return [self decodeUTF];
 }
 
-- (NSString *)readXML
+- (NSData *)_decodeByteArray
 {
-	// @FIXME
-	return [self _decodeUTF];
-}
-
-- (NSData *)readByteArray
-{
-	uint32_t ref = [self readUInt29];
+	uint32_t ref = [self decodeUnsignedInt29];
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
@@ -1018,13 +976,13 @@
 		return [NSData data];
 	}
 	uint32_t length = (ref >> 1);
-	NSData *data = [self readBytes:length];
+	NSData *data = [self decodeBytes:length];
 	return data;
 }
 
-- (NSDate *)readDate
+- (NSDate *)_decodeDate
 {
-	uint32_t ref = [self readUInt29];
+	uint32_t ref = [self decodeUnsignedInt29];
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
@@ -1035,7 +993,7 @@
 		NSLog(@"Object reference is out of bounds");
 		return [NSDate date];
 	}
-	NSTimeInterval time = [self _decodeDouble];
+	NSTimeInterval time = [self decodeDouble];
 	NSDate *date = [NSDate dateWithTimeIntervalSince1970:(time / 1000)];
 	[m_objectTable addObject:date];
 	return date;

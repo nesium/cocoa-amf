@@ -11,8 +11,7 @@
 
 @implementation ASObject
 
-@synthesize type=m_type;
-@synthesize properties=m_properties;
+@synthesize type=m_type, properties=m_properties, isExternalizable=m_isExternalizable;
 
 #pragma mark -
 #pragma mark Initialization & Deallocation

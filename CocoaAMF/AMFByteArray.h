@@ -16,61 +16,84 @@
 
 #define AMFInvalidArchiveOperationException @"AMFInvalidArchiveOperationException"
 
-@interface AMFByteArray : NSObject 
+@interface AMFByteArray : NSCoder 
 {
-	NSMutableData *m_data;
-	AMFVersion m_objectEncoding;
-	uint32_t m_position;
+	NSData *m_data;
 	const uint8_t *m_bytes;
+	uint32_t m_position;
+	AMFVersion m_objectEncoding;
+	NSMutableDictionary *m_registeredClasses;
+	NSMutableArray *m_objectTable;
+	ASObject *m_currentDeserializedObject;
 }
-
 @property (nonatomic, readonly) AMFVersion objectEncoding;
 @property (nonatomic, readonly) NSData *data;
 
-- (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding;
+//--------------------------------------------------------------------------------------------------
+//	Usual NSCoder methods
+//--------------------------------------------------------------------------------------------------
 
+- (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding;
 + (id)unarchiveObjectWithData:(NSData *)data encoding:(AMFVersion)encoding;
 + (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFVersion)encoding;
 
+- (BOOL)allowsKeyedCoding;
+- (void)finishDecoding;
+- (Class)classForClassName:(NSString *)codedName;
+- (void)setClass:(Class)cls forClassName:(NSString *)codedName;
+- (BOOL)containsValueForKey:(NSString *)key;
+
+- (BOOL)decodeBoolForKey:(NSString *)key;
+- (const uint8_t *)decodeBytesForKey:(NSString *)key returnedLength:(NSUInteger *)lengthp;
+- (double)decodeDoubleForKey:(NSString *)key;
+- (float)decodeFloatForKey:(NSString *)key;
+- (int32_t)decodeInt32ForKey:(NSString *)key;
+- (int64_t)decodeInt64ForKey:(NSString *)key;
+- (int)decodeIntForKey:(NSString *)key;
+- (id)decodeObjectForKey:(NSString *)key;
+- (void)decodeValueOfObjCType:(const char *)valueType at:(void *)data;
+
+//--------------------------------------------------------------------------------------------------
+//	AMF Extensions for reading specific data and deserializing externalizable classes
+//--------------------------------------------------------------------------------------------------
+
 //- (void)compress;
-- (BOOL)readBoolean;
-- (int8_t)_decodeChar;
-- (NSData *)readBytes:(uint32_t)length;
-- (double)_decodeDouble;
-- (float)_decodeFloat;
-- (int32_t)_decodeInt;
-- (NSString *)readMultiByte:(uint32_t)length encoding:(NSStringEncoding)encoding;
-- (NSObject *)_decodeObject;
-- (int16_t)_decodeShort;
-- (uint8_t)_decodeUnsignedChar;
-- (uint32_t)_decodeUnsignedInt;
-- (uint16_t)_decodeUnsignedShort;
-- (NSString *)_decodeUTF;
-- (NSString *)_decodeUTFBytes:(uint32_t)length;
 // - (void)uncompress;
 
+- (BOOL)decodeBool;
+- (int8_t)decodeChar;
+- (double)decodeDouble;
+- (float)decodeFloat;
+- (int32_t)decodeInt;
+- (int16_t)decodeShort;
+- (uint8_t)decodeUnsignedChar;
+- (uint32_t)decodeUnsignedInt;
+- (uint16_t)decodeUnsignedShort;
+- (uint32_t)decodeUnsignedInt29;
+- (NSData *)decodeBytes:(uint32_t)length;
+- (NSString *)decodeMultiByteString:(uint32_t)length encoding:(NSStringEncoding)encoding;
+- (NSObject *)decodeObject;
+- (NSString *)decodeUTF;
+- (NSString *)decodeUTFBytes:(uint32_t)length;
 @end
+
 
 
 @interface AMF0ByteArray : AMFByteArray
 {
-	NSMutableArray *m_objectTable;
 	AMFByteArray *m_avmPlusByteArray;
 }
-
 @end
+
 
 
 @interface AMF3ByteArray : AMFByteArray
 {
 	NSMutableArray *m_stringTable;
-	NSMutableArray *m_objectTable;
 	NSMutableArray *m_traitsTable;
 }
-
-- (uint32_t)readUInt29;
-
 @end
+
 
 
 @interface AMF3TraitsInfo : NSObject 
@@ -81,7 +104,6 @@
 	NSUInteger m_count;
 	NSMutableArray *m_properties;
 }
-
 @property (nonatomic, retain) NSString *className;
 @property (nonatomic, assign) BOOL dynamic;
 @property (nonatomic, assign) BOOL externalizable;
@@ -89,5 +111,4 @@
 @property (nonatomic, retain) NSMutableArray *properties;
 
 - (void)addProperty:(NSString *)property;
-
 @end

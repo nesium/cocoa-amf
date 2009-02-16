@@ -14,8 +14,8 @@
 - (void)assertAMF0Data:(const char *)data length:(uint32_t)length equalsObject:(id)obj;
 {
 	AMFByteArray *byteArray = [[AMFByteArray alloc] 
-		initWithData:[NSData dataWithBytes:data length:length] encoding:kAMF0Version];
-	id deserializedObj = [byteArray _decodeObject];
+		initForReadingWithData:[NSData dataWithBytes:data length:length] encoding:kAMF0Version];
+	id deserializedObj = [byteArray decodeObject];
 	
 	if (obj == [NSNull null])
 	{

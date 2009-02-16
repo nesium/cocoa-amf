@@ -10,8 +10,23 @@
 
 @class AMF3TraitsInfo;
 
-@interface AMF3ByteArray (Private)
-- (void)writeTraits:(AMF3TraitsInfo *)traits;
+@interface AMF0MutableByteArray (Private)
+- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
+- (void)_encodeArray:(NSArray *)value;
+- (void)_encodeECMAArray:(NSDictionary *)value;
+- (void)_encodeASObject:(ASObject *)obj;
+- (void)_encodeNumber:(NSNumber *)value;
+- (void)_encodeDate:(NSDate *)value;
+@end
+
+@interface AMF3MutableByteArray (Private)
+- (void)_encodeTraits:(AMF3TraitsInfo *)traits;
+- (void)_encodeArray:(NSArray *)value;
+- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
+- (void)_encodeDictionary:(NSDictionary *)value;
+- (void)_encodeDate:(NSDate *)value;
+- (void)_encodeNumber:(NSNumber *)value;
+- (void)_encodeASObject:(ASObject *)value;
 @end
 
 
@@ -20,83 +35,83 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (void)writeBoolean:(BOOL)value
+- (void)encodeBoolean:(BOOL)value
 {
-	[self writeUnsignedByte:(value ? 1 : 0)];
+	[self encodeUnsignedChar:(value ? 1 : 0)];
 }
 
-- (void)writeByte:(int8_t)value
+- (void)encodeChar:(int8_t)value
 {
 	[m_data appendBytes:&value length:sizeof(int8_t)];
 }
 
-- (void)writeBytes:(NSData *)value
+- (void)encodeBytes:(NSData *)value
 {
 	[m_data appendData:value];
 }
 
-- (void)writeDouble:(double)value
+- (void)encodeDouble:(double)value
 {
 	uint8_t *ptr = (void *)&value;
-	[self writeUnsignedByte:ptr[7]];
-	[self writeUnsignedByte:ptr[6]];
-	[self writeUnsignedByte:ptr[5]];
-	[self writeUnsignedByte:ptr[4]];
-	[self writeUnsignedByte:ptr[3]];
-	[self writeUnsignedByte:ptr[2]];
-	[self writeUnsignedByte:ptr[1]];
-	[self writeUnsignedByte:ptr[0]];
+	[self encodeUnsignedChar:ptr[7]];
+	[self encodeUnsignedChar:ptr[6]];
+	[self encodeUnsignedChar:ptr[5]];
+	[self encodeUnsignedChar:ptr[4]];
+	[self encodeUnsignedChar:ptr[3]];
+	[self encodeUnsignedChar:ptr[2]];
+	[self encodeUnsignedChar:ptr[1]];
+	[self encodeUnsignedChar:ptr[0]];
 }
 
-- (void)writeFloat:(float)value
+- (void)encodeFloat:(float)value
 {
 	uint8_t *ptr = (void *)&value;
-	[self writeUnsignedByte:ptr[3]];
-	[self writeUnsignedByte:ptr[2]];
-	[self writeUnsignedByte:ptr[1]];
-	[self writeUnsignedByte:ptr[0]];
+	[self encodeUnsignedChar:ptr[3]];
+	[self encodeUnsignedChar:ptr[2]];
+	[self encodeUnsignedChar:ptr[1]];
+	[self encodeUnsignedChar:ptr[0]];
 }
 
-- (void)writeInt:(int32_t)value
+- (void)encodeInt:(int32_t)value
 {
 	value = CFSwapInt32HostToBig(value);
 	[m_data appendBytes:&value length:sizeof(int32_t)];
 }
 
-- (void)writeMultiByte:(NSString *)value encoding:(NSStringEncoding)encoding
+- (void)encodeMultiByteString:(NSString *)value encoding:(NSStringEncoding)encoding
 {
 	[m_data appendData:[value dataUsingEncoding:encoding]];
 }
 
-- (void)writeObject:(NSObject *)value
+- (void)encodeObject:(NSObject *)value
 {
 }
 
-- (void)writeShort:(int16_t)value
+- (void)encodeShort:(int16_t)value
 {
 	value = CFSwapInt16HostToBig(value);
 	[m_data appendBytes:&value length:sizeof(int16_t)];
 }
 
-- (void)writeUnsignedInt:(uint32_t)value
+- (void)encodeUnsignedInt:(uint32_t)value
 {
 	value = CFSwapInt32HostToBig(value);
 	[m_data appendBytes:&value length:sizeof(uint32_t)];
 }
 
-- (void)writeUTF:(NSString *)value
+- (void)encodeUTF:(NSString *)value
 {
 	if (value == nil)
 	{
-		[self writeUnsignedShort:0];
+		[self encodeUnsignedShort:0];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
-	[self writeUnsignedShort:[data length]];
+	[self encodeUnsignedShort:[data length]];
 	[m_data appendData:data];
 }
 
-- (void)writeUTFBytes:(NSString *)value
+- (void)encodeUTFBytes:(NSString *)value
 {
 	if (value == nil)
 	{
@@ -110,17 +125,42 @@
 #pragma mark -
 #pragma mark Protected methods
 
-- (void)writeUnsignedByte:(uint8_t)value
+- (void)encodeUnsignedChar:(uint8_t)value
 {
 	[m_data appendBytes:&value length:sizeof(uint8_t)];
 }
 
-- (void)writeUnsignedShort:(uint16_t)value
+- (void)encodeUnsignedShort:(uint16_t)value
 {
 	value = CFSwapInt16HostToBig(value);
 	[m_data appendBytes:&value length:sizeof(uint16_t)];
 }
 
+- (void)encodeUnsignedInt29:(uint32_t)value
+{
+	if (value < 0x80)
+	{
+		[self writeUnsignedByte:value];
+	}
+	else if (value < 0x4000)
+	{
+		[self writeUnsignedByte:((value >> 7) & 0x7F) | 0x80];
+		[self writeUnsignedByte:(value & 0x7F)];
+	}
+	else if (value < 0x200000)
+	{
+		[self writeUnsignedByte:((value >> 14) & 0x7F) | 0x80];
+		[self writeUnsignedByte:((value >> 7) & 0x7F) | 0x80];
+		[self writeUnsignedByte:(value & 0x7F)];
+	}
+	else
+	{
+		[self writeUnsignedByte:((value >> 22) & 0x7F) | 0x80];
+		[self writeUnsignedByte:((value >> 15) & 0x7F) | 0x80];
+		[self writeUnsignedByte:((value >> 8) & 0x7F) | 0x80];
+		[self writeUnsignedByte:(value & 0xFF)];
+	}
+}
 @end
 
 
@@ -163,7 +203,7 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (void)writeString:(NSString *)value omitType:(BOOL)omitType
+- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType
 {
 	NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
 	
@@ -180,7 +220,7 @@
 	[self writeBytes:stringData];
 }
 
-- (void)writeArray:(NSArray *)value
+- (void)_encodeArray:(NSArray *)value
 {
 	if ([m_objectTable containsObject:value])
 	{
@@ -197,7 +237,7 @@
 	}
 }
 
-- (void)writeECMAArray:(NSDictionary *)value
+- (void)_encodeECMAArray:(NSDictionary *)value
 {
 	if ([m_objectTable containsObject:value])
 	{
@@ -221,14 +261,14 @@
 	[self writeUnsignedInt:[value count]];
 	for (NSString *key in value)
 	{
-		[self writeString:key omitType:YES];
+		[self _encodeString:key omitType:YES];
 		[self writeObject:[value objectForKey:key]];
 	}
 	[self writeUnsignedShort:0];
 	[self writeUnsignedByte:kAMF0ObjectEndType];
 }
 
-- (void)writeASObject:(ASObject *)obj
+- (void)_encodeASObject:(ASObject *)obj
 {
 	if ([m_objectTable containsObject:obj])
 	{
@@ -245,18 +285,18 @@
 	else
 	{
 		[self writeUnsignedByte:kAMF0TypedObjectType];
-		[self writeString:obj.type omitType:YES];
+		[self _encodeString:obj.type omitType:YES];
 	}
 	for (NSString *key in obj.properties)
 	{
-		[self writeString:key omitType:YES];
+		[self _encodeString:key omitType:YES];
 		[self writeObject:[obj valueForKey:key]];
 	}
 	[self writeUnsignedShort:0];
 	[self writeUnsignedByte:kAMF0ObjectEndType];
 }
 
-- (void)writeNumber:(NSNumber *)value
+- (void)_encodeNumber:(NSNumber *)value
 {
 	if ([[value className] isEqualToString:@"NSCFBoolean"])
 	{
@@ -284,31 +324,7 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (void)writeUInt29:(uint32_t)value
-{
-	if (value < 0x80)
-	{
-		[self writeUnsignedByte:value];
-	}
-	else if (value < 0x4000)
-	{
-		[self writeUnsignedByte:((value >> 7) & 0x7F) | 0x80];
-		[self writeUnsignedByte:(value & 0x7F)];
-	}
-	else if (value < 0x200000)
-	{
-		[self writeUnsignedByte:((value >> 14) & 0x7F) | 0x80];
-		[self writeUnsignedByte:((value >> 7) & 0x7F) | 0x80];
-		[self writeUnsignedByte:(value & 0x7F)];
-	}
-	else
-	{
-		[self writeUnsignedByte:((value >> 22) & 0x7F) | 0x80];
-		[self writeUnsignedByte:((value >> 15) & 0x7F) | 0x80];
-		[self writeUnsignedByte:((value >> 8) & 0x7F) | 0x80];
-		[self writeUnsignedByte:(value & 0xFF)];
-	}
-}
+
 
 - (void)writeObject:(NSObject *)value
 {
@@ -322,11 +338,11 @@
 {
 	if (value == nil)
 	{
-		[self writeUInt29:0];
+		[self encodeUnsignedInt29:0];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
-	[self writeUInt29:[data length]];
+	[self encodeUnsignedInt29:[data length]];
 	[self writeBytes:data];
 }
 
@@ -340,16 +356,16 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (void)writeArray:(NSArray *)value
+- (void)_encodeArray:(NSArray *)value
 {
 	[self writeUnsignedByte:kAMF3ArrayType];
 	if ([m_objectTable containsObject:value])
 	{
-		[self writeUInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
-	[self writeUInt29:(([value count] << 1) | 1)];
+	[self encodeUnsignedInt29:(([value count] << 1) | 1)];
 	[self writeUnsignedByte:((0 << 1) | 1)];
 	for (NSObject *obj in value)
 	{
@@ -357,7 +373,7 @@
 	}
 }
 
-- (void)writeString:(NSString *)value omitType:(BOOL)omitType
+- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType
 {
 	if (!omitType)
 	{
@@ -370,49 +386,49 @@
 	}
 	if ([m_stringTable containsObject:value])
 	{
-		[self writeUInt29:([m_stringTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:([m_stringTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_stringTable addObject:value];
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
-	[self writeUInt29:(([data length] << 1) | 1)];
+	[self encodeUnsignedInt29:(([data length] << 1) | 1)];
 	[self writeBytes:data];
 }
 
-- (void)writeDictionary:(NSDictionary *)value
+- (void)_encodeDictionary:(NSDictionary *)value
 {
 	[self writeUnsignedByte:kAMF3ArrayType];
 	if ([m_objectTable containsObject:value])
 	{
-		[self writeUInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
-	[self writeUInt29:((0 << 1) | 1)];
+	[self encodeUnsignedInt29:((0 << 1) | 1)];
 	NSEnumerator *keyEnumerator = [value keyEnumerator];
 	NSString *key;
 	while (key = [keyEnumerator nextObject])
 	{
-		[self writeString:key omitType:YES];
+		[self _encodeString:key omitType:YES];
 		[self writeObject:[value objectForKey:key]];
 	}
 	[self writeUnsignedByte:((0 << 1) | 1)];
 }
 
-- (void)writeDate:(NSDate *)value
+- (void)_encodeDate:(NSDate *)value
 {
 	[self writeUnsignedByte:kAMF3DateType];
 	if ([m_objectTable containsObject:value])
 	{
-		[self writeUInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
-	[self writeUInt29:((0 << 1) | 1)];
+	[self encodeUnsignedInt29:((0 << 1) | 1)];
 	[self writeDouble:([value timeIntervalSince1970] * 1000)];
 }
 
-- (void)writeNumber:(NSNumber *)value
+- (void)_encodeNumber:(NSNumber *)value
 {
 	if ([[value className] isEqualToString:@"NSCFBoolean"])
 	{
@@ -427,15 +443,15 @@
 		return;
 	}
 	[self writeUnsignedByte:kAMF3IntegerType];
-	[self writeUInt29:[value intValue]];
+	[self encodeUnsignedInt29:[value intValue]];
 }
 
-- (void)writeASObject:(ASObject *)value
+- (void)_encodeASObject:(ASObject *)value
 {
 	[self writeUnsignedByte:kAMF3ObjectType];
 	if ([m_objectTable containsObject:value])
 	{
-		[self writeUInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
@@ -445,7 +461,7 @@
 	traits.count = (traits.dynamic ? 0 : [value count]);
 	traits.className = value.type;
 	traits.properties = (traits.dynamic ? nil : (id)[value.properties allKeys]);
-	[self writeTraits:traits];
+	[self _encodeTraits:traits];
 	
 	NSEnumerator *keyEnumerator = [value.properties keyEnumerator];
 	NSString *key;
@@ -454,22 +470,22 @@
 	{
 		if (traits.dynamic)
 		{
-			[self writeString:key omitType:YES];
+			[self _encodeString:key omitType:YES];
 		}
 		[self writeObject:[value.properties objectForKey:key]];
 	}
 	if (traits.dynamic)
 	{
-		[self writeUInt29:((0 << 1) | 1)];
+		[self encodeUnsignedInt29:((0 << 1) | 1)];
 	}
 	[traits release];
 }
 
-- (void)writeTraits:(AMF3TraitsInfo *)traits
+- (void)_encodeTraits:(AMF3TraitsInfo *)traits
 {
 	if ([m_traitsTable containsObject:traits])
 	{
-		[self writeUInt29:(([m_traitsTable indexOfObject:traits] << 2) | 1)];
+		[self encodeUnsignedInt29:(([m_traitsTable indexOfObject:traits] << 2) | 1)];
 		return;
 	}
 	[m_traitsTable addObject:traits];
@@ -477,11 +493,11 @@
 	if (traits.externalizable) infoBits |= 4;
 	if (traits.dynamic) infoBits |= 8;
 	infoBits |= (traits.count << 4);
-	[self writeUInt29:infoBits];
-	[self writeString:traits.className omitType:YES];
+	[self encodeUnsignedInt29:infoBits];
+	[self _encodeString:traits.className omitType:YES];
 	for (uint32_t i = 0; i < traits.count; i++)
 	{
-		[self writeString:[traits.properties objectAtIndex:i] omitType:YES];
+		[self _encodeString:[traits.properties objectAtIndex:i] omitType:YES];
 	}
 }
 
