@@ -197,48 +197,7 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>49A46B950F49E2AB008ADED3</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>AMFMutableByteArray.m</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>49A46B960F49E2AB008ADED3</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>AMFMutableByteArray.m</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>49A46B970F49E2AB008ADED3</string>
-						<key>history</key>
-						<array>
-							<string>49A46B920F49DFB3008ADED3</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {755, 859}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>1579 96 755 900 1200 96 1440 900 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -311,7 +270,7 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>8</integer>
+											<integer>13</integer>
 											<integer>1</integer>
 											<integer>0</integer>
 										</array>
@@ -340,7 +299,7 @@
 									<real>43</real>
 								</array>
 								<key>RubberWindowFrame</key>
-								<string>1228 195 341 685 1200 96 1440 900 </string>
+								<string>1206 234 341 685 1200 96 1440 900 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXSmartGroupTreeModule</string>
@@ -477,8 +436,8 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>49A46B930F49E2AB008ADED3</string>
-				<string>49A46B940F49E2AB008ADED3</string>
+				<string>49A46BA60F4ABCD4008ADED3</string>
+				<string>49A46BA70F4ABCD4008ADED3</string>
 				<string>1C9437FD063B20B00039CFAC</string>
 				<string>1C9437FE063B20B00039CFAC</string>
 				<string>1C9437FF063B20B00039CFAC</string>
@@ -511,19 +470,12 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>49A46B980F49E2AB008ADED3</string>
-		<string>49A46B990F49E2AB008ADED3</string>
-		<string>49A46B9A0F49E2AB008ADED3</string>
-		<string>1C530D54069F1CE1000CFCEE</string>
-		<string>49A46B9B0F49E2AB008ADED3</string>
 		<string>49A46B0F0F498AC9008ADED3</string>
-		<string>1C530D5B069F1CE1000CFCEE</string>
-		<string>1C530D52069F1CE1000CFCEE</string>
-		<string>49A46B950F49E2AB008ADED3</string>
+		<string>1C530D54069F1CE1000CFCEE</string>
 		<string>/Projekte/Cocoa/CocoaAMF/CocoaAMF.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>1228 195 341 685 1200 96 1440 900 </string>
+	<string>1206 234 341 685 1200 96 1440 900 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -781,8 +733,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {333, 201}}</string>
-											<string>{{333, 0}, {384, 201}}</string>
+											<string>{{0, 0}, {333, 206}}</string>
+											<string>{{333, 0}, {384, 206}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -797,8 +749,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {717, 201}}</string>
-											<string>{{0, 201}, {717, 195}}</string>
+											<string>{{0, 0}, {717, 206}}</string>
+											<string>{{0, 206}, {717, 190}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -831,7 +783,7 @@
 										<real>154</real>
 									</array>
 									<key>Frame</key>
-									<string>{{333, 0}, {384, 201}}</string>
+									<string>{{333, 0}, {384, 206}}</string>
 									<key>RubberWindowFrame</key>
 									<string>1267 522 717 437 1200 96 1440 900 </string>
 								</dict>
@@ -859,13 +811,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D54069F1CE1000CFCEE</string>
-				<string>49A46B5D0F49C41A008ADED3</string>
+				<string>49A46BCF0F4B395A008ADED3</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>49A46B5E0F49C41A008ADED3</string>
-				<string>49A46B5F0F49C41A008ADED3</string>
-				<string>49A46B600F49C41A008ADED3</string>
-				<string>49A46B610F49C41A008ADED3</string>
-				<string>49A46B620F49C41A008ADED3</string>
+				<string>49A46BD00F4B395A008ADED3</string>
+				<string>49A46BD10F4B395A008ADED3</string>
+				<string>49A46BD20F4B395A008ADED3</string>
+				<string>49A46BD30F4B395A008ADED3</string>
+				<string>49A46BD40F4B395A008ADED3</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -1532,7 +1484,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>49A46B0F0F498AC9008ADED3</string>
-				<string>49A46B100F498AC9008ADED3</string>
+				<string>49A46BD50F4B395A008ADED3</string>
 				<string>49A46B0E0F498AC9008ADED3</string>
 			</array>
 			<key>WindowString</key>

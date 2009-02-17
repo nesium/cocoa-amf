@@ -7,12 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMFByteArray.h"
+#import "ASObject.h"
 
 
-@interface AMFMutableByteArray : AMFByteArray 
+@interface AMFMutableByteArray : NSCoder 
 {
 	NSMutableData *m_data;
+	const uint8_t *m_bytes;
+	uint32_t m_position;
+	NSMutableArray *m_objectTable;
+	ASObject *m_currentSerializedObject;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -24,21 +28,18 @@
 + (BOOL)archiveRootObject:(id)rootObject toFile:(NSString *)path;
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key;
-- (void)encodeBytes:(const void *)address length:(NSUInteger)length forKey:(NSString *)key;
 - (void)encodeDouble:(double)value forKey:(NSString *)key;
 - (void)encodeFloat:(float)value forKey:(NSString *)key;
 - (void)encodeInt32:(int32_t)value forKey:(NSString *)key;
 - (void)encodeInt64:(int64_t)value forKey:(NSString *)key;
 - (void)encodeInt:(int)value forKey:(NSString *)key;
 - (void)encodeObject:(id)value forKey:(NSString *)key;
-- (void)encodeValueOfObjCType:(const char *)valueType at:(const void *)address;
-- (void)encodeValuesOfObjCTypes:(const char *)valueTypes, ...;
 
 //--------------------------------------------------------------------------------------------------
 //	AMF Extensions for writing specific data and serializing externalizable classes
 //--------------------------------------------------------------------------------------------------
 
-- (void)encodeBoolean:(BOOL)value;
+- (void)encodeBool:(BOOL)value;
 - (void)encodeChar:(int8_t)value;
 - (void)encodeDouble:(double)value;
 - (void)encodeFloat:(float)value;
@@ -48,7 +49,7 @@
 - (void)encodeUnsignedInt:(uint32_t)value;
 - (void)encodeUnsignedShort:(uint16_t)value;
 - (void)encodeUnsignedInt29:(uint32_t)value;
-- (void)encodeBytes:(NSData *)value;
+- (void)encodeDataObject:(NSData *)value;
 - (void)encodeMultiByteString:(NSString *)value encoding:(NSStringEncoding)encoding;
 - (void)encodeObject:(NSObject *)value;
 - (void)encodeUTF:(NSString *)value;

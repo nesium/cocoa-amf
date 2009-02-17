@@ -12,12 +12,8 @@
 			49A46AF00F4983D5008ADED3 /* SimpleRemotingCallExample */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 256476117;
-			PBXWorkspaceStateSaveDate = 256476117;
-		};
-		perUserProjectItems = {
-			49A46B920F49DFB3008ADED3 /* PBXBookmark */ = 49A46B920F49DFB3008ADED3 /* PBXBookmark */;
-			49A46B970F49E2AB008ADED3 /* PBXTextBookmark */ = 49A46B970F49E2AB008ADED3 /* PBXTextBookmark */;
+			PBXPerProjectTemplateStateSaveDate = 256556232;
+			PBXWorkspaceStateSaveDate = 256556232;
 		};
 		sourceControlManager = 49B3B1E00EE6942300498A01 /* Source Control */;
 		userBuildSettings = {
@@ -29,6 +25,22 @@
 			sepNavSelRange = "{238, 0}";
 			sepNavVisRange = "{150, 209}";
 			sepNavWindowFrame = "{{19, 391}, {870, 1182}}";
+		};
+	};
+	2C35A4660EA401CB000B2452 /* AMF.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {699, 1013}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1079}";
+			sepNavWindowFrame = "{{226, 299}, {746, 1085}}";
+		};
+	};
+	2C35A46F0EA401CB000B2452 /* AMFActionMessage.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {699, 1013}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1065}";
+			sepNavWindowFrame = "{{203, 320}, {746, 1085}}";
 		};
 	};
 	2C35A4700EA401CB000B2452 /* AMFActionMessage.m */ = {
@@ -69,6 +81,14 @@
 			49A46AEF0F4983D5008ADED3 /* ServerExample */,
 		);
 	};
+	2C73A8EB0F1954E100EA16AD /* AMFRemotingCall.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {699, 1013}}";
+			sepNavSelRange = "{952, 0}";
+			sepNavVisRange = "{0, 2014}";
+			sepNavWindowFrame = "{{249, 278}, {746, 1085}}";
+		};
+	};
 	2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {929, 3094}}";
@@ -86,17 +106,17 @@
 	2C80A67E0F1C1FA700D761BB /* AMFMutableByteArray.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {774, 1179}}";
-			sepNavSelRange = "{1339, 0}";
-			sepNavVisRange = "{0, 2550}";
-			sepNavWindowFrame = "{{308, 29}, {821, 1251}}";
+			sepNavSelRange = "{1882, 41}";
+			sepNavVisRange = "{0, 2425}";
+			sepNavWindowFrame = "{{368, 31}, {821, 1251}}";
 		};
 	};
 	2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {708, 7070}}";
-			sepNavSelRange = "{511, 0}";
-			sepNavVisRange = "{0, 1456}";
-			sepNavWindowFrame = "{{1579, 96}, {755, 900}}";
+			sepNavIntBoundsRect = "{{0, 0}, {699, 8806}}";
+			sepNavSelRange = "{10501, 0}";
+			sepNavVisRange = "{12749, 1987}";
+			sepNavWindowFrame = "{{215, 150}, {746, 1085}}";
 		};
 	};
 	2C8500910EDF39560058EBE0 /* AMFClient */ = {
@@ -105,12 +125,20 @@
 			49B3B1D60EE6941C00498A01 /* AMFClient */,
 		);
 	};
+	2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {699, 1013}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 765}";
+			sepNavWindowFrame = "{{157, 362}, {746, 1085}}";
+		};
+	};
 	2C8500E30EDF42DF0058EBE0 /* AMFByteArray.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {929, 1680}}";
-			sepNavSelRange = "{1225, 0}";
-			sepNavVisRange = "{0, 2889}";
-			sepNavWindowFrame = "{{27, 155}, {976, 1398}}";
+			sepNavIntBoundsRect = "{{0, 0}, {750, 1456}}";
+			sepNavSelRange = "{2115, 0}";
+			sepNavVisRange = "{0, 2598}";
+			sepNavWindowFrame = "{{35, 387}, {797, 1179}}";
 		};
 	};
 	2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */ = {
@@ -123,18 +151,10 @@
 	};
 	2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {929, 15358}}";
-			sepNavSelRange = "{8000, 0}";
-			sepNavVisRange = "{6709, 1889}";
-			sepNavWindowFrame = "{{197, 31}, {976, 1398}}";
-		};
-	};
-	2C8500E80EDF42DF0058EBE0 /* AMF0KeyedArchiver.m */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {708, 2982}}";
-			sepNavSelRange = "{760, 0}";
-			sepNavVisRange = "{1502, 1803}";
-			sepNavWindowFrame = "{{54, 236}, {755, 1171}}";
+			sepNavIntBoundsRect = "{{0, 0}, {929, 14728}}";
+			sepNavSelRange = "{19470, 370}";
+			sepNavVisRange = "{18529, 1922}";
+			sepNavWindowFrame = "{{176, 119}, {976, 1398}}";
 		};
 	};
 	2CB5B48B0F16C7D200C71818 /* Tests */ = {
@@ -193,20 +213,6 @@
 		name = SimpleRemotingCallExample;
 		sourceDirectories = (
 		);
-	};
-	49A46B920F49DFB3008ADED3 /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */;
-	};
-	49A46B970F49E2AB008ADED3 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */;
-		name = "AMFMutableByteArray.m: 19";
-		rLen = 0;
-		rLoc = 511;
-		rType = 0;
-		vrLen = 1456;
-		vrLoc = 0;
 	};
 	49B3B1D50EE6941C00498A01 /* SharedObject Browser */ = {
 		isa = PBXExecutable;

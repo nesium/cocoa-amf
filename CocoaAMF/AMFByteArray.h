@@ -44,7 +44,6 @@
 - (BOOL)containsValueForKey:(NSString *)key;
 
 - (BOOL)decodeBoolForKey:(NSString *)key;
-- (const uint8_t *)decodeBytesForKey:(NSString *)key returnedLength:(NSUInteger *)lengthp;
 - (double)decodeDoubleForKey:(NSString *)key;
 - (float)decodeFloatForKey:(NSString *)key;
 - (int32_t)decodeInt32ForKey:(NSString *)key;

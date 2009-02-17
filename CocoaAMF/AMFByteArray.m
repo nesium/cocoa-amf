@@ -138,11 +138,6 @@
 	return NO;
 }
 
-- (const uint8_t *)decodeBytesForKey:(NSString *)key returnedLength:(NSUInteger *)lengthp
-{
-	return NULL;
-}
-
 - (double)decodeDoubleForKey:(NSString *)key
 {
 	NSNumber *num = [self _decodeNumberForKey:key];
