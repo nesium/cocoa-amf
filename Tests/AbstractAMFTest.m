@@ -8,36 +8,32 @@
 
 #import "AbstractAMFTest.h"
 
+#define TEST_DATA_PATH @"../../Tests/data"
+
 
 @implementation AbstractAMFTest
 
-- (void)assertAMF0Data:(const char *)data length:(uint32_t)length equalsObject:(id)obj;
+- (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj
 {
-	AMFByteArray *byteArray = [[AMFByteArray alloc] 
-		initForReadingWithData:[NSData dataWithBytes:data length:length] encoding:kAMF0Version];
-	id deserializedObj = [byteArray decodeObject];
-	
-	if (obj == [NSNull null])
-	{
-		STAssertTrue(deserializedObj == obj, @"%@ should be %@", 
-			deserializedObj, obj);	
-	}
-	else if ([obj isKindOfClass:[NSArray class]])
-	{
-		STAssertTrue([deserializedObj isEqualToArray:obj], @"%@ should be %@", 
-			deserializedObj, obj);
-	}
-	else if ([obj isKindOfClass:[NSDictionary class]])
-	{
-		STAssertTrue([deserializedObj isEqualToDictionary:obj], @"%@ should be %@", 
-			deserializedObj, obj);
-	}
-	else
-	{
-		STAssertTrue([deserializedObj isEqual:obj], @"%@ should be %@", 
-			deserializedObj, obj);
-	}
-	[byteArray release];
+	path = [[TEST_DATA_PATH stringByAppendingPathComponent:[path pathExtension]] 
+		stringByAppendingPathComponent:path];
+	AMFVersion version = [[[path pathExtension] lowercaseString] isEqual:@"amf0"] 
+		? kAMF0Version : kAMF3Version;
+	id deserializedObj = [AMFUnarchiver unarchiveObjectWithFile:path encoding:version];
+	BOOL isEqual = obj == nil ? deserializedObj == nil : [deserializedObj isEqual:obj];
+	if (!isEqual) NSLog(@"Assertion failure: %@ should be %@", deserializedObj, obj);
+	return isEqual;
+}
+
+- (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path
+{
+	path = [[TEST_DATA_PATH stringByAppendingPathComponent:[path pathExtension]] 
+		stringByAppendingPathComponent:path];
+	AMFVersion version = [[[path pathExtension] lowercaseString] isEqual:@"amf0"] 
+		? kAMF0Version : kAMF3Version;
+	NSData *data = [AMFArchiver archivedDataWithRootObject:obj encoding:version];
+	NSLog(@"%@", data);
+	return [[NSData dataWithContentsOfFile:path] isEqual:data];
 }
 
 @end

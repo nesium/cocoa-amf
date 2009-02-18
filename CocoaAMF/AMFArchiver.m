@@ -6,12 +6,13 @@
 //  Copyright 2009 nesiumdotcom. All rights reserved.
 //
 
-#import "AMFMutableByteArray.h"
+#import "AMFArchiver.h"
 
 @class AMF3TraitsInfo;
 
-@interface AMFMutableByteArray (Private)
+@interface AMFArchiver (Private)
 - (void)_ensureLength:(unsigned)length;
+- (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
 
 - (void)_encodeDate:(NSDate *)value;
 - (void)_encodeArray:(NSArray *)value;
@@ -21,53 +22,73 @@
 - (void)_encodeCustomObject:(id)value;
 @end
 
-@interface AMF0MutableByteArray (Private)
+@interface AMF0Archiver (Private)
 - (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
 @end
 
-@interface AMF3MutableByteArray (Private)
+@interface AMF3Archiver (Private)
 - (void)_encodeTraits:(AMF3TraitsInfo *)traits;
 - (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
+- (void)_encodeData:(NSData *)value;
 @end
 
 
-@implementation AMFMutableByteArray
+@implementation AMFArchiver
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
+
+- (id)init
+{
+	if (self = [super init])
+	{
+		m_data = [[NSMutableData alloc] init];
+		m_position = 0;
+		m_bytes = [m_data mutableBytes];
+		m_objectTable = [[NSMutableArray alloc] init];
+		m_currentSerializedObject = nil;
+	}
+	return self;
+}
 
 - (id)initForWritingWithMutableData:(NSMutableData *)data encoding:(AMFVersion)encoding
 {
 	NSZone *temp = [self zone];  // Must not call methods after release
 	[self release];              // Placeholder no longer needed
 	return (encoding == kAMF0Version)
-		? [[AMF0MutableByteArray allocWithZone:temp] initForWritingWithMutableData:data]
-		: [[AMF3MutableByteArray allocWithZone:temp] initForWritingWithMutableData:data];
+		? [[AMF0Archiver allocWithZone:temp] initForWritingWithMutableData:data]
+		: [[AMF3Archiver allocWithZone:temp] initForWritingWithMutableData:data];
 }
 
 - (id)initForWritingWithMutableData:(NSMutableData *)data
 {
-	if (self = [super init])
+	if (self = [self init])
 	{
-		m_data = [data retain];
-		m_position = 0;
-		m_bytes = [m_data mutableBytes];
-		m_objectTable = [[NSMutableArray alloc] init];
-		m_currentSerializedObject = nil;
+		[data retain];
+		[m_data release];
+		m_data = data;
 	}
+	return self;
 }
 
-+ (NSData *)archivedDataWithRootObject:(id)rootObject
++ (NSData *)archivedDataWithRootObject:(id)rootObject encoding:(AMFVersion)encoding
 {
+	AMFArchiver *archiver = [[[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
+		encoding:encoding] autorelease];
+	[archiver encodeRootObject:rootObject];
+	return [archiver data];
 }
 
-+ (BOOL)archiveRootObject:(id)rootObject toFile:(NSString *)path
++ (BOOL)archiveRootObject:(id)rootObject encoding:(AMFVersion)encoding toFile:(NSString *)path;
 {
+   NSData *data = [self archivedDataWithRootObject:rootObject encoding:encoding];
+   return [data writeToFile:path atomically:YES];
 }
 
 - (void)dealloc
 {
 	[m_objectTable release];
+	[m_data release];
 	[super dealloc];
 }
 
@@ -75,6 +96,21 @@
 
 #pragma mark -
 #pragma mark Public methods
+
+- (NSData *)data
+{
+   return [[m_data copy] autorelease];
+}
+
+- (NSMutableData *)archiverData
+{
+   return m_data;
+}
+
+- (void)encodeRootObject:(id)rootObject
+{
+	[self encodeObject:rootObject];
+}
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key
 {
@@ -109,6 +145,10 @@
 - (void)encodeObject:(id)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:value forKey:key];
+}
+
+- (void)encodeValueOfObjCType:(const char *)valueType at:(const void *)address
+{
 }
 
 - (void)encodeBool:(BOOL)value
@@ -155,33 +195,34 @@
 - (void)encodeInt:(int32_t)value
 {
 	value = CFSwapInt32HostToBig(value);
-	[m_data appendBytes:&value length:sizeof(int32_t)];
+	[self _appendBytes:&value length:sizeof(int32_t)];
 }
 
 - (void)encodeMultiByteString:(NSString *)value encoding:(NSStringEncoding)encoding
 {
-	[m_data appendData:[value dataUsingEncoding:encoding]];
+	[self encodeDataObject:[value dataUsingEncoding:encoding]];
 }
 
 - (void)encodeObject:(NSObject *)value
 {
-	if ([obj isKindOfClass:[NSString string]])
+	NSLog(@"Encode object: %@", value);
+	if ([value isKindOfClass:[NSString string]])
 	{
 		[self encodeUTF:(NSString *)value];
 	}
-	else if ([obj isKindOfClass:[NSDate date]])
+	else if ([value isKindOfClass:[NSDate date]])
 	{
 		[self _encodeDate:(NSDate *)value];
 	}
-	else if ([obj isKindOfClass:[NSArray class]])
+	else if ([value isKindOfClass:[NSArray class]])
 	{
 		[self _encodeArray:(NSArray *)value];
 	}
-	else if ([obj isKindOfClass:[NSDictionary class]])
+	else if ([value isKindOfClass:[NSDictionary class]])
 	{
 		[self _encodeDictionary:(NSDictionary *)value];
 	}
-	else if ([obj isKindOfClass:[ASObject class]])
+	else if ([value isKindOfClass:[ASObject class]])
 	{
 		[self _encodeASObject:(ASObject *)value];
 	}
@@ -194,13 +235,13 @@
 - (void)encodeShort:(int16_t)value
 {
 	value = CFSwapInt16HostToBig(value);
-	[m_data appendBytes:&value length:sizeof(int16_t)];
+	[self _appendBytes:&value length:sizeof(int16_t)];
 }
 
 - (void)encodeUnsignedInt:(uint32_t)value
 {
 	value = CFSwapInt32HostToBig(value);
-	[m_data appendBytes:&value length:sizeof(uint32_t)];
+	[self _appendBytes:&value length:sizeof(uint32_t)];
 }
 
 - (void)encodeUTF:(NSString *)value
@@ -212,7 +253,7 @@
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
 	[self encodeUnsignedShort:[data length]];
-	[m_data appendData:data];
+	[self encodeDataObject:data];
 }
 
 - (void)encodeUTFBytes:(NSString *)value
@@ -221,7 +262,7 @@
 	{
 		return;
 	}
-	[m_data appendData:[value dataUsingEncoding:NSUTF8StringEncoding]];
+	[self encodeDataObject:[value dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (void)encodeUnsignedChar:(uint8_t)value
@@ -279,16 +320,23 @@
 
 - (void)_encodeCustomObject:(id)value
 {
-	ASObject *obj = m_currentSerializedObject = [[ASObject alloc] init];
+	ASObject *obj = m_currentSerializedObject = [[[ASObject alloc] init] autorelease];
 	[value encodeWithCoder:self];
 	[self _encodeASObject:obj];
-	[obj release];
+}
+
+- (void)_appendBytes:(const void*)bytes length:(NSUInteger)length
+{
+	[self _ensureLength:length];
+	uint8_t *chars = (uint8_t *)bytes;
+	for (NSUInteger i = 0; i < length; i++)
+		m_bytes[m_position++] = chars[i];
 }
 @end
 
 
 
-@implementation AMF0MutableByteArray
+@implementation AMF0Archiver
 
 #pragma mark -
 #pragma mark Public methods
@@ -297,19 +345,19 @@
 {
 	if (value == nil)
 	{
-		[self writeUnsignedShort:0];
+		[self encodeUnsignedShort:0];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
 	if ([data length] > 0xFFFF)
 	{
-		[self writeUnsignedInt:[data length]];
+		[self encodeUnsignedInt:[data length]];
 	}
 	else
 	{
-		[self writeUnsignedShort:[data length]];
+		[self encodeUnsignedShort:[data length]];
 	}
-	[m_data appendData:data];
+	[self encodeDataObject:data];
 }
 
 
@@ -320,18 +368,17 @@
 - (void)_encodeString:(NSString *)value omitType:(BOOL)omitType
 {
 	NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
-	
 	if ([stringData length] > 0xFFFF)
 	{
 		omitType ?: [self encodeUnsignedChar:kAMF0LongStringType];
-		[self writeUnsignedInt:[stringData length]];
+		[self encodeUnsignedInt:[stringData length]];
 	}
 	else
 	{
 		omitType ?: [self encodeUnsignedChar:kAMF0StringType];
-		[self writeUnsignedShort:[stringData length]];
+		[self encodeUnsignedShort:[stringData length]];
 	}
-	[self writeBytes:stringData];
+	[self encodeDataObject:stringData];
 }
 
 - (void)_encodeArray:(NSArray *)value
@@ -339,12 +386,12 @@
 	if ([m_objectTable containsObject:value])
 	{
 		[self encodeUnsignedChar:kAMF0ReferenceType];
-		[self writeUnsignedShort:[m_objectTable indexOfObject:value]];
+		[self encodeUnsignedShort:[m_objectTable indexOfObject:value]];
 		return;
 	}
 	[m_objectTable addObject:value];
 	[self encodeUnsignedChar:kAMF0StrictArrayType];
-	[self writeUnsignedInt:[value count]];
+	[self encodeUnsignedInt:[value count]];
 	for (id obj in value)
 	{
 		[self encodeObject:obj];
@@ -356,7 +403,7 @@
 	if ([m_objectTable containsObject:value])
 	{
 		[self encodeUnsignedChar:kAMF0ReferenceType];
-		[self writeUnsignedShort:[m_objectTable indexOfObject:value]];
+		[self encodeUnsignedShort:[m_objectTable indexOfObject:value]];
 		return;
 	}
 	[m_objectTable addObject:value];
@@ -366,18 +413,18 @@
 	{
 		// so we write a generic empty object
 		[self encodeUnsignedChar:kAMF0ObjectType];
-		[self writeUnsignedShort:0];
+		[self encodeUnsignedShort:0];
 		[self encodeUnsignedChar:kAMF0ObjectEndType];
 		return;
 	}
 	[self encodeUnsignedChar:kAMF0ECMAArrayType];
-	[self writeUnsignedInt:[value count]];
+	[self encodeUnsignedInt:[value count]];
 	for (NSString *key in value)
 	{
 		[self _encodeString:key omitType:YES];
-		[self writeObject:[value objectForKey:key]];
+		[self encodeObject:[value objectForKey:key]];
 	}
-	[self writeUnsignedShort:0];
+	[self encodeUnsignedShort:0];
 	[self encodeUnsignedChar:kAMF0ObjectEndType];
 }
 
@@ -386,14 +433,14 @@
 	if ([m_objectTable containsObject:value])
 	{
 		[self encodeUnsignedChar:kAMF0ReferenceType];
-		[self writeUnsignedShort:[m_objectTable indexOfObject:value]];
+		[self encodeUnsignedShort:[m_objectTable indexOfObject:value]];
 		return;
 	}
 	[m_objectTable addObject:value];
 	if (value.type == nil)
 	{
 		[self encodeUnsignedChar:kAMF0ObjectType];
-		[self writeUnsignedShort:0];
+		[self encodeUnsignedShort:0];
 	}
 	else
 	{
@@ -403,9 +450,9 @@
 	for (NSString *key in value.properties)
 	{
 		[self _encodeString:key omitType:YES];
-		[self writeObject:[value valueForKey:key]];
+		[self encodeObject:[value valueForKey:key]];
 	}
-	[self writeUnsignedShort:0];
+	[self encodeUnsignedShort:0];
 	[self encodeUnsignedChar:kAMF0ObjectEndType];
 }
 
@@ -414,25 +461,25 @@
 	if ([[value className] isEqualToString:@"NSCFBoolean"])
 	{
 		[self encodeUnsignedChar:kAMF0BooleanType];
-		[self writeBoolean:[value boolValue]];
+		[self encodeBool:[value boolValue]];
 		return;
 	}
 	[self encodeUnsignedChar:kAMF0NumberType];
-	[self writeDouble:[value doubleValue]];
+	[self encodeDouble:[value doubleValue]];
 }
 
 - (void)writeDate:(NSDate *)value
 {
 	[self encodeUnsignedChar:kAMF0DateType];
-	[self writeDouble:([value timeIntervalSince1970] * 1000)];
-	[self writeUnsignedShort:([[NSTimeZone localTimeZone] secondsFromGMT] / 60)];
+	[self encodeDouble:([value timeIntervalSince1970] * 1000)];
+	[self encodeUnsignedShort:([[NSTimeZone localTimeZone] secondsFromGMT] / 60)];
 }
 
 @end
 
 
 
-@implementation AMF3MutableByteArray
+@implementation AMF3Archiver
 
 #pragma mark -
 #pragma mark Public methods
@@ -446,7 +493,7 @@
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
 	[self encodeUnsignedInt29:[data length]];
-	[self writeBytes:data];
+	[self encodeDataObject:data];
 }
 
 - (void)encodeBool:(BOOL)value
@@ -503,7 +550,7 @@
 	[m_stringTable addObject:value];
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
 	[self encodeUnsignedInt29:(([data length] << 1) | 1)];
-	[self writeBytes:data];
+	[self encodeDataObject:data];
 }
 
 - (void)_encodeDictionary:(NSDictionary *)value
@@ -536,7 +583,7 @@
 	}
 	[m_objectTable addObject:value];
 	[self encodeUnsignedInt29:((0 << 1) | 1)];
-	[self writeDouble:([value timeIntervalSince1970] * 1000)];
+	[self encodeDouble:([value timeIntervalSince1970] * 1000)];
 }
 
 - (void)_encodeData:(NSData *)value
@@ -563,7 +610,7 @@
 		strcmp([value objCType], "d") == 0)
 	{
 		[self encodeUnsignedChar:kAMF3DoubleType];
-		[self writeDouble:[value doubleValue]];
+		[self encodeDouble:[value doubleValue]];
 		return;
 	}
 	[self encodeUnsignedChar:kAMF3IntegerType];
@@ -579,7 +626,7 @@
 		return;
 	}
 	[m_objectTable addObject:value];
-	AMF3TraitsInfo *traits = [[AMF3TraitsInfo alloc] init];
+	AMF3TraitsInfo *traits = [[[AMF3TraitsInfo alloc] init] autorelease];
 	traits.externalizable = NO; // @FIXME
 	traits.dynamic = (value.type == nil || [value.type length] == 0);
 	traits.count = (traits.dynamic ? 0 : [value count]);

@@ -6,18 +6,17 @@
 //  Copyright 2008 nesiumdotcom. All rights reserved.
 //
 
-#import "AMFByteArray.h"
-#import "AMF0KeyedArchiver.h"
-#import "AMF3KeyedArchiver.h"
+#import "AMFUnarchiver.h"
 
 
-@interface AMFByteArray (Protected)
+@interface AMFUnarchiver (Protected)
 - (void)_ensureLength:(unsigned)length;
 - (void)_cannotDecodeType:(const char *)type;
+- (id)_objectReferenceAtIndex:(uint32_t)index;
 - (NSNumber *)_decodeNumberForKey:(NSString *)key;
 @end
 
-@interface AMF0ByteArray (Private)
+@interface AMF0Unarchiver (Private)
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type;
 - (NSArray *)_decodeArray;
 - (NSObject *)_decodeTypedObject;
@@ -26,10 +25,10 @@
 - (NSString *)_decodeXML;
 - (NSDate *)_decodeDate;
 - (NSDictionary *)_decodeECMAArray;
-- (NSObject *)readReference;
+- (NSObject *)_decodeReference;
 @end
 
-@interface AMF3ByteArray (Private)
+@interface AMF3Unarchiver (Private)
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type;
 - (NSObject *)_decodeASObject;
 - (NSObject *)_decodeArray;
@@ -46,7 +45,7 @@
 
 
 
-@implementation AMFByteArray
+@implementation AMFUnarchiver
 
 @synthesize objectEncoding=m_objectEncoding, data=m_data;
 
@@ -58,8 +57,8 @@
 	NSZone *temp = [self zone];  // Must not call methods after release
 	[self release];              // Placeholder no longer needed
 	return (encoding == kAMF0Version)
-		? [[AMF0ByteArray allocWithZone:temp] initForReadingWithData:data]
-		: [[AMF3ByteArray allocWithZone:temp] initForReadingWithData:data];
+		? [[AMF0Unarchiver allocWithZone:temp] initForReadingWithData:data]
+		: [[AMF3Unarchiver allocWithZone:temp] initForReadingWithData:data];
 }
 
 - (id)initForReadingWithData:(NSData *)data
@@ -82,7 +81,7 @@
 	{
 		[NSException raise:@"AMFInvalidArchiveOperationException" format:@"Invalid data"];
 	}
-	AMFByteArray *byteArray = [[AMFByteArray alloc] initWithData:data encoding:encoding];
+	AMFUnarchiver *byteArray = [[AMFUnarchiver alloc] initForReadingWithData:data encoding:encoding];
 	id object = [[byteArray decodeObject] retain];
 	[byteArray release];
 	return [object autorelease];
@@ -329,6 +328,7 @@
 
 - (uint8_t)decodeUnsignedChar
 {
+	//NSLog(@"position: %d", m_position);
 	[self _ensureLength:1];
 	return m_bytes[m_position++];
 }
@@ -425,8 +425,6 @@
 	NSObject <NSCoding> *desObject = [cls allocWithZone:NULL];
 	desObject = [desObject initWithCoder:self];
 	desObject = [desObject awakeAfterUsingCoder:self];
-	
-	[m_objectTable addObject:desObject];
 	m_currentDeserializedObject = nil;
 	
 	return [desObject autorelease];
@@ -456,6 +454,16 @@
 	[NSException raise:@"NSUnarchiverCannotDecodeException"
 		format:@"%@ cannot decode type=%s", [self className], type];
 }
+
+- (id)_objectReferenceAtIndex:(uint32_t)index
+{
+	if ([m_objectTable count] <= index)
+	{
+		[NSException raise:@"NSUnarchiverCannotDecodeException" 
+			format:@"%@ cannot decode object reference", [self className]];
+	}
+	return [m_objectTable objectAtIndex:index];
+}
 @end
 
 
@@ -464,7 +472,7 @@
 
 
 
-@implementation AMF0ByteArray
+@implementation AMF0Unarchiver
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
@@ -473,7 +481,6 @@
 {
 	if (self = [super initForReadingWithData:data])
 	{
-		m_objectTable = [[NSMutableArray alloc] init];
 		m_objectEncoding = kAMF0Version;
 		m_avmPlusByteArray = nil;
 	}
@@ -482,7 +489,6 @@
 
 - (void)dealloc
 {
-	[m_objectTable release];
 	[m_avmPlusByteArray release];
 	[super dealloc];
 }
@@ -563,7 +569,7 @@
 			break;
 			
 		case kAMF0ReferenceType:
-			value = [self readReference];
+			value = [self _decodeReference];
 			break;
 			
 		case kAMF0UndefinedType:
@@ -571,19 +577,19 @@
 			break;
 			
 		case kAMF0UnsupportedType:
-			NSLog(@"Unsupported type");
+			[self _cannotDecodeType:"Unsupported type"];
 			break;
 			
 		case kAMF0ObjectEndType:
-			NSLog(@"Unexpected object end");
+			[self _cannotDecodeType:"Unexpected object end"];
 			break;
 			
 		case kAMF0RecordsetType:
-			NSLog(@"Unexpected recordset");
+			[self _cannotDecodeType:"Unexpected recordset"];
 			break;
 			
 		default:
-			NSLog(@"Unknown type");
+			[self _cannotDecodeType:"Unknown type"];
 	}
 	return value;
 }
@@ -592,6 +598,7 @@
 {
 	uint32_t size = [self decodeUnsignedInt];
 	NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:size];
+	[m_objectTable addObject:array];
 	for (uint32_t i = 0; i < size; i++)
 	{
 		NSObject *obj = [self decodeObject];
@@ -600,7 +607,6 @@
 			[array addObject:obj];
 		}
 	}
-	[m_objectTable addObject:array];
 	[array release];
 	return array;
 }
@@ -615,6 +621,7 @@
 {
 	ASObject *object = [[ASObject alloc] init];
 	object.type = className;
+	[m_objectTable addObject:object];
 	
 	NSString *propertyName = [self decodeUTF];
 	AMF0Type type = [self decodeUnsignedChar];
@@ -630,6 +637,7 @@
 	{
 		return [object autorelease];
 	}
+	[m_objectTable replaceObjectAtIndex:[m_objectTable indexOfObject:object] withObject:desObject];
 	[object release];
 	return [desObject autorelease];
 }
@@ -676,14 +684,10 @@
 	return dict;
 }
 
-- (NSObject *)readReference
+- (NSObject *)_decodeReference
 {
 	uint16_t index = [self decodeUnsignedShort];
-	if (index >= [m_objectTable count])
-	{
-		return nil;
-	}
-	return [m_objectTable objectAtIndex:index];
+	return [self _objectReferenceAtIndex:index];
 }
 
 @end
@@ -694,7 +698,7 @@
 
 
 
-@implementation AMF3ByteArray
+@implementation AMF3Unarchiver
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
@@ -825,16 +829,12 @@
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
-		if (ref < [m_objectTable count])
-		{
-			return [m_objectTable objectAtIndex:ref];
-		}
-		NSLog(@"Object reference is out of bounds");
-		return [[[ASObject alloc] init] autorelease];
+		return [self _objectReferenceAtIndex:ref];
 	}
 	
 	AMF3TraitsInfo *traitsInfo = [self _decodeTraits:ref];
 	ASObject *object = [[ASObject alloc] init];
+	[m_objectTable addObject:object];
 	if (traitsInfo.className && [traitsInfo.className length] > 0)
 	{
 		object.type = traitsInfo.className;
@@ -863,6 +863,7 @@
 	{
 		return [object autorelease];
 	}
+	[m_objectTable replaceObjectAtIndex:[m_objectTable indexOfObject:object] withObject:desObject];
 	[object release];
 	return desObject;
 }
@@ -874,12 +875,7 @@
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
-		if (ref < [m_objectTable count])
-		{
-			return [m_objectTable objectAtIndex:ref];
-		}
-		NSLog(@"Array reference is out of bounds");
-		return [NSArray array];
+		return [self _objectReferenceAtIndex:ref];
 	}
 	
 	uint32_t length = (ref >> 1);
@@ -895,6 +891,7 @@
 		if (array == nil)
 		{
 			array = [NSMutableDictionary dictionary];
+			[m_objectTable addObject:array];
 		}
 		[(NSMutableDictionary *)array setObject:[self decodeObject] forKey:name];
 	}
@@ -902,6 +899,7 @@
 	if (array == nil)
 	{
 		array = [NSMutableArray array];
+		[m_objectTable addObject:array];
 		for (uint32_t i = 0; i < length; i++)
 		{
 			[(NSMutableArray *)array addObject:[self decodeObject]];
@@ -915,7 +913,6 @@
 				forKey:[NSNumber numberWithInt:i]];
 		}
 	}
-	[m_objectTable addObject:array];
 	
 	return array;
 }
@@ -963,12 +960,7 @@
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
-		if (ref < [m_objectTable count])
-		{
-			return [m_objectTable objectAtIndex:ref];
-		}
-		NSLog(@"Object reference is out of bounds");
-		return [NSData data];
+		return [self _objectReferenceAtIndex:ref];
 	}
 	uint32_t length = (ref >> 1);
 	NSData *data = [self decodeBytes:length];
@@ -981,12 +973,7 @@
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
-		if (ref < [m_objectTable count])
-		{
-			return [m_objectTable objectAtIndex:ref];
-		}
-		NSLog(@"Object reference is out of bounds");
-		return [NSDate date];
+		return [self _objectReferenceAtIndex:ref];
 	}
 	NSTimeInterval time = [self decodeDouble];
 	NSDate *date = [NSDate dateWithTimeIntervalSince1970:(time / 1000)];

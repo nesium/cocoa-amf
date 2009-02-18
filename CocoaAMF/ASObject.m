@@ -21,7 +21,8 @@
 	if (self = [super init])
 	{
 		m_properties = [[NSMutableDictionary alloc] init];
-		m_type = @"";
+		m_type = nil;
+		m_isExternalizable = NO;
 	}
 	return self;
 }
@@ -29,10 +30,9 @@
 + (ASObject *)asObjectWithDictionary:(NSDictionary *)dict
 {
 	ASObject *obj = [[[ASObject alloc] init] autorelease];
-	for (NSString *key in dict)
-	{
-		[obj setValue:[dict valueForKey:key] forKey:key];
-	}
+	NSMutableDictionary *mutableCopy = [dict mutableCopy];
+	obj.properties = mutableCopy;
+	[mutableCopy release];
 	return obj;
 }
 
@@ -41,6 +41,17 @@
 	[m_type release];
 	[m_properties release];
 	[super dealloc];
+}
+
+- (BOOL)isEqual:(id)obj
+{
+	if (![obj isKindOfClass:[ASObject class]])
+	{
+		return NO;
+	}
+	ASObject *asObj = (ASObject *)obj;
+	return ((asObj.type == nil && m_type == nil) || [asObj.type isEqual:m_type]) && 
+		asObj.isExternalizable == m_isExternalizable && [asObj.properties isEqual:m_properties];
 }
 
 

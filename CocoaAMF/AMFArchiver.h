@@ -7,13 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMF.h"
+#import "AMFUnarchiver.h"
 #import "ASObject.h"
 
 
-@interface AMFMutableByteArray : NSCoder 
+@interface AMFArchiver : NSCoder 
 {
 	NSMutableData *m_data;
-	const uint8_t *m_bytes;
+	uint8_t *m_bytes;
 	uint32_t m_position;
 	NSMutableArray *m_objectTable;
 	ASObject *m_currentSerializedObject;
@@ -24,8 +26,12 @@
 //--------------------------------------------------------------------------------------------------
 
 - (id)initForWritingWithMutableData:(NSMutableData *)data encoding:(AMFVersion)encoding;
-+ (NSData *)archivedDataWithRootObject:(id)rootObject;
-+ (BOOL)archiveRootObject:(id)rootObject toFile:(NSString *)path;
++ (NSData *)archivedDataWithRootObject:(id)rootObject encoding:(AMFVersion)encoding;
++ (BOOL)archiveRootObject:(id)rootObject encoding:(AMFVersion)encoding toFile:(NSString *)path;
+
+- (NSData *)data;
+- (NSMutableData *)archiverData;
+- (void)encodeRootObject:(id)rootObject;
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key;
 - (void)encodeDouble:(double)value forKey:(NSString *)key;
@@ -34,6 +40,7 @@
 - (void)encodeInt64:(int64_t)value forKey:(NSString *)key;
 - (void)encodeInt:(int)value forKey:(NSString *)key;
 - (void)encodeObject:(id)value forKey:(NSString *)key;
+- (void)encodeValueOfObjCType:(const char *)valueType at:(const void *)address;
 
 //--------------------------------------------------------------------------------------------------
 //	AMF Extensions for writing specific data and serializing externalizable classes
@@ -57,18 +64,16 @@
 @end
 
 
-@interface AMF0MutableByteArray : AMFMutableByteArray
+@interface AMF0Archiver : AMFArchiver
 {
-	NSMutableArray *m_objectTable;
-	AMFByteArray *m_avmPlusByteArray;
+	AMFArchiver *m_avmPlusByteArray;
 }
 @end
 
 
-@interface AMF3MutableByteArray : AMFMutableByteArray
+@interface AMF3Archiver : AMFArchiver
 {
 	NSMutableArray *m_stringTable;
-	NSMutableArray *m_objectTable;
 	NSMutableArray *m_traitsTable;
 }
 @end

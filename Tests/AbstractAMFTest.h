@@ -8,14 +8,14 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "AMF.h"
-#import "AMFByteArray.h"
+#import "AMFUnarchiver.h"
+#import "AMFArchiver.h"
 
 
 @interface AbstractAMFTest : SenTestCase 
 {
 
 }
-
-- (void)assertAMF0Data:(const char *)data length:(uint32_t)length equalsObject:(id)obj;
-
+- (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj;
+- (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path;
 @end

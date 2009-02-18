@@ -8,6 +8,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "AbstractAMFTest.h"
+#import "ASObject.h"
 
 
 @interface AMF0Test : AbstractAMFTest

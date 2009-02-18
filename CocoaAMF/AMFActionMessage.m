@@ -33,7 +33,7 @@
 {
 	if (self = [super init])
 	{
-		AMFByteArray *ba = [[AMFByteArray alloc] initWithData:data encoding:kAMF0Version];
+		AMFUnarchiver *ba = [[AMFUnarchiver alloc] initWithData:data encoding:kAMF0Version];
 		m_version = [ba decodeUnsignedShort];
 		uint16_t numHeaders = [ba decodeUnsignedShort];
 		NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];
@@ -81,39 +81,39 @@
 
 - (NSData *)data
 {
-	AMFByteArray *ba = [[AMFByteArray alloc] initWithData:[NSMutableData data] 
+	AMFArchiver *ba = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 		encoding:kAMF0Version];
-	[ba writeUnsignedShort:m_version];
-	[ba writeUnsignedShort:[m_headers count]];
+	[ba encodeUnsignedShort:m_version];
+	[ba encodeUnsignedShort:[m_headers count]];
 	for (AMFMessageHeader *header in m_headers)
 	{
-		[ba writeUTF:header.name];
-		[ba writeBoolean:header.mustUnderstand];
-		AMFByteArray *headerBa = [[AMFByteArray alloc] initWithData:[NSMutableData data] 
+		[ba encodeUTF:header.name];
+		[ba encodeBool:header.mustUnderstand];
+		AMFArchiver *headerBa = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 			encoding:m_version];
 		if (m_version == kAMF3Version)
 		{
-			[headerBa writeUnsignedByte:kAMF0AVMPlusObjectType];
+			[headerBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
-		[headerBa writeObject:header.data];
-		[ba writeUnsignedInt:[headerBa.data length]];
-		[ba writeBytes:headerBa.data];
+		[headerBa encodeObject:header.data];
+		[ba encodeUnsignedInt:[headerBa.data length]];
+		[ba encodeDataObject:headerBa.data];
 		[headerBa release];
 	}
-	[ba writeUnsignedShort:[m_bodies count]];
+	[ba encodeUnsignedShort:[m_bodies count]];
 	for (AMFMessageBody *body in m_bodies)
 	{
-		body.targetURI != nil ? [ba writeUTF:body.targetURI] : [ba writeUTF:@"null"];
-		body.responseURI != nil ? [ba writeUTF:body.responseURI] : [ba writeUTF:@"null"];
-		AMFByteArray *bodyBa = [[AMFByteArray alloc] initWithData:[NSMutableData data] 
+		body.targetURI != nil ? [ba encodeUTF:body.targetURI] : [ba encodeUTF:@"null"];
+		body.responseURI != nil ? [ba encodeUTF:body.responseURI] : [ba encodeUTF:@"null"];
+		AMFArchiver *bodyBa = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 			encoding:m_version];
 		if (m_version == kAMF3Version)
 		{
-			[bodyBa writeUnsignedByte:kAMF0AVMPlusObjectType];
+			[bodyBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
-		[bodyBa writeObject:body.data];
-		[ba writeUnsignedInt:[bodyBa.data length]];
-		[ba writeBytes:bodyBa.data];
+		[bodyBa encodeObject:body.data];
+		[ba encodeUnsignedInt:[bodyBa.data length]];
+		[ba encodeDataObject:bodyBa.data];
 		[bodyBa release];
 	}
 	NSData *data = [[ba.data retain] autorelease];

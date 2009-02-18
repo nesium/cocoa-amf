@@ -19,19 +19,19 @@
 		2C73A8180F193CD200EA16AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8170F193CD200EA16AD /* main.m */; };
 		2C73A87C0F19423F00EA16AD /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
 		2C73A8810F19427A00EA16AD /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
-		2C73A8820F19427B00EA16AD /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C73A8820F19427B00EA16AD /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2C73A8830F19427C00EA16AD /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
 		2C73A8840F19427D00EA16AD /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8920F1942FE00EA16AD /* DirectoryService.m */; };
 		2C73A8ED0F1954E100EA16AD /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
 		2C73A90B0F19681200EA16AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A90A0F19681200EA16AD /* main.m */; };
 		2C73A90F0F19687F00EA16AD /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
-		2C73A9100F19688000EA16AD /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C73A9100F19688000EA16AD /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2C73A9110F19688100EA16AD /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
 		2C73A9120F19688200EA16AD /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
 		2C73A9130F19688300EA16AD /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2C73A9240F196A2E00EA16AD /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
-		2C80A6800F1C1FA700D761BB /* AMFMutableByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */; };
+		2C80A6800F1C1FA700D761BB /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
 		2C8162E30E9BED3700C11CDF /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8162E20E9BED3700C11CDF /* Controller.m */; };
 		2C8500880EDF38820058EBE0 /* FileSystemRepNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500870EDF38820058EBE0 /* FileSystemRepNode.m */; };
 		2C8500A40EDF39AE0058EBE0 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
@@ -46,9 +46,9 @@
 		2C8500CC0EDF41890058EBE0 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500C20EDF41890058EBE0 /* CJSONDeserializer.m */; };
 		2C8500CD0EDF41890058EBE0 /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500C40EDF41890058EBE0 /* CJSONScanner.m */; };
 		2C8500CE0EDF41890058EBE0 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500C60EDF41890058EBE0 /* CJSONSerializer.m */; };
-		2C8500EA0EDF42DF0058EBE0 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C8500EA0EDF42DF0058EBE0 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2C8500ED0EDF42DF0058EBE0 /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
-		2C8500EE0EDF42DF0058EBE0 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2C8500EE0EDF42DF0058EBE0 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2C8500FC0EDF43380058EBE0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		2C85010D0EDF43D10058EBE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C85010C0EDF43D10058EBE0 /* main.m */; };
 		2CB077B90EE0D2DC0059C799 /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
@@ -57,12 +57,29 @@
 		2CB5B4970F16C89300C71818 /* AMF0Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C47403F0F16C2890062D1FD /* AMF0Test.m */; };
 		2CB5B4C70F16D24E00C71818 /* AbstractAMFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */; };
 		2CB5B4CC0F16D27000C71818 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
-		2CB5B4CD0F16D27200C71818 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */; };
+		2CB5B4CD0F16D27200C71818 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
+		49A46CAE0F4C2AEB008ADED3 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
+		49A46CAF0F4C2AEC008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
+		49A46CB10F4C2AEE008ADED3 /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
+		49A46CB20F4C2AEE008ADED3 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
+		49A46CB30F4C2AEF008ADED3 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		49A46CC30F4C2B99008ADED3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A46CC20F4C2B99008ADED3 /* main.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		49A46D820F4C5336008ADED3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CB5B48B0F16C7D200C71818 /* Tests */;
+			remoteInfo = Tests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		2CB078660EE0E3500059C799 /* CopyFiles */ = {
@@ -116,8 +133,8 @@
 		2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFRemotingCall.m; sourceTree = "<group>"; };
 		2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleRemotingCallExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C73A90A0F19681200EA16AD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2C80A67E0F1C1FA700D761BB /* AMFMutableByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFMutableByteArray.h; sourceTree = "<group>"; };
-		2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFMutableByteArray.m; sourceTree = "<group>"; };
+		2C80A67E0F1C1FA700D761BB /* AMFArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFArchiver.h; sourceTree = "<group>"; };
+		2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFArchiver.m; sourceTree = "<group>"; };
 		2C8162E10E9BED3700C11CDF /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		2C8162E20E9BED3700C11CDF /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		2C8500860EDF38820058EBE0 /* FileSystemRepNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemRepNode.h; sourceTree = "<group>"; };
@@ -144,15 +161,17 @@
 		2C8500C50EDF41890058EBE0 /* CJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONSerializer.h; sourceTree = "<group>"; };
 		2C8500C60EDF41890058EBE0 /* CJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializer.m; sourceTree = "<group>"; };
 		2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFGateway.h; sourceTree = "<group>"; };
-		2C8500E30EDF42DF0058EBE0 /* AMFByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFByteArray.h; sourceTree = "<group>"; };
+		2C8500E30EDF42DF0058EBE0 /* AMFUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFUnarchiver.h; sourceTree = "<group>"; };
 		2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFGateway.m; sourceTree = "<group>"; };
-		2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFByteArray.m; sourceTree = "<group>"; };
+		2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFUnarchiver.m; sourceTree = "<group>"; };
 		2C85010C0EDF43D10058EBE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
 		2CB5B48C0F16C7D200C71818 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractAMFTest.h; sourceTree = "<group>"; };
 		2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractAMFTest.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAMF_Prefix.pch; sourceTree = "<group>"; };
+		49A46C690F4C29C6008ADED3 /* ExecutableTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = ExecutableTests; path = build/Release/ExecutableTests; sourceTree = "<group>"; };
+		49A46CC20F4C2B99008ADED3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CocoaAMF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaAMF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -182,6 +201,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2CB5B4890F16C7D200C71818 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49A46C670F4C29C6008ADED3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -225,6 +251,7 @@
 				2CB5B48C0F16C7D200C71818 /* Tests.octest */,
 				2C73A8090F193C2F00EA16AD /* ServerExample */,
 				2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */,
+				49A46C690F4C29C6008ADED3 /* ExecutableTests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,10 +294,10 @@
 				2C35A4660EA401CB000B2452 /* AMF.h */,
 				2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */,
 				2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */,
-				2C8500E30EDF42DF0058EBE0 /* AMFByteArray.h */,
-				2C8500E60EDF42DF0058EBE0 /* AMFByteArray.m */,
-				2C80A67E0F1C1FA700D761BB /* AMFMutableByteArray.h */,
-				2C80A67F0F1C1FA700D761BB /* AMFMutableByteArray.m */,
+				2C8500E30EDF42DF0058EBE0 /* AMFUnarchiver.h */,
+				2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */,
+				2C80A67E0F1C1FA700D761BB /* AMFArchiver.h */,
+				2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */,
 				2C35A46F0EA401CB000B2452 /* AMFActionMessage.h */,
 				2C35A4700EA401CB000B2452 /* AMFActionMessage.m */,
 				2C35A4810EA401CB000B2452 /* ASObject.h */,
@@ -289,6 +316,7 @@
 				2C47403F0F16C2890062D1FD /* AMF0Test.m */,
 				2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */,
 				2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */,
+				49A46CC20F4C2B99008ADED3 /* main.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -534,6 +562,23 @@
 			productReference = 2CB5B48C0F16C7D200C71818 /* Tests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		49A46C680F4C29C6008ADED3 /* ExecutableTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49A46C7A0F4C29CE008ADED3 /* Build configuration list for PBXNativeTarget "ExecutableTests" */;
+			buildPhases = (
+				49A46C660F4C29C6008ADED3 /* Sources */,
+				49A46C670F4C29C6008ADED3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				49A46D830F4C5336008ADED3 /* PBXTargetDependency */,
+			);
+			name = ExecutableTests;
+			productName = ExecutableTests;
+			productReference = 49A46C690F4C29C6008ADED3 /* ExecutableTests */;
+			productType = "com.apple.product-type.tool";
+		};
 		8D1107260486CEB800E47090 /* SharedObject Browser */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SharedObject Browser" */;
@@ -569,6 +614,7 @@
 				2CB5B48B0F16C7D200C71818 /* Tests */,
 				2C73A8080F193C2F00EA16AD /* ServerExample */,
 				2C73A9050F1967E200EA16AD /* SimpleRemotingCallExample */,
+				49A46C680F4C29C6008ADED3 /* ExecutableTests */,
 			);
 		};
 /* End PBXProject section */
@@ -614,7 +660,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "# Run the unit tests in this test bundle.\n#\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -626,7 +672,7 @@
 				2C73A8180F193CD200EA16AD /* main.m in Sources */,
 				2C73A87C0F19423F00EA16AD /* AsyncSocket.m in Sources */,
 				2C73A8810F19427A00EA16AD /* AMFActionMessage.m in Sources */,
-				2C73A8820F19427B00EA16AD /* AMFByteArray.m in Sources */,
+				2C73A8820F19427B00EA16AD /* AMFUnarchiver.m in Sources */,
 				2C73A8830F19427C00EA16AD /* AMFGateway.m in Sources */,
 				2C73A8840F19427D00EA16AD /* ASObject.m in Sources */,
 				2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */,
@@ -640,7 +686,7 @@
 			files = (
 				2C73A90B0F19681200EA16AD /* main.m in Sources */,
 				2C73A90F0F19687F00EA16AD /* AMFActionMessage.m in Sources */,
-				2C73A9100F19688000EA16AD /* AMFByteArray.m in Sources */,
+				2C73A9100F19688000EA16AD /* AMFUnarchiver.m in Sources */,
 				2C73A9110F19688100EA16AD /* AMFGateway.m in Sources */,
 				2C73A9120F19688200EA16AD /* AMFRemotingCall.m in Sources */,
 				2C73A9130F19688300EA16AD /* ASObject.m in Sources */,
@@ -663,13 +709,13 @@
 				2C8500CC0EDF41890058EBE0 /* CJSONDeserializer.m in Sources */,
 				2C8500CD0EDF41890058EBE0 /* CJSONScanner.m in Sources */,
 				2C8500CE0EDF41890058EBE0 /* CJSONSerializer.m in Sources */,
-				2C8500EA0EDF42DF0058EBE0 /* AMFByteArray.m in Sources */,
+				2C8500EA0EDF42DF0058EBE0 /* AMFUnarchiver.m in Sources */,
 				2C85010D0EDF43D10058EBE0 /* main.m in Sources */,
 				2CB077B90EE0D2DC0059C799 /* OutlineViewDataSource.m in Sources */,
 				2C109BA40EE347B600AF1643 /* NSString+URLEncode.m in Sources */,
 				2C109BE10EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m in Sources */,
 				2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */,
-				2C80A6800F1C1FA700D761BB /* AMFMutableByteArray.m in Sources */,
+				2C80A6800F1C1FA700D761BB /* AMFArchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,8 +726,22 @@
 				2CB5B4970F16C89300C71818 /* AMF0Test.m in Sources */,
 				2CB5B4C70F16D24E00C71818 /* AbstractAMFTest.m in Sources */,
 				2CB5B4CC0F16D27000C71818 /* AMFActionMessage.m in Sources */,
-				2CB5B4CD0F16D27200C71818 /* AMFByteArray.m in Sources */,
+				2CB5B4CD0F16D27200C71818 /* AMFUnarchiver.m in Sources */,
 				2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */,
+				49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49A46C660F4C29C6008ADED3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49A46CAE0F4C2AEB008ADED3 /* AMFActionMessage.m in Sources */,
+				49A46CAF0F4C2AEC008ADED3 /* AMFArchiver.m in Sources */,
+				49A46CB10F4C2AEE008ADED3 /* AMFRemotingCall.m in Sources */,
+				49A46CB20F4C2AEE008ADED3 /* AMFUnarchiver.m in Sources */,
+				49A46CB30F4C2AEF008ADED3 /* ASObject.m in Sources */,
+				49A46CC30F4C2B99008ADED3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,11 +756,19 @@
 				2C3A9D970EA95C3300BFE5CC /* OutlineViewDataSource.m in Sources */,
 				2C8500880EDF38820058EBE0 /* FileSystemRepNode.m in Sources */,
 				2C8500ED0EDF42DF0058EBE0 /* AMFGateway.m in Sources */,
-				2C8500EE0EDF42DF0058EBE0 /* AMFByteArray.m in Sources */,
+				2C8500EE0EDF42DF0058EBE0 /* AMFUnarchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		49A46D830F4C5336008ADED3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CB5B48B0F16C7D200C71818 /* Tests */;
+			targetProxy = 49A46D820F4C5336008ADED3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -921,7 +989,54 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		49A46C6B0F4C29C7008ADED3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ExecutableTests;
+			};
+			name = Debug;
+		};
+		49A46C6C0F4C29C7008ADED3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ExecutableTests;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1018,6 +1133,15 @@
 			buildConfigurations = (
 				2CB5B4900F16C7D700C71818 /* Debug */,
 				2CB5B4910F16C7D700C71818 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49A46C7A0F4C29CE008ADED3 /* Build configuration list for PBXNativeTarget "ExecutableTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49A46C6B0F4C29C7008ADED3 /* Debug */,
+				49A46C6C0F4C29C7008ADED3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

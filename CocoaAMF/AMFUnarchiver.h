@@ -16,7 +16,7 @@
 
 #define AMFInvalidArchiveOperationException @"AMFInvalidArchiveOperationException"
 
-@interface AMFByteArray : NSCoder 
+@interface AMFUnarchiver : NSCoder 
 {
 	NSData *m_data;
 	const uint8_t *m_bytes;
@@ -78,15 +78,15 @@
 
 
 
-@interface AMF0ByteArray : AMFByteArray
+@interface AMF0Unarchiver : AMFUnarchiver
 {
-	AMFByteArray *m_avmPlusByteArray;
+	AMFUnarchiver *m_avmPlusByteArray;
 }
 @end
 
 
 
-@interface AMF3ByteArray : AMFByteArray
+@interface AMF3Unarchiver : AMFUnarchiver
 {
 	NSMutableArray *m_stringTable;
 	NSMutableArray *m_traitsTable;
