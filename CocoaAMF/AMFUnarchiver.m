@@ -43,7 +43,7 @@
 #pragma mark -
 
 
-
+static NSMutableDictionary *g_registeredClasses = nil;
 
 @implementation AMFUnarchiver
 
@@ -125,9 +125,20 @@
 	return [m_registeredClasses objectForKey:codedName];
 }
 
++ (Class)classForClassName:(NSString *)codedName
+{
+	return [g_registeredClasses objectForKey:codedName];
+}
+
 - (void)setClass:(Class)cls forClassName:(NSString *)codedName
 {
 	[m_registeredClasses setObject:cls forKey:codedName];
+}
+
++ (void)setClass:(Class)cls forClassName:(NSString *)codedName
+{
+	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
+	[g_registeredClasses setObject:cls forKey:codedName];
 }
 
 - (BOOL)decodeBoolForKey:(NSString *)key
@@ -306,10 +317,10 @@
 - (int32_t)decodeInt
 {
 	[self _ensureLength:4];
-	uint8_t ch1 = [self decodeChar];
-	uint8_t ch2 = [self decodeChar];
-	uint8_t ch3 = [self decodeChar];
-	uint8_t ch4 = [self decodeChar];
+	uint8_t ch1 = m_bytes[m_position++];
+	uint8_t ch2 = m_bytes[m_position++];
+	uint8_t ch3 = m_bytes[m_position++];
+	uint8_t ch4 = m_bytes[m_position++];
 	return (ch1 << 24) + (ch2 << 16) + (ch3 << 8) + ch4;
 }
 
@@ -328,7 +339,6 @@
 
 - (uint8_t)decodeUnsignedChar
 {
-	//NSLog(@"position: %d", m_position);
 	[self _ensureLength:1];
 	return m_bytes[m_position++];
 }
@@ -412,20 +422,24 @@
 	{
 		return object;
 	}
-	NSString *className = m_currentDeserializedObject.type;
+	NSString *className = object.type;
 	Class cls;
 	if (!(cls = [m_registeredClasses objectForKey:className]))
 	{
-		if (!(cls = objc_getClass([className cStringUsingEncoding:NSUTF8StringEncoding])))
+		if (!(cls = [g_registeredClasses objectForKey:className]))
 		{
-			return object;
+			if (!(cls = objc_getClass([className cStringUsingEncoding:NSUTF8StringEncoding])))
+			{
+				return object;
+			}
 		}
 	}
+	ASObject *lastDeserializedObject = m_currentDeserializedObject;
 	m_currentDeserializedObject = object;
 	NSObject <NSCoding> *desObject = [cls allocWithZone:NULL];
 	desObject = [desObject initWithCoder:self];
 	desObject = [desObject awakeAfterUsingCoder:self];
-	m_currentDeserializedObject = nil;
+	m_currentDeserializedObject = lastDeserializedObject;
 	
 	return [desObject autorelease];
 }
@@ -482,14 +496,12 @@
 	if (self = [super initForReadingWithData:data])
 	{
 		m_objectEncoding = kAMF0Version;
-		m_avmPlusByteArray = nil;
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	[m_avmPlusByteArray release];
 	[super dealloc];
 }
 
@@ -527,13 +539,8 @@
 			break;
 			
 		case kAMF0AVMPlusObjectType:
-//			if (m_avmPlusByteArray == nil)
-//			{
-//				m_avmPlusByteArray = [[AMFByteArray alloc] initWithData:m_data 
-//					encoding:kAMF3Version];
-//			}
-//			m_avmPlusByteArray.position = m_position;
-//			value = [m_avmPlusByteArray readObject];
+			value = [AMFUnarchiver unarchiveObjectWithData:[m_data subdataWithRange:
+				(NSRange){m_position, [m_data length] - m_position}] encoding:kAMF3Version];
 			break;
 			
 		case kAMF0StrictArrayType:
@@ -639,7 +646,7 @@
 	}
 	[m_objectTable replaceObjectAtIndex:[m_objectTable indexOfObject:object] withObject:desObject];
 	[object release];
-	return [desObject autorelease];
+	return desObject;
 }
 
 - (NSString *)_decodeLongString

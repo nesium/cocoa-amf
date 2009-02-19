@@ -9,6 +9,7 @@
 		);
 		breakpoints = (
 			49A46CEB0F4C2D92008ADED3 /* malloc_error_break */,
+			49A46ECC0F4DA59F008ADED3 /* objc_exception_throw */,
 		);
 		codeSenseManager = 49B3B1E10EE6942300498A01 /* Code sense */;
 		executables = (
@@ -41,8 +42,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 256646448;
-			PBXWorkspaceStateSaveDate = 256646448;
+			PBXPerProjectTemplateStateSaveDate = 256731317;
+			PBXWorkspaceStateSaveDate = 256731317;
 		};
 		sourceControlManager = 49B3B1E00EE6942300498A01 /* Source Control */;
 		userBuildSettings = {
@@ -59,9 +60,9 @@
 	2C35A4660EA401CB000B2452 /* AMF.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {699, 1013}}";
-			sepNavSelRange = "{472, 0}";
+			sepNavSelRange = "{550, 0}";
 			sepNavVisRange = "{0, 1079}";
-			sepNavWindowFrame = "{{54, 173}, {746, 1085}}";
+			sepNavWindowFrame = "{{608, 118}, {746, 1085}}";
 		};
 	};
 	2C35A46F0EA401CB000B2452 /* AMFActionMessage.h */ = {
@@ -75,8 +76,8 @@
 	2C35A4700EA401CB000B2452 /* AMFActionMessage.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {929, 2758}}";
-			sepNavSelRange = "{2812, 0}";
-			sepNavVisRange = "{0, 2224}";
+			sepNavSelRange = "{1528, 0}";
+			sepNavVisRange = "{0, 2234}";
 			sepNavWindowFrame = "{{157, 49}, {976, 1398}}";
 		};
 	};
@@ -106,10 +107,10 @@
 	};
 	2C47403F0F16C2890062D1FD /* AMF0Test.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {630, 1568}}";
-			sepNavSelRange = "{3026, 0}";
-			sepNavVisRange = "{1932, 1609}";
-			sepNavWindowFrame = "{{508, 139}, {675, 651}}";
+			sepNavIntBoundsRect = "{{0, 0}, {714, 3066}}";
+			sepNavSelRange = "{5640, 0}";
+			sepNavVisRange = "{2466, 2965}";
+			sepNavWindowFrame = "{{419, 80}, {761, 1212}}";
 		};
 	};
 	2C73A8080F193C2F00EA16AD /* ServerExample */ = {
@@ -150,10 +151,10 @@
 	};
 	2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {874, 9632}}";
-			sepNavSelRange = "{7475, 0}";
-			sepNavVisRange = "{6874, 824}";
-			sepNavWindowFrame = "{{130, 280}, {746, 1085}}";
+			sepNavIntBoundsRect = "{{0, 0}, {699, 9646}}";
+			sepNavSelRange = "{263, 0}";
+			sepNavVisRange = "{0, 1802}";
+			sepNavWindowFrame = "{{395, 57}, {746, 1085}}";
 		};
 	};
 	2C8500910EDF39560058EBE0 /* AMFClient */ = {
@@ -161,6 +162,29 @@
 		executables = (
 			49B3B1D60EE6941C00498A01 /* AMFClient */,
 		);
+	};
+	2C8500AC0EDF3B650058EBE0 /* Controller.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {714, 1140}}";
+			sepNavSelRange = "{172, 0}";
+			sepNavVisRange = "{0, 1618}";
+			sepNavWindowFrame = "{{387, 25}, {761, 1212}}";
+		};
+	};
+	2C8500AD0EDF3B650058EBE0 /* Controller.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {931, 4760}}";
+			sepNavSelRange = "{6652, 0}";
+			sepNavVisRange = "{6115, 1214}";
+			sepNavWindowFrame = "{{339, 38}, {761, 1212}}";
+		};
+	};
+	2C8500C60EDF41890058EBE0 /* CJSONSerializer.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {931, 2604}}";
+			sepNavSelRange = "{1367, 0}";
+			sepNavVisRange = "{918, 816}";
+		};
 	};
 	2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */ = {
 		uiCtxt = {
@@ -172,9 +196,9 @@
 	};
 	2C8500E30EDF42DF0058EBE0 /* AMFUnarchiver.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {750, 1582}}";
-			sepNavSelRange = "{670, 0}";
-			sepNavVisRange = "{140, 2547}";
+			sepNavIntBoundsRect = "{{0, 0}, {750, 1456}}";
+			sepNavSelRange = "{1382, 0}";
+			sepNavVisRange = "{0, 2711}";
 			sepNavWindowFrame = "{{103, 261}, {797, 1179}}";
 		};
 	};
@@ -188,10 +212,10 @@
 	};
 	2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {929, 14490}}";
-			sepNavSelRange = "{5907, 0}";
-			sepNavVisRange = "{5466, 2027}";
-			sepNavWindowFrame = "{{207, 48}, {976, 1398}}";
+			sepNavIntBoundsRect = "{{0, 0}, {931, 14476}}";
+			sepNavSelRange = "{2621, 0}";
+			sepNavVisRange = "{2429, 560}";
+			sepNavWindowFrame = "{{190, 46}, {951, 1109}}";
 		};
 	};
 	2CB5B48B0F16C7D200C71818 /* Tests */ = {
@@ -200,17 +224,17 @@
 	2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {663, 865}}";
-			sepNavSelRange = "{243, 0}";
-			sepNavVisRange = "{0, 436}";
+			sepNavSelRange = "{692, 0}";
+			sepNavVisRange = "{0, 697}";
 			sepNavWindowFrame = "{{318, 363}, {710, 937}}";
 		};
 	};
 	2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {663, 842}}";
-			sepNavSelRange = "{166, 0}";
-			sepNavVisRange = "{0, 1291}";
-			sepNavWindowFrame = "{{169, 74}, {710, 937}}";
+			sepNavIntBoundsRect = "{{0, 0}, {663, 1274}}";
+			sepNavSelRange = "{1229, 0}";
+			sepNavVisRange = "{819, 1399}";
+			sepNavWindowFrame = "{{88, 33}, {710, 937}}";
 		};
 	};
 	49A46AEF0F4983D5008ADED3 /* ServerExample */ = {
@@ -334,9 +358,24 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = libSystem.B.dylib;
-		modificationTime = 256663464.9324;
+		modificationTime = 256754327.425626;
 		state = 1;
 		symbolName = malloc_error_break;
+	};
+	49A46ECC0F4DA59F008ADED3 /* objc_exception_throw */ = {
+		isa = PBXSymbolicBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 1;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		hitCount = 0;
+		ignoreCount = 0;
+		location = libobjc.A.dylib;
+		modificationTime = 256754327.425642;
+		state = 1;
+		symbolName = objc_exception_throw;
 	};
 	49B3B1D50EE6941C00498A01 /* SharedObject Browser */ = {
 		isa = PBXExecutable;
@@ -368,7 +407,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 1;
+		breakpointsEnabled = 0;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -386,6 +425,8 @@
 		};
 		sourceDirectories = (
 		);
+		variableFormatDictionary = {
+		};
 	};
 	49B3B1E00EE6942300498A01 /* Source Control */ = {
 		isa = PBXSourceControlManager;

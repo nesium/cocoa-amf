@@ -16,6 +16,17 @@
 {
 
 }
+- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFVersion *)version;
+- (AMFUnarchiver *)unarchiverForPath:(NSString *)path;
 - (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj;
 - (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path;
+@end
+
+
+@interface Spam : NSObject <NSCoding>
+{
+	NSString *baz;
+	NSString *x;
+}
+@property (nonatomic, retain) NSString *baz;
 @end

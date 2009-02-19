@@ -40,7 +40,9 @@
 - (BOOL)allowsKeyedCoding;
 - (void)finishDecoding;
 - (Class)classForClassName:(NSString *)codedName;
++ (Class)classForClassName:(NSString *)codedName;
 - (void)setClass:(Class)cls forClassName:(NSString *)codedName;
++ (void)setClass:(Class)cls forClassName:(NSString *)codedName;
 - (BOOL)containsValueForKey:(NSString *)key;
 
 - (BOOL)decodeBoolForKey:(NSString *)key;
@@ -80,7 +82,6 @@
 
 @interface AMF0Unarchiver : AMFUnarchiver
 {
-	AMFUnarchiver *m_avmPlusByteArray;
 }
 @end
 

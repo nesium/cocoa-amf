@@ -33,7 +33,7 @@
 {
 	if (self = [super init])
 	{
-		AMFUnarchiver *ba = [[AMFUnarchiver alloc] initWithData:data encoding:kAMF0Version];
+		AMFUnarchiver *ba = [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version];
 		m_version = [ba decodeUnsignedShort];
 		uint16_t numHeaders = [ba decodeUnsignedShort];
 		NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];

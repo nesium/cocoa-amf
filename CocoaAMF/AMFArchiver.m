@@ -20,15 +20,14 @@
 - (void)_encodeNumber:(NSNumber *)value;
 - (void)_encodeASObject:(ASObject *)value;
 - (void)_encodeCustomObject:(id)value;
+- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
 @end
 
 @interface AMF0Archiver (Private)
-- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
 @end
 
 @interface AMF3Archiver (Private)
 - (void)_encodeTraits:(AMF3TraitsInfo *)traits;
-- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
 - (void)_encodeData:(NSData *)value;
 @end
 
@@ -205,10 +204,13 @@
 
 - (void)encodeObject:(NSObject *)value
 {
-	NSLog(@"Encode object: %@", value);
-	if ([value isKindOfClass:[NSString string]])
+	if ([value isKindOfClass:[NSString class]])
 	{
-		[self encodeUTF:(NSString *)value];
+		[self _encodeString:(NSString *)value omitType:NO];
+	}
+	else if ([value isKindOfClass:[NSNumber class]])
+	{
+		[self _encodeNumber:(NSNumber *)value];
 	}
 	else if ([value isKindOfClass:[NSDate date]])
 	{
@@ -267,6 +269,7 @@
 
 - (void)encodeUnsignedChar:(uint8_t)value
 {
+	[self _ensureLength:1];
 	m_bytes[m_position++] = value;
 }
 
@@ -418,7 +421,10 @@
 		return;
 	}
 	[self encodeUnsignedChar:kAMF0ECMAArrayType];
-	[self encodeUnsignedInt:[value count]];
+	//[self encodeUnsignedInt:[value count]];
+	// PyAMF does always write 0 instead of length
+	// @TODO look how flash handles this
+	[self encodeUnsignedInt:0];
 	for (NSString *key in value)
 	{
 		[self _encodeString:key omitType:YES];
@@ -440,7 +446,7 @@
 	if (value.type == nil)
 	{
 		[self encodeUnsignedChar:kAMF0ObjectType];
-		[self encodeUnsignedShort:0];
+		//[self encodeUnsignedShort:0];
 	}
 	else
 	{

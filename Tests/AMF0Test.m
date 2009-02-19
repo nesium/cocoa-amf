@@ -8,107 +8,212 @@
 
 #import "AMF0Test.h"
 
-
 @implementation AMF0Test
 
-- (void)testReadNumber
+- (void)testNumber
 {
-	STAssertTrue([self assertDataOfFile:@"read_number_0.amf0" 
-		isEqualTo:[NSNumber numberWithInt:0]], @"Numbers do not match");
-	STAssertTrue([self assertDataOfFile:@"read_number_1.amf0" 
-		isEqualTo:[NSNumber numberWithDouble:0.2]], @"Numbers do not match");
-	STAssertTrue([self assertDataOfFile:@"read_number_2.amf0" 
-		isEqualTo:[NSNumber numberWithInt:1]], @"Numbers do not match");
-	STAssertTrue([self assertDataOfFile:@"read_number_3.amf0" 
-		isEqualTo:[NSNumber numberWithInt:42]], @"Numbers do not match");
-	STAssertTrue([self assertDataOfFile:@"read_number_4.amf0" 
-		isEqualTo:[NSNumber numberWithInt:-123]], @"Numbers do not match");
-	STAssertTrue([self assertDataOfFile:@"read_number_5.amf0" 
-		isEqualTo:[NSNumber numberWithDouble:1.23456789]], @"Numbers do not match");
+	NSNumber *num = [NSNumber numberWithInt:0];
+	STAssertTrue([self assertDataOfFile:@"number_0.amf0" 
+		isEqualTo:num], @"Numbers do not match");
+	
+	STAssertTrue([self assertEncodedObject:num isEqualToContentsOfFile:@"number_0.amf0"], 
+		@"Number data is not equal");
+	
+	num = [NSNumber numberWithDouble:0.2];
+	STAssertTrue([self assertDataOfFile:@"number_1.amf0" 
+		isEqualTo:num], @"Numbers do not match");
+		
+	STAssertTrue([self assertEncodedObject:num isEqualToContentsOfFile:@"number_1.amf0"], 
+		@"Number data is not equal");
+	
+	num = [NSNumber numberWithInt:1];
+	STAssertTrue([self assertDataOfFile:@"number_2.amf0" 
+		isEqualTo:num], @"Numbers do not match");
+		
+	STAssertTrue([self assertEncodedObject:num isEqualToContentsOfFile:@"number_2.amf0"], 
+		@"Number data is not equal");
+	
+	num = [NSNumber numberWithInt:42];
+	STAssertTrue([self assertDataOfFile:@"number_3.amf0" 
+		isEqualTo:num], @"Numbers do not match");
+		
+	STAssertTrue([self assertEncodedObject:num isEqualToContentsOfFile:@"number_3.amf0"], 
+		@"Number data is not equal");
+	
+	num = [NSNumber numberWithInt:-123];
+	STAssertTrue([self assertDataOfFile:@"number_4.amf0" 
+		isEqualTo:num], @"Numbers do not match");
+		
+	STAssertTrue([self assertEncodedObject:num isEqualToContentsOfFile:@"number_4.amf0"], 
+		@"Number data is not equal");
+		
+	num = [NSNumber numberWithDouble:1.23456789];
+	STAssertTrue([self assertDataOfFile:@"number_5.amf0" 
+		isEqualTo:num], @"Numbers do not match");
+		
+	STAssertTrue([self assertEncodedObject:num isEqualToContentsOfFile:@"number_5.amf0"], 
+		@"Number data is not equal");
 }
 
-- (void)testReadBoolean
+- (void)testBoolean
 {
-	STAssertTrue([self assertDataOfFile:@"read_boolean_0.amf0" 
+	STAssertTrue([self assertDataOfFile:@"boolean_0.amf0" 
 		isEqualTo:[NSNumber numberWithBool:YES]], @"Booleans do not match");
-	STAssertTrue([self assertDataOfFile:@"read_boolean_1.amf0" 
+		
+	STAssertTrue([self assertEncodedObject:[NSNumber numberWithBool:YES] 
+		isEqualToContentsOfFile:@"boolean_0.amf0"], @"Boolean data is not equal");
+		
+	STAssertTrue([self assertDataOfFile:@"boolean_1.amf0" 
 		isEqualTo:[NSNumber numberWithBool:NO]], @"Booleans do not match");
+		
+	STAssertTrue([self assertEncodedObject:[NSNumber numberWithBool:NO] 
+		isEqualToContentsOfFile:@"boolean_1.amf0"], @"Boolean data is not equal");
 }
 
-- (void)testReadString
+- (void)testString
 {
-	STAssertTrue([self assertDataOfFile:@"read_string_0.amf0" 
+	NSString *str = @"";
+	STAssertTrue([self assertDataOfFile:@"string_0.amf0" 
 		isEqualTo:@""], @"Strings do not match");
-	STAssertTrue([self assertDataOfFile:@"read_string_1.amf0" 
-		isEqualTo:@"hello"], @"Strings do not match");
-	STAssertTrue([self assertDataOfFile:@"read_string_2.amf0" 
-		isEqualTo:@"ᚠᛇᚻ"], @"Strings do not match");
+		
+	STAssertTrue([self assertEncodedObject:str isEqualToContentsOfFile:@"string_0.amf0"], 
+		@"String data is not equal");
+	
+	str = @"hello";
+	STAssertTrue([self assertDataOfFile:@"string_1.amf0" 
+		isEqualTo:str], @"Strings do not match");
+	
+	STAssertTrue([self assertEncodedObject:str isEqualToContentsOfFile:@"string_1.amf0"], 
+		@"String data is not equal");
+	
+	str = @"ᚠᛇᚻ";
+	STAssertTrue([self assertDataOfFile:@"string_2.amf0" 
+		isEqualTo:str], @"Strings do not match");
+		
+	STAssertTrue([self assertEncodedObject:str isEqualToContentsOfFile:@"string_2.amf0"], 
+		@"String data is not equal");
 }
 
-- (void)testReadNull
+- (void)testNull
 {
-	STAssertTrue([self assertDataOfFile:@"read_null_0.amf0" 
+	STAssertTrue([self assertDataOfFile:@"null_0.amf0" 
 		isEqualTo:[NSNull null]], @"Could not read null value");
 }
 
-- (void)testReadUndefined
+- (void)testUndefined
 {
-	STAssertTrue([self assertDataOfFile:@"read_undefined_0.amf0" 
+	STAssertTrue([self assertDataOfFile:@"undefined_0.amf0" 
 		isEqualTo:[NSNull null]], @"Could not read undefined value");
 }
 
-- (void)testReadArray
+- (void)testArray
 {
-	STAssertTrue([self assertDataOfFile:@"read_array_0.amf0" 
-		isEqualTo:[NSArray array]], @"Arrays do not match");
-		
-	NSArray *arr = [NSArray arrayWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:2], 
-		[NSNumber numberWithInt:3], nil];
-	STAssertTrue([self assertDataOfFile:@"read_array_1.amf0" 
+	NSArray *arr = [NSArray array];
+	STAssertTrue([self assertDataOfFile:@"array_0.amf0" 
 		isEqualTo:arr], @"Arrays do not match");
+		
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"array_0.amf0"], 
+		@"Array data is not equal");
+		
+	arr = [NSArray arrayWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:2], 
+		[NSNumber numberWithInt:3], nil];
+	STAssertTrue([self assertDataOfFile:@"array_1.amf0" 
+		isEqualTo:arr], @"Arrays do not match");
+
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"array_1.amf0"], 
+		@"Array data is not equal");
 	
 	arr = [NSArray arrayWithObject:[NSArray arrayWithObject:[NSNumber numberWithDouble:1.0]]];
-	STAssertTrue([self assertDataOfFile:@"read_array_2.amf0" 
+	STAssertTrue([self assertDataOfFile:@"array_2.amf0" 
 		isEqualTo:arr], 
 		@"Arrays do not match");
 		
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"array_2.amf0"], 
+		@"Array data is not equal");
+		
 	arr = [NSArray arrayWithObject:[NSArray arrayWithObjects:@"test", @"test", @"test", @"test", nil]];
-	STAssertTrue([self assertDataOfFile:@"read_array_3.amf0" 
+	STAssertTrue([self assertDataOfFile:@"array_3.amf0" 
 		isEqualTo:arr], @"Arrays do not match");
+		
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"array_3.amf0"], 
+		@"Array data is not equal");
 
 	ASObject *dict = [ASObject asObjectWithDictionary:[NSDictionary 
 		dictionaryWithObjectsAndKeys:@"spam", @"a", @"eggs", @"b"]];
 	arr = [NSArray arrayWithObject:[NSArray arrayWithObjects:dict, dict, nil]];
-	STAssertTrue([self assertDataOfFile:@"read_array_4.amf0" 
+	STAssertTrue([self assertDataOfFile:@"array_4.amf0" 
 		isEqualTo:arr], @"Arrays do not match");
 		
-	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"read_array_4.amf0"], 
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"array_4.amf0"], 
 		@"Array data is not equal");
 }
 
-- (void)testReadObject
+- (void)testObject
 {
-	STAssertTrue([self assertDataOfFile:@"read_object_0.amf0" 
-		isEqualTo:[ASObject asObjectWithDictionary:
-			[NSDictionary dictionaryWithObject:@"a" forKey:@"a"]]], @"Objects do not match");
+	ASObject *obj = [ASObject asObjectWithDictionary:
+			[NSDictionary dictionaryWithObject:@"a" forKey:@"a"]];
+	STAssertTrue([self assertDataOfFile:@"object_0.amf0" 
+		isEqualTo:obj], @"Objects do not match");
+		
+	STAssertTrue([self assertEncodedObject:obj isEqualToContentsOfFile:@"object_0.amf0"], 
+		@"Object data is not equal");
 }
 
-- (void)testReadDictionary
+- (void)testDictionary
 {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithInt:1], @"a", 
 		[NSNumber numberWithInt:2], @"b", 
 		[NSNumber numberWithInt:3], @"c", nil];
-	STAssertTrue([self assertDataOfFile:@"read_dictionary_0.amf0" 
-		isEqualTo:dict], @"Dictionaries do not match");	
+	STAssertTrue([self assertDataOfFile:@"dictionary_0.amf0" 
+		isEqualTo:dict], @"Dictionaries do not match");
+		
+	STAssertTrue([self assertEncodedObject:dict isEqualToContentsOfFile:@"dictionary_0.amf0"], 
+		@"Dictionary data is not equal");
 }
 
-- (void)testReadDate
+- (void)testTypedObject
 {
-	NSDate *date = [NSDate dateWithTimeIntervalSince1970:1042326000];
-	STAssertTrue([self assertDataOfFile:@"read_date_0.amf0" 
-		isEqualTo:date], @"Dates do not match");
+	ASObject *obj = [ASObject asObjectWithDictionary:
+		[NSDictionary dictionaryWithObject:@"hello" forKey:@"baz"]];
+	obj.type = @"org.pyamf.spam";
+	
+	STAssertTrue([self assertDataOfFile:@"typedobject_0.amf0" 
+		isEqualTo:obj], @"Typed objects do not match");
+		
+	STAssertTrue([self assertEncodedObject:obj isEqualToContentsOfFile:@"typedobject_0.amf0"], 
+		@"Typed object data is not equal");
 }
+
+- (void)testRegisteredTypedObject
+{
+	Spam *spam = [[Spam alloc] init];
+	spam.baz = @"hello";
+	
+	AMFUnarchiver *unarchiver = [self unarchiverForPath:@"typedobject_0.amf0"];
+	[unarchiver setClass:[Spam class] forClassName:@"org.pyamf.spam"];
+	id result = [unarchiver decodeObject];
+	STAssertTrue([spam isEqual:result], @"Registered typed object test failed.");
+	
+	[spam release];	
+}
+
+- (void)testForceAMF3
+{
+	ASObject *obj = [ASObject asObjectWithDictionary:
+		[NSDictionary dictionaryWithObject:@"y" forKey:@"x"]];
+	obj.type = @"spam.eggs";
+	
+	STAssertTrue([self assertDataOfFile:@"forceamf3_0.amf0" 
+		isEqualTo:obj], @"forceAMF3 test failed");
+}
+
+//- (void)testReadDate
+//{
+//	NSDate *date = [NSDate dateWithTimeIntervalSince1970:1042326000];
+//	STAssertTrue([self assertDataOfFile:@"read_date_0.amf0" 
+//		isEqualTo:date], @"Dates do not match");
+//}
 
 
 @end
