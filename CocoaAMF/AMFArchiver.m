@@ -34,6 +34,8 @@
 
 @implementation AMFArchiver
 
+static NSMutableDictionary *g_registeredClasses = nil;
+
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
@@ -46,6 +48,7 @@
 		m_bytes = [m_data mutableBytes];
 		m_objectTable = [[NSMutableArray alloc] init];
 		m_currentSerializedObject = nil;
+		m_registeredClasses = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -88,6 +91,7 @@
 {
 	[m_objectTable release];
 	[m_data release];
+	[m_registeredClasses release];
 	[super dealloc];
 }
 
@@ -109,6 +113,27 @@
 - (void)encodeRootObject:(id)rootObject
 {
 	[self encodeObject:rootObject];
+}
+
+- (void)setClassName:(NSString *)codedName forClass:(Class)cls
+{
+	[m_registeredClasses setObject:codedName forKey:cls];
+}
+
++ (void)setClassName:(NSString *)codedName forClass:(Class)cls
+{
+	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
+	[g_registeredClasses setObject:codedName forKey:cls];
+}
+
+- (NSString *)classNameForClass:(Class)cls
+{
+	return [m_registeredClasses objectForKey:cls];
+}
+
++ (NSString *)classNameForClass:(Class)cls
+{
+	return [g_registeredClasses objectForKey:cls];
 }
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key
@@ -324,6 +349,9 @@
 - (void)_encodeCustomObject:(id)value
 {
 	ASObject *obj = m_currentSerializedObject = [[[ASObject alloc] init] autorelease];
+	obj.type = [[self class] classNameForClass:[value class]];
+	if (!obj.type) obj.type = [self classNameForClass:[value class]];
+	if (!obj.type) obj.type = [value className];
 	[value encodeWithCoder:self];
 	[self _encodeASObject:obj];
 }
@@ -655,7 +683,6 @@
 	{
 		[self encodeUnsignedInt29:((0 << 1) | 1)];
 	}
-	[traits release];
 }
 
 - (void)_encodeTraits:(AMF3TraitsInfo *)traits

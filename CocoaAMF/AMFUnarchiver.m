@@ -36,6 +36,8 @@
 - (NSData *)_decodeByteArray;
 - (NSDate *)_decodeDate;
 - (AMF3TraitsInfo *)_decodeTraits:(uint32_t)infoBits;
+- (NSString *)_stringReferenceAtIndex:(uint32_t)index;
+- (AMF3TraitsInfo *)_traitsReferenceAtIndex:(uint32_t)index;
 @end
 
 
@@ -43,10 +45,9 @@
 #pragma mark -
 
 
-static NSMutableDictionary *g_registeredClasses = nil;
-
 @implementation AMFUnarchiver
 
+static NSMutableDictionary *g_registeredClasses = nil;
 @synthesize objectEncoding=m_objectEncoding, data=m_data;
 
 #pragma mark -
@@ -747,12 +748,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if ((ref & 1) == 0)
 	{
 		ref = (ref >> 1);
-		if (ref < [m_stringTable count])
-		{
-			return (NSString *)[m_stringTable objectAtIndex:ref];
-		}
-		NSLog(@"String reference %d is out of bounds", ref);
-		return [NSString string];
+		return [self _stringReferenceAtIndex:ref];
 	}
 	uint32_t length = ref >> 1;
 	if (length == 0)
@@ -768,6 +764,26 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 #pragma mark -
 #pragma mark Private methods
+
+- (NSString *)_stringReferenceAtIndex:(uint32_t)index
+{
+	if ([m_stringTable count] <= index)
+	{
+		[NSException raise:@"NSUnarchiverCannotDecodeException" 
+			format:@"%@ cannot decode string reference", [self className]];
+	}
+	return [m_stringTable objectAtIndex:index];
+}
+
+- (AMF3TraitsInfo *)_traitsReferenceAtIndex:(uint32_t)index
+{
+	if ([m_traitsTable count] <= index)
+	{
+		[NSException raise:@"NSUnarchiverCannotDecodeException" 
+			format:@"%@ cannot decode traits reference", [self className]];
+	}
+	return [m_traitsTable objectAtIndex:index];
+}
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
@@ -929,12 +945,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if ((infoBits & 3) == 1)
 	{
 		infoBits = (infoBits >> 2);
-		if (infoBits < [m_traitsTable count])
-		{
-			return [m_traitsTable objectAtIndex:infoBits];
-		}
-		NSLog(@"Traits reference is out of bounds");
-		return [[[AMF3TraitsInfo alloc] init] autorelease];
+		return [self _traitsReferenceAtIndex:infoBits];
 	}
 	BOOL externalizable = (infoBits & 4) == 4;
 	BOOL dynamic = (infoBits & 8) == 8;

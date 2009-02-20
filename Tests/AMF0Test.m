@@ -195,7 +195,16 @@
 	id result = [unarchiver decodeObject];
 	STAssertTrue([spam isEqual:result], @"Registered typed object test failed.");
 	
-	[spam release];	
+	AMFArchiver *archiver = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
+		encoding:kAMF0Version];
+	[archiver setClassName:@"org.pyamf.spam" forClass:[Spam class]];
+	[archiver encodeRootObject:spam];
+	NSData *data = [NSData dataWithContentsOfFile:[self fullPathForTestFile:@"typedobject_0.amf0" 
+		version:nil]];
+	STAssertTrue([data isEqual:[archiver archiverData]], @"Registered typed object data is not equal");
+	[archiver release];
+	
+	[spam release];
 }
 
 - (void)testForceAMF3

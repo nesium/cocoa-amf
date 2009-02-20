@@ -50,8 +50,11 @@
 
 - (NSString *)fullPathForTestFile:(NSString *)file version:(AMFVersion *)version
 {
-	*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
-		? kAMF0Version : kAMF3Version;
+	if (version != nil)
+	{
+		*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
+			? kAMF0Version : kAMF3Version;
+	}
 	return [[TEST_DATA_PATH stringByAppendingPathComponent:[file pathExtension]] 
 		stringByAppendingPathComponent:file];
 }

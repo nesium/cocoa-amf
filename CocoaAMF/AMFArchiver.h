@@ -18,6 +18,7 @@
 	uint8_t *m_bytes;
 	uint32_t m_position;
 	NSMutableArray *m_objectTable;
+	NSMutableDictionary *m_registeredClasses;
 	ASObject *m_currentSerializedObject;
 }
 
@@ -32,6 +33,10 @@
 - (NSData *)data;
 - (NSMutableData *)archiverData;
 - (void)encodeRootObject:(id)rootObject;
+- (void)setClassName:(NSString *)codedName forClass:(Class)cls;
++ (void)setClassName:(NSString *)codedName forClass:(Class)cls;
+- (NSString *)classNameForClass:(Class)cls;
++ (NSString *)classNameForClass:(Class)cls;
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key;
 - (void)encodeDouble:(double)value forKey:(NSString *)key;
