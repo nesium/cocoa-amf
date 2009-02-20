@@ -178,4 +178,33 @@
 		@"String data is not equal");
 }
 
+- (void)testArray
+{
+	NSArray *arr = [NSArray arrayWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:1], 
+		[NSNumber numberWithInt:2], [NSNumber numberWithInt:3], nil];
+	STAssertTrue([self assertDataOfFile:@"array_0.amf3" 
+		isEqualTo:arr], @"Arrays do not match");
+
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"array_0.amf3"], 
+		@"Array data is not equal");
+}
+
+- (void)testDictionary
+{
+	NSDictionary *dict = [NSDictionary dictionaryWithObject:@"eggs" forKey:@"spam"];
+	STAssertTrue([self assertDataOfFile:@"dictionary_0.amf3" 
+		isEqualTo:dict], @"Dictionaries do not match");
+		
+	STAssertTrue([self assertEncodedObject:dict isEqualToContentsOfFile:@"dictionary_0.amf3"], 
+		@"Dictionary data is not equal");
+	
+	dict = [NSDictionary dictionaryWithObjectsAndKeys:@"a", @"a", @"b", @"b", @"c", @"c", 
+		@"d", @"d", nil];
+	STAssertTrue([self assertDataOfFile:@"dictionary_1.amf3" 
+		isEqualTo:dict], @"Dictionaries do not match");
+		
+	STAssertTrue([self assertEncodedObject:dict isEqualToContentsOfFile:@"dictionary_1.amf3"], 
+		@"Dictionary data is not equal");
+}
+
 @end

@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "AMFActionMessage.h"
 
 int main (int argc, const char * argv[]) 
 {

@@ -860,32 +860,43 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	}
 	
 	AMF3TraitsInfo *traitsInfo = [self _decodeTraits:ref];
-	ASObject *object = [[ASObject alloc] init];
-	[m_objectTable addObject:object];
+	NSObject *object;
 	if (traitsInfo.className && [traitsInfo.className length] > 0)
 	{
-		object.type = traitsInfo.className;
+		object = [[ASObject alloc] init];
+		[(ASObject *)object setType:traitsInfo.className];
+		[(ASObject *)object setIsExternalizable:traitsInfo.externalizable];
 	}
-	object.isExternalizable = traitsInfo.externalizable;
-	
-	NSEnumerator *propertiesEnumerator = [traitsInfo.properties objectEnumerator];
-	NSString *property;
-	while (property = [propertiesEnumerator nextObject])
+	else
 	{
-		[object setValue:[self decodeObject] forKey:property];
+		object = [[NSMutableDictionary alloc] init];
+	}
+	[m_objectTable addObject:object];
+	
+	NSString *key;
+	for (key in traitsInfo.properties)
+	{
+		[object setValue:[self decodeObject] forKey:key];
 	}
 	
 	if (traitsInfo.dynamic)
 	{
-		property = [self decodeUTF];
-		while (property != nil && [property length] > 0)
+		key = [self decodeUTF];
+		while (key != nil && [key length] > 0)
 		{
-			[object setValue:[self decodeObject] forKey:property];
-			property = [self decodeUTF];
+			[object setValue:[self decodeObject] forKey:key];
+			key = [self decodeUTF];
 		}
 	}
 	
-	NSObject *desObject = [self _deserializeObject:object];
+	if (![object isMemberOfClass:[ASObject class]])
+	{
+		NSDictionary *dictCopy = [object copy];
+		[object release];
+		return [dictCopy autorelease];
+	}
+	
+	NSObject *desObject = [self _deserializeObject:(ASObject *)object];
 	if (desObject == object)
 	{
 		return [object autorelease];

@@ -122,6 +122,13 @@
 	return data;
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | version: %d | headers: %d bodies: %d>\nheaders:\n%@\nbodies:\n%@", 
+		[self class], (long)self, m_version, [m_headers count], [m_bodies count], 
+		m_headers, m_bodies];
+}
+
 @end
 
 
@@ -158,6 +165,12 @@
 	[super dealloc];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | name: %@ | mustUnderstand: %d>\n%@", 
+		[self class], (long)self, m_name, m_mustUnderstand, m_data];
+}
+
 @end
 
 
@@ -192,6 +205,12 @@
 	[m_responseURI release];
 	[m_data release];
 	[super dealloc];
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | targetURI: %@ | responseURI: %@>\n%@", 
+		[self class], (long)self, m_targetURI, m_responseURI, m_data];
 }
 
 @end

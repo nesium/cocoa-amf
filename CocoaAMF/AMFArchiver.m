@@ -515,6 +515,23 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 @implementation AMF3Archiver
 
+- (id)init
+{
+	if (self = [super init])
+	{
+		m_stringTable = [[NSMutableArray alloc] init];
+		m_traitsTable = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[m_stringTable release];
+	[m_traitsTable release];
+	[super dealloc];
+}
+
 #pragma mark -
 #pragma mark Public methods
 
@@ -522,7 +539,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 {
 	if (value == nil)
 	{
-		[self encodeUnsignedInt29:0];
+		[self encodeUnsignedInt29:((0 << 1) | 1)];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
@@ -573,7 +590,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	}
 	if (value == nil || [value length] == 0)
 	{
-		[self encodeUnsignedChar:0];
+		[self encodeUnsignedChar:((0 << 1) | 1)];
 		return;
 	}
 	if ([m_stringTable containsObject:value])
@@ -589,22 +606,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeDictionary:(NSDictionary *)value
 {
-	[self encodeUnsignedChar:kAMF3ArrayType];
-	if ([m_objectTable containsObject:value])
-	{
-		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
-		return;
-	}
-	[m_objectTable addObject:value];
-	[self encodeUnsignedInt29:((0 << 1) | 1)];
-	NSEnumerator *keyEnumerator = [value keyEnumerator];
-	NSString *key;
-	while (key = [keyEnumerator nextObject])
-	{
-		[self _encodeString:key omitType:YES];
-		[self encodeObject:[value objectForKey:key]];
-	}
-	[self encodeUnsignedChar:((0 << 1) | 1)];
+	[self _encodeASObject:[ASObject asObjectWithDictionary:value]];
 }
 
 - (void)_encodeDate:(NSDate *)value
@@ -661,7 +663,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	}
 	[m_objectTable addObject:value];
 	AMF3TraitsInfo *traits = [[[AMF3TraitsInfo alloc] init] autorelease];
-	traits.externalizable = NO; // @FIXME
+	traits.externalizable = value.isExternalizable;
 	traits.dynamic = (value.type == nil || [value.type length] == 0);
 	traits.count = (traits.dynamic ? 0 : [value count]);
 	traits.className = value.type;
