@@ -66,6 +66,7 @@
 		49A46CB20F4C2AEE008ADED3 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		49A46CB30F4C2AEF008ADED3 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		49A46CC30F4C2B99008ADED3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A46CC20F4C2B99008ADED3 /* main.m */; };
+		49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A46FB30F4EBA3F008ADED3 /* AMF3Test.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -172,6 +173,8 @@
 		32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAMF_Prefix.pch; sourceTree = "<group>"; };
 		49A46C690F4C29C6008ADED3 /* ExecutableTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ExecutableTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		49A46CC20F4C2B99008ADED3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		49A46FB20F4EBA3F008ADED3 /* AMF3Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF3Test.h; sourceTree = "<group>"; };
+		49A46FB30F4EBA3F008ADED3 /* AMF3Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF3Test.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CocoaAMF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaAMF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -314,6 +317,8 @@
 				2C73A82F0F193EC000EA16AD /* Tests-Info.plist */,
 				2C47403E0F16C2890062D1FD /* AMF0Test.h */,
 				2C47403F0F16C2890062D1FD /* AMF0Test.m */,
+				49A46FB20F4EBA3F008ADED3 /* AMF3Test.h */,
+				49A46FB30F4EBA3F008ADED3 /* AMF3Test.m */,
 				2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */,
 				2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */,
 				49A46CC20F4C2B99008ADED3 /* main.m */,
@@ -729,6 +734,7 @@
 				2CB5B4CD0F16D27200C71818 /* AMFUnarchiver.m in Sources */,
 				2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */,
 				49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */,
+				49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
