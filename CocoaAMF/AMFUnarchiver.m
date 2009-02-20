@@ -333,8 +333,8 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (int16_t)decodeShort
 {
 	[self _ensureLength:2];
-	int8_t ch1 = [self decodeChar];
-	int8_t ch2 = [self decodeChar];
+	int8_t ch1 = m_bytes[m_position++];
+	int8_t ch2 = m_bytes[m_position++];
 	return (ch1 << 8) + ch2;
 }
 
@@ -357,8 +357,8 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (uint16_t)decodeUnsignedShort
 {
 	[self _ensureLength:2];
-	int8_t ch1 = [self decodeChar];
-	int8_t ch2 = [self decodeChar];
+	int8_t ch1 = m_bytes[m_position++];
+	int8_t ch2 = m_bytes[m_position++];
 	return ((ch1 & 0xFF) << 8) | (ch2 & 0xFF);
 }
 
@@ -811,8 +811,12 @@ static NSMutableDictionary *g_registeredClasses = nil;
 			break;
 			
 		case kAMF3IntegerType:
-			value = [NSNumber numberWithInt:[self decodeUnsignedInt29]];
+		{
+			int32_t intValue = [self decodeUnsignedInt29];
+			intValue = (intValue << 3) >> 3;
+			value = [NSNumber numberWithInt:intValue];
 			break;
+		}
 			
 		case kAMF3DoubleType:
 			value = [NSNumber numberWithDouble:[self decodeDouble]];
