@@ -74,7 +74,7 @@
 {
 	NSString *str = @"";
 	STAssertTrue([self assertDataOfFile:@"string_0.amf0" 
-		isEqualTo:@""], @"Strings do not match");
+		isEqualTo:str], @"Strings do not match");
 		
 	STAssertTrue([self assertEncodedObject:str isEqualToContentsOfFile:@"string_0.amf0"], 
 		@"String data is not equal");
