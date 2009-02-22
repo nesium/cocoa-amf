@@ -15,8 +15,8 @@
 @interface AMFActionMessage : NSObject 
 {
 	AMFVersion m_version;
-	NSArray *m_headers;
-	NSArray *m_bodies;
+	NSMutableArray *m_headers;
+	NSMutableArray *m_bodies;
 }
 @property (nonatomic, assign) AMFVersion version;
 @property (nonatomic, retain) NSArray *headers;
@@ -24,6 +24,8 @@
 
 - (id)initWithData:(NSData *)data;
 - (NSData *)data;
+- (void)addBodyWithTargetURI:(NSString *)targetURI responseURI:(NSString *)responseURI data:(id)data;
+- (void)addHeaderWithName:(NSString *)name mustUnderstand:(BOOL)mustUnderstand data:(id)data;
 @end
 
 

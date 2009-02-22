@@ -59,6 +59,15 @@
 		2CB5B4CC0F16D27000C71818 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
 		2CB5B4CD0F16D27200C71818 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		2CF104170F4F666D00A99429 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF104160F4F666D00A99429 /* main.m */; };
+		2CF1041B0F4F669700A99429 /* AMFDuplexGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF1041A0F4F669700A99429 /* AMFDuplexGateway.m */; };
+		2CF104400F4F7D6000A99429 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
+		2CF104410F4F7D6100A99429 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
+		2CF104420F4F7D6300A99429 /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */; };
+		2CF104430F4F7D6300A99429 /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */; };
+		2CF104440F4F7D6500A99429 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
+		2CF104450F4F7D6600A99429 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
+		2CF104480F4F7D7700A99429 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
 		49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
 		49A46CAE0F4C2AEB008ADED3 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
 		49A46CAF0F4C2AEC008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
@@ -170,6 +179,10 @@
 		2CB5B48C0F16C7D200C71818 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractAMFTest.h; sourceTree = "<group>"; };
 		2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractAMFTest.m; sourceTree = "<group>"; };
+		2CF104120F4F665000A99429 /* DuplexSocket */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DuplexSocket; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CF104160F4F666D00A99429 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2CF104190F4F669700A99429 /* AMFDuplexGateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFDuplexGateway.h; sourceTree = "<group>"; };
+		2CF1041A0F4F669700A99429 /* AMFDuplexGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFDuplexGateway.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CocoaAMF_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaAMF_Prefix.pch; sourceTree = "<group>"; };
 		49A46C690F4C29C6008ADED3 /* ExecutableTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ExecutableTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		49A46CC20F4C2B99008ADED3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -204,6 +217,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2CB5B4890F16C7D200C71818 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CF104100F4F665000A99429 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -255,6 +275,7 @@
 				2C73A8090F193C2F00EA16AD /* ServerExample */,
 				2C73A9060F1967E200EA16AD /* SimpleRemotingCallExample */,
 				49A46C690F4C29C6008ADED3 /* ExecutableTests */,
+				2CF104120F4F665000A99429 /* DuplexSocket */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -307,6 +328,8 @@
 				2C35A4820EA401CB000B2452 /* ASObject.m */,
 				2C73A8EB0F1954E100EA16AD /* AMFRemotingCall.h */,
 				2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */,
+				2CF104190F4F669700A99429 /* AMFDuplexGateway.h */,
+				2CF1041A0F4F669700A99429 /* AMFDuplexGateway.m */,
 			);
 			path = CocoaAMF;
 			sourceTree = "<group>";
@@ -342,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				2C85008D0EDF39490058EBE0 /* AMFClient */,
+				2CF1040C0F4F662E00A99429 /* DuplexSocket */,
 				2C73A8050F193C0400EA16AD /* ServerExample */,
 				2C73A9020F1967C600EA16AD /* SimpleRemotingCallExample */,
 				29B97315FDCFA39411CA2CEA /* SharedObject Browser */,
@@ -496,6 +520,15 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		2CF1040C0F4F662E00A99429 /* DuplexSocket */ = {
+			isa = PBXGroup;
+			children = (
+				2CF104160F4F666D00A99429 /* main.m */,
+			);
+			name = DuplexSocket;
+			path = Examples/DuplexSocket;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -567,6 +600,22 @@
 			productReference = 2CB5B48C0F16C7D200C71818 /* Tests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		2CF104110F4F665000A99429 /* DuplexSocket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CF104180F4F666D00A99429 /* Build configuration list for PBXNativeTarget "DuplexSocket" */;
+			buildPhases = (
+				2CF1040F0F4F665000A99429 /* Sources */,
+				2CF104100F4F665000A99429 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DuplexSocket;
+			productName = DuplexSocket;
+			productReference = 2CF104120F4F665000A99429 /* DuplexSocket */;
+			productType = "com.apple.product-type.tool";
+		};
 		49A46C680F4C29C6008ADED3 /* ExecutableTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49A46C7A0F4C29CE008ADED3 /* Build configuration list for PBXNativeTarget "ExecutableTests" */;
@@ -620,6 +669,7 @@
 				2C73A8080F193C2F00EA16AD /* ServerExample */,
 				2C73A9050F1967E200EA16AD /* SimpleRemotingCallExample */,
 				49A46C680F4C29C6008ADED3 /* ExecutableTests */,
+				2CF104110F4F665000A99429 /* DuplexSocket */,
 			);
 		};
 /* End PBXProject section */
@@ -735,6 +785,22 @@
 				2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */,
 				49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */,
 				49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CF1040F0F4F665000A99429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CF104170F4F666D00A99429 /* main.m in Sources */,
+				2CF1041B0F4F669700A99429 /* AMFDuplexGateway.m in Sources */,
+				2CF104400F4F7D6000A99429 /* AMFArchiver.m in Sources */,
+				2CF104410F4F7D6100A99429 /* AMFActionMessage.m in Sources */,
+				2CF104420F4F7D6300A99429 /* AMFGateway.m in Sources */,
+				2CF104430F4F7D6300A99429 /* AMFRemotingCall.m in Sources */,
+				2CF104440F4F7D6500A99429 /* AMFUnarchiver.m in Sources */,
+				2CF104450F4F7D6600A99429 /* ASObject.m in Sources */,
+				2CF104480F4F7D7700A99429 /* AsyncSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1001,6 +1067,52 @@
 			};
 			name = Release;
 		};
+		2CF104140F4F665100A99429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DuplexSocket;
+			};
+			name = Debug;
+		};
+		2CF104150F4F665100A99429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DuplexSocket;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		49A46C6B0F4C29C7008ADED3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1139,6 +1251,15 @@
 			buildConfigurations = (
 				2CB5B4900F16C7D700C71818 /* Debug */,
 				2CB5B4910F16C7D700C71818 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CF104180F4F666D00A99429 /* Build configuration list for PBXNativeTarget "DuplexSocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CF104140F4F665100A99429 /* Debug */,
+				2CF104150F4F665100A99429 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

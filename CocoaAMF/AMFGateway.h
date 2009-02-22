@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
-#import "AMFByteArray.h"
 #import "AMFActionMessage.h"
 
 #if TARGET_OS_IPHONE

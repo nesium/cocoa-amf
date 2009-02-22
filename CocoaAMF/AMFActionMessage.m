@@ -23,8 +23,8 @@
 {
 	if (self = [super init])
 	{
-		m_headers = nil;
-		m_bodies = nil;
+		m_headers = [[NSMutableArray alloc] init];
+		m_bodies = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -120,6 +120,26 @@
 	[ba release];
 	
 	return data;
+}
+
+- (void)addBodyWithTargetURI:(NSString *)targetURI responseURI:(NSString *)responseURI data:(id)data
+{
+	AMFMessageBody *body = [[AMFMessageBody alloc] init];
+	body.targetURI = targetURI;
+	body.responseURI = responseURI;
+	body.data = data;
+	[m_bodies addObject:body];
+	[body release];
+}
+
+- (void)addHeaderWithName:(NSString *)name mustUnderstand:(BOOL)mustUnderstand data:(id)data
+{
+	AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
+	header.name = name;
+	header.mustUnderstand = mustUnderstand;
+	header.data = data;
+	[m_headers addObject:header];
+	[header release];
 }
 
 - (NSString *)description
