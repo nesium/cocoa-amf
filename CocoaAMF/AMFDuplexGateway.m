@@ -18,6 +18,7 @@
 - (void)_processResponseWithServiceName:(NSString *)serviceName methodName:(NSString *)methodName 
 	responseData:(id)responseData invocationIndex:(int)invocationIndex 
 	resultType:(NSString *)resultType;
+- (void)_executeQueuedInvocations;
 @end
 
 @implementation AMFDuplexGateway
@@ -33,6 +34,9 @@
 		[m_socket setDelegate:self];
 		m_services = [[NSMutableDictionary alloc] init];
 		m_remoteServices = [[NSMutableDictionary alloc] init];
+		m_queuedInvocations = [[NSMutableSet alloc] init];
+		m_pendingInvocations = [[NSMutableSet alloc] init];
+		m_invocationCount = 1;
 	}
 	return self;
 }
@@ -43,6 +47,8 @@
 	[m_socket release];
 	[m_remote release];
 	[m_services release];
+	[m_queuedInvocations release];
+	[m_pendingInvocations release];
 	[super dealloc];
 }
 
@@ -77,14 +83,40 @@
 	[m_services removeObjectForKey:name];
 }
 
-- (void)invokeRemoteService:(NSString *)serviceName methodName:(NSString *)methodName 
-	arguments:(NSArray *)arguments
+- (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
+	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments
 {
-	NSLog(@"send message");
 	AMFActionMessage *am = [[AMFActionMessage alloc] init];
 	[am addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", serviceName, methodName] 
-		responseURI:@"/1" data:arguments];
-	[self _sendActionMessage:am];
+		responseURI:[NSString stringWithFormat:@"/%d", m_invocationCount] data:arguments];
+		
+	if (m_remote == nil)
+		[m_queuedInvocations addObject:am];
+	else
+		[self _sendActionMessage:am];
+	
+	[am release];
+	AMFInvocationResult *result = [AMFInvocationResult invocationResultForService:serviceName 
+		methodName:methodName arguments:arguments index:m_invocationCount++];
+	[m_pendingInvocations addObject:result];
+	return result;
+}
+
+- (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
+	methodName:(NSString *)methodName arguments:(id)firstArgument, ...
+{
+	NSMutableArray *arguments = [NSMutableArray array];
+	if (firstArgument != nil)
+	{
+		va_list args;
+		va_start(args, firstArgument);
+		id argument = firstArgument;
+		do [arguments addObject:argument];
+		while (argument = va_arg(args, id));
+		va_end(args);
+	}
+	if ([arguments count] == 0) arguments = nil;
+	return [self invokeRemoteService:serviceName methodName:methodName argumentsArray:arguments];
 }
 
 
@@ -153,7 +185,34 @@
 	responseData:(id)responseData invocationIndex:(int)invocationIndex 
 	resultType:(NSString *)resultType
 {
-	
+	AMFInvocationResult *result = nil;
+	for (AMFInvocationResult *nextResult in m_pendingInvocations)
+	{
+		if (nextResult.invocationIndex == invocationIndex && 
+			[nextResult.serviceName isEqual:serviceName] && 
+			[nextResult.methodName isEqual:methodName])
+		{
+			result = nextResult;
+			break;
+		}
+	}
+	if (result == nil)
+	{
+		NSLog(@"Received a response to a request we obviously never sent!");
+		return;
+	}
+	result.status = resultType;
+	result.result = responseData;
+	[result performSelector:@selector(_invocationDidReceiveResponse) withObject:nil];
+}
+
+- (void)_executeQueuedInvocations
+{
+	for (AMFActionMessage *am in m_queuedInvocations)
+	{
+		[self _sendActionMessage:am];
+	}
+	[m_queuedInvocations removeAllObjects];
 }
 
 
@@ -166,8 +225,7 @@
 	[newSocket setDelegate:self];
 	m_remote = [newSocket retain];
 	[self _continueReading];
-	[self invokeRemoteService:@"TestService" methodName:@"sayHello" 
-		arguments:[NSArray arrayWithObject:@"World"]];
+	[self _executeQueuedInvocations];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
@@ -189,7 +247,6 @@
 		{
 			AMFActionMessage *am = [[AMFActionMessage alloc] initWithData:data];
 			[self _processActionMessage:am];
-			NSLog(@"%@", am);
 		}
 		@catch (NSException *e) 
 		{
@@ -209,12 +266,37 @@
  
 - (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
 {
-	NSLog(@"will disconnect with error %@", err);
+	//NSLog(@"will disconnect with error %@", err);
 }
  
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock
 {
-	NSLog(@"did disconnect");
+	m_remote = nil;
+	//NSLog(@"did disconnect");
+}
+
+@end
+
+
+
+@implementation AMFInvocationResult
+
+@synthesize serviceName, methodName, arguments, invocationIndex, result, status, context, action, target;
+
++ (AMFInvocationResult *)invocationResultForService:(NSString *)aServiceName 
+	methodName:(NSString *)aMethodName arguments:(NSArray *)args index:(uint32_t)index
+{
+	AMFInvocationResult *result = [[AMFInvocationResult alloc] init];
+	result.serviceName = aServiceName;
+	result.methodName = aMethodName;
+	result.arguments = args;
+	result.invocationIndex = index;
+	return [result autorelease];
+}
+
+- (void)_invocationDidReceiveResponse
+{
+	[target performSelector:action withObject:self];
 }
 
 @end
