@@ -11,7 +11,7 @@
 #define kReadDataLengthTag 1
 #define kReadDataTag 2
 
-@interface AMFDuplexGateway (Private)
+@interface AMFRemoteGateway (Private)
 - (void)_continueReading;
 - (void)_sendActionMessage:(AMFActionMessage *)am;
 - (void)_processActionMessage:(AMFActionMessage *)am;
@@ -22,6 +22,8 @@
 @end
 
 @implementation AMFDuplexGateway
+
+@synthesize delegate=m_delegate;
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
@@ -78,6 +80,11 @@
 	[m_services removeObjectForKey:name];
 }
 
+- (id)serviceWithName:(NSString *)name
+{
+	return [m_services objectForKey:name];
+}
+
 
 
 #pragma mark -
@@ -85,24 +92,23 @@
  
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
 {
-	[newSocket setDelegate:self];
-	m_remote = [newSocket retain];
-	[self _continueReading];
+	AMFRemoteGateway *remoteGateway = [[AMFRemoteGateway alloc] initWithDelegate:self 
+		socket:newSocket];
+	[m_remoteGateways addObject:remoteGateway];
+	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidConnect:)])
+	{
+		objc_msgSend(m_delegate, @selector(gateway:remoteGatewayDidConnect:), self, remoteGateway);
+	}
+	[remoteGateway release];
 }
 
-- (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag
+- (void)remoteGatewayDidDisconnect:(AMFRemoteGateway *)remoteGateway
 {
-}
- 
-- (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
-{
-	//NSLog(@"will disconnect with error %@", err);
-}
- 
-- (void)onSocketDidDisconnect:(AsyncSocket *)sock
-{
-	m_remote = nil;
-	//NSLog(@"did disconnect");
+	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidDisconnect:)])
+	{
+		objc_msgSend(m_delegate, @selector(gateway:remoteGatewayDidDisconnect:), self, remoteGateway);
+	}
+	[m_remoteGateways removeObject:remoteGateway];
 }
 
 @end
@@ -114,13 +120,17 @@
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
-- (id)init
+- (id)initWithDelegate:(id <AMFRemoteGatewayDelegate>)delegate socket:(AsyncSocket *)socket;
 {
 	if (self = [super init])
 	{
+		m_delegate = delegate;
+		m_socket = [socket retain];
+		[m_socket setDelegate:self];
 		m_queuedInvocations = [[NSMutableSet alloc] init];
 		m_pendingInvocations = [[NSMutableSet alloc] init];
 		m_invocationCount = 1;
+		[self _continueReading];
 	}
 	return self;
 }
@@ -145,12 +155,7 @@
 	AMFActionMessage *am = [[AMFActionMessage alloc] init];
 	[am addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", serviceName, methodName] 
 		responseURI:[NSString stringWithFormat:@"/%d", m_invocationCount] data:arguments];
-		
-	if (m_remote == nil)
-		[m_queuedInvocations addObject:am];
-	else
-		[self _sendActionMessage:am];
-	
+	[self _sendActionMessage:am];
 	[am release];
 	AMFInvocationResult *result = [AMFInvocationResult invocationResultForService:serviceName 
 		methodName:methodName arguments:arguments index:m_invocationCount++];
@@ -182,7 +187,7 @@
 
 - (void)_continueReading
 {
-	[m_remote readDataToLength:4 withTimeout:-1 tag:kReadDataLengthTag];
+	[m_socket readDataToLength:4 withTimeout:-1 tag:kReadDataLengthTag];
 }
 
 - (void)_sendActionMessage:(AMFActionMessage *)am
@@ -191,8 +196,8 @@
 	uint32_t msgDataLength = CFSwapInt32HostToBig([data length]);
 	NSMutableData *lengthBits = [NSMutableData data];
 	[lengthBits appendBytes:&msgDataLength length:sizeof(uint32_t)];
-	[m_remote writeData:lengthBits withTimeout:-1 tag:0];
-	[m_remote writeData:data withTimeout:-1 tag:0];
+	[m_socket writeData:lengthBits withTimeout:-1 tag:0];
+	[m_socket writeData:data withTimeout:-1 tag:0];
 }
 
 - (void)_processActionMessage:(AMFActionMessage *)am
@@ -214,7 +219,7 @@
 				responseData:body.data invocationIndex:responseIndex resultType:resultType];
 			continue;
 		}
-		id service = [m_services objectForKey:serviceName];
+		id service = [m_delegate serviceWithName:serviceName];
 		SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@:", methodName]);
 		
 		if (![service respondsToSelector:selector])
@@ -224,7 +229,12 @@
 		}
 		
 		NSMethodSignature *signature = [service methodSignatureForSelector:selector];
-		id result = [service performSelector:selector withObject:body.data];
+		NSMutableArray *amData = [body.data isKindOfClass:[NSArray class]] 
+			? [body.data mutableCopy]
+			: [[NSMutableArray alloc] initWithObjects:body.data, nil];
+		[amData insertObject:self atIndex:0];
+		id result = [service performSelector:selector withObject:amData];
+		[amData release];
 		
 		if (![signature isOneway])
 		{
@@ -276,14 +286,6 @@
 #pragma mark -
 #pragma mark AsyncSocket delegate methods
  
-- (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
-{
-	[newSocket setDelegate:self];
-	m_remote = [newSocket retain];
-	[self _continueReading];
-	[self _executeQueuedInvocations];
-}
-
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
 	if (tag == kReadDataLengthTag)
@@ -316,13 +318,19 @@
 	}
 }
 
+- (void)onSocketDidDisconnect:(AsyncSocket *)sock
+{
+	[m_delegate remoteGatewayDidDisconnect:self];
+}
+
 @end
 
 
 
 @implementation AMFInvocationResult
 
-@synthesize serviceName, methodName, arguments, invocationIndex, result, status, context, action, target;
+@synthesize serviceName, methodName, arguments, invocationIndex, result, status, context, 
+	action, target;
 
 + (AMFInvocationResult *)invocationResultForService:(NSString *)aServiceName 
 	methodName:(NSString *)aMethodName arguments:(NSArray *)args index:(uint32_t)index

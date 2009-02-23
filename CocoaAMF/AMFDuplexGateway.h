@@ -14,28 +14,47 @@
 @class AMFInvocationResult;
 @class AMFRemoteGateway;
 
-@interface AMFDuplexGateway : NSObject 
+@protocol AMFRemoteGatewayDelegate
+- (id)serviceWithName:(NSString *)name;
+- (void)remoteGatewayDidDisconnect:(AMFRemoteGateway *)remoteGateway;
+@end
+
+
+@interface AMFDuplexGateway : NSObject <AMFRemoteGatewayDelegate>
 {
 	AsyncSocket *m_socket;
 	NSMutableSet *m_remoteGateways;
 	NSMutableDictionary *m_services;
+	id m_delegate;
 }
+@property (nonatomic, assign) id delegate;
 
 - (BOOL)startOnPort:(uint16_t)port error:(NSError **)error;
 - (void)stop;
 
 - (void)registerService:(id)service withName:(NSString *)name;
 - (void)unregisterServiceWithName:(NSString *)name;
+- (id)serviceWithName:(NSString *)name;
+
+- (void)remoteGatewayDidDisconnect:(AMFRemoteGateway *)remoteGateway;
+@end
+
+
+@interface NSObject (AMFDuplexGatewayDelegate)
+- (void)gateway:(AMFDuplexGateway *)gateway remoteGatewayDidConnect:(AMFRemoteGateway *)remote;
+- (void)gateway:(AMFDuplexGateway *)gateway remoteGatewayDidDisconnect:(AMFRemoteGateway *)remote;
 @end
 
 
 @interface AMFRemoteGateway : NSObject
 {
+	id m_delegate;
 	AsyncSocket *m_socket;
 	NSMutableSet *m_queuedInvocations;
 	NSMutableSet *m_pendingInvocations;
 	uint32_t m_invocationCount;
 }
+- (id)initWithDelegate:(id <AMFRemoteGatewayDelegate>)delegate socket:(AsyncSocket *)socket;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 

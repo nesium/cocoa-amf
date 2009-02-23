@@ -28,6 +28,19 @@
 	NSLog(@"Say hello complete: %@", [sender result]);
 }
 
+- (void)gateway:(AMFDuplexGateway *)gateway remoteGatewayDidConnect:(AMFRemoteGateway *)remote
+{
+	AMFInvocationResult *result = [remote invokeRemoteService:@"TestService" methodName:@"sayHello" 
+		arguments:@"Wuff", nil];
+	result.target = self;
+	result.action = @selector(sayHello_complete:);
+}
+
+- (void)gateway:(AMFDuplexGateway *)gateway remoteGatewayDidDisconnect:(AMFRemoteGateway *)remote
+{
+	NSLog(@"did disconnect");
+}
+
 @end
 
 
@@ -42,6 +55,7 @@ int main (int argc, const char * argv[])
 	AMFDuplexGateway *gateway = [[AMFDuplexGateway alloc] init];
 	TestService *testService = [[TestService alloc] init];
 	[gateway registerService:testService withName:@"TestService"];
+	gateway.delegate = testService;
 	
 	if (![gateway startOnPort:port error:&error])
 	{
@@ -49,10 +63,6 @@ int main (int argc, const char * argv[])
 	}
 	else
 	{
-		AMFInvocationResult *result = [gateway invokeRemoteService:@"TestService" methodName:@"sayHello" 
-			arguments:@"Wuff", nil];
-		result.target = testService;
-		result.action = @selector(sayHello_complete:);
 		[runLoop run];
 	}	
 	[gateway release];
