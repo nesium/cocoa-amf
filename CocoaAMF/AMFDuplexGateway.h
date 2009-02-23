@@ -12,16 +12,13 @@
 #import "AsyncSocket.h"
 
 @class AMFInvocationResult;
+@class AMFRemoteGateway;
 
 @interface AMFDuplexGateway : NSObject 
 {
 	AsyncSocket *m_socket;
-	AsyncSocket *m_remote;
+	NSMutableSet *m_remoteGateways;
 	NSMutableDictionary *m_services;
-	NSMutableDictionary *m_remoteServices;
-	NSMutableSet *m_queuedInvocations;
-	NSMutableSet *m_pendingInvocations;
-	uint32_t m_invocationCount;
 }
 
 - (BOOL)startOnPort:(uint16_t)port error:(NSError **)error;
@@ -29,7 +26,16 @@
 
 - (void)registerService:(id)service withName:(NSString *)name;
 - (void)unregisterServiceWithName:(NSString *)name;
+@end
 
+
+@interface AMFRemoteGateway : NSObject
+{
+	AsyncSocket *m_socket;
+	NSMutableSet *m_queuedInvocations;
+	NSMutableSet *m_pendingInvocations;
+	uint32_t m_invocationCount;
+}
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 

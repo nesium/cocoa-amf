@@ -33,10 +33,7 @@
 		m_socket = [[AsyncSocket alloc] init];
 		[m_socket setDelegate:self];
 		m_services = [[NSMutableDictionary alloc] init];
-		m_remoteServices = [[NSMutableDictionary alloc] init];
-		m_queuedInvocations = [[NSMutableSet alloc] init];
-		m_pendingInvocations = [[NSMutableSet alloc] init];
-		m_invocationCount = 1;
+		m_remoteGateways = [[NSMutableSet alloc] init];
 	}
 	return self;
 }
@@ -45,10 +42,8 @@
 {
 	[m_socket disconnect];
 	[m_socket release];
-	[m_remote release];
+	[m_remoteGateways release];
 	[m_services release];
-	[m_queuedInvocations release];
-	[m_pendingInvocations release];
 	[super dealloc];
 }
 
@@ -82,6 +77,67 @@
 {
 	[m_services removeObjectForKey:name];
 }
+
+
+
+#pragma mark -
+#pragma mark AsyncSocket delegate methods
+ 
+- (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
+{
+	[newSocket setDelegate:self];
+	m_remote = [newSocket retain];
+	[self _continueReading];
+}
+
+- (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag
+{
+}
+ 
+- (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
+{
+	//NSLog(@"will disconnect with error %@", err);
+}
+ 
+- (void)onSocketDidDisconnect:(AsyncSocket *)sock
+{
+	m_remote = nil;
+	//NSLog(@"did disconnect");
+}
+
+@end
+
+
+
+@implementation AMFRemoteGateway
+
+#pragma mark -
+#pragma mark Initialization & Deallocation
+
+- (id)init
+{
+	if (self = [super init])
+	{
+		m_queuedInvocations = [[NSMutableSet alloc] init];
+		m_pendingInvocations = [[NSMutableSet alloc] init];
+		m_invocationCount = 1;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[m_socket disconnect];
+	[m_socket release];
+	[m_queuedInvocations release];
+	[m_pendingInvocations release];
+	[super dealloc];
+}
+
+
+
+#pragma mark -
+#pragma mark Public methods
 
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments
@@ -258,21 +314,6 @@
 			[self _continueReading];
 		}
 	}
-}
-
-- (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag
-{
-}
- 
-- (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
-{
-	//NSLog(@"will disconnect with error %@", err);
-}
- 
-- (void)onSocketDidDisconnect:(AsyncSocket *)sock
-{
-	m_remote = nil;
-	//NSLog(@"did disconnect");
 }
 
 @end
