@@ -207,4 +207,27 @@
 		@"Dictionary data is not equal");
 }
 
+- (void)testRegisteredTypedObject
+{
+	Spam *spam = [[Spam alloc] init];
+	spam.baz = @"hello";
+	
+	AMFUnarchiver *unarchiver = [self unarchiverForPath:@"typedobject_0.amf3"];
+	[unarchiver setClass:[Spam class] forClassName:@"org.pyamf.spam"];
+	id result = [unarchiver decodeObject];
+	STAssertTrue([spam isEqual:result], @"Registered typed object test failed.");
+	
+	AMFArchiver *archiver = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
+		encoding:kAMF3Version];
+	[archiver setClassName:@"org.pyamf.spam" forClass:[Spam class]];
+	[archiver encodeRootObject:spam];
+	NSData *data = [NSData dataWithContentsOfFile:[self fullPathForTestFile:@"typedobject_0.amf3" 
+		version:nil]];
+	[[archiver archiverData] writeToFile:@"/Users/marc/Desktop/test.amf3" atomically:NO];
+	STAssertTrue([data isEqual:[archiver archiverData]], @"Registered typed object data is not equal");
+	[archiver release];
+	
+	[spam release];
+}
+
 @end

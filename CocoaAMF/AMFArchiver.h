@@ -6,7 +6,7 @@
 //  Copyright 2009 nesiumdotcom. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "AMF.h"
 #import "AMFUnarchiver.h"
 #import "ASObject.h"
