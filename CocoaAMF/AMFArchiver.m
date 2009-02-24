@@ -414,7 +414,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeArray:(NSArray *)value
 {
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedChar:kAMF0ReferenceType];
 		[self encodeUnsignedShort:[m_objectTable indexOfObject:value]];
@@ -431,7 +431,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeDictionary:(NSDictionary *)value
 {
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedChar:kAMF0ReferenceType];
 		[self encodeUnsignedShort:[m_objectTable indexOfObject:value]];
@@ -464,7 +464,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeASObject:(ASObject *)value
 {
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedChar:kAMF0ReferenceType];
 		[self encodeUnsignedShort:[m_objectTable indexOfObject:value]];
@@ -568,7 +568,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (void)_encodeArray:(NSArray *)value
 {
 	[self encodeUnsignedChar:kAMF3ArrayType];
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
@@ -612,7 +612,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (void)_encodeDate:(NSDate *)value
 {
 	[self encodeUnsignedChar:kAMF3DateType];
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
@@ -624,7 +624,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeData:(NSData *)value
 {
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
@@ -656,7 +656,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (void)_encodeASObject:(ASObject *)value
 {
 	[self encodeUnsignedChar:kAMF3ObjectType];
-	if ([m_objectTable containsObject:value])
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{
 		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
 		return;
