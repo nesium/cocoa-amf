@@ -106,7 +106,7 @@
 			NSDictionary *obj = [parent isKindOfClass:[ASObject class]] 
 				? [(ASObject *)parent properties]
 				: (NSDictionary *)parent;
-			return [[obj allKeys] objectAtIndex:[[obj allValues] indexOfObject:item]];
+			return [[obj allKeys] objectAtIndex:[[obj allValues] indexOfObjectIdenticalTo:item]];
 		}
 		return @"";
 	}

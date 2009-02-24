@@ -16,16 +16,15 @@
 		2CE53EFE0F1A6A050000AD55 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */; };
 		2CE53EFF0F1A6A050000AD55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EFB0F1A6A050000AD55 /* main.m */; };
 		2CE53F000F1A6A050000AD55 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EFC0F1A6A050000AD55 /* MainWindow.xib */; };
-		2CE53F1D0F1A6AB40000AD55 /* AMF0KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F0E0F1A6AB40000AD55 /* AMF0KeyedArchiver.m */; };
-		2CE53F1E0F1A6AB40000AD55 /* AMF3KeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F100F1A6AB40000AD55 /* AMF3KeyedArchiver.m */; };
 		2CE53F1F0F1A6AB40000AD55 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */; };
-		2CE53F200F1A6AB40000AD55 /* AMFByteArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F140F1A6AB40000AD55 /* AMFByteArray.m */; };
 		2CE53F210F1A6AB40000AD55 /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F160F1A6AB40000AD55 /* AMFGateway.m */; };
 		2CE53F220F1A6AB40000AD55 /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */; };
 		2CE53F230F1A6AB40000AD55 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F1A0F1A6AB40000AD55 /* ASObject.m */; };
 		2CE53F340F1A6B550000AD55 /* NSObject-iPhoneExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */; };
 		2CE53F470F1A6C8E0000AD55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */; };
 		2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5403B0F1A76260000AD55 /* DemoCaller.m */; };
+		49A471490F52E60D008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A471460F52E60D008ADED3 /* AMFArchiver.m */; };
+		49A4714A0F52E60D008ADED3 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A471470F52E60D008ADED3 /* AMFUnarchiver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,16 +40,10 @@
 		2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2CE53EFB0F1A6A050000AD55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2CE53EFC0F1A6A050000AD55 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		2CE53F020F1A6A920000AD55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.mxml; path = Info.plist; sourceTree = "<group>"; };
+		2CE53F020F1A6A920000AD55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CE53F0C0F1A6AB40000AD55 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
-		2CE53F0D0F1A6AB40000AD55 /* AMF0KeyedArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF0KeyedArchiver.h; sourceTree = "<group>"; };
-		2CE53F0E0F1A6AB40000AD55 /* AMF0KeyedArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF0KeyedArchiver.m; sourceTree = "<group>"; };
-		2CE53F0F0F1A6AB40000AD55 /* AMF3KeyedArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF3KeyedArchiver.h; sourceTree = "<group>"; };
-		2CE53F100F1A6AB40000AD55 /* AMF3KeyedArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF3KeyedArchiver.m; sourceTree = "<group>"; };
 		2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFActionMessage.h; sourceTree = "<group>"; };
 		2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFActionMessage.m; sourceTree = "<group>"; };
-		2CE53F130F1A6AB40000AD55 /* AMFByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFByteArray.h; sourceTree = "<group>"; };
-		2CE53F140F1A6AB40000AD55 /* AMFByteArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFByteArray.m; sourceTree = "<group>"; };
 		2CE53F150F1A6AB40000AD55 /* AMFGateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFGateway.h; sourceTree = "<group>"; };
 		2CE53F160F1A6AB40000AD55 /* AMFGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFGateway.m; sourceTree = "<group>"; };
 		2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFRemotingCall.h; sourceTree = "<group>"; };
@@ -62,6 +55,10 @@
 		2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2CE5403A0F1A76260000AD55 /* DemoCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCaller.h; sourceTree = "<group>"; };
 		2CE5403B0F1A76260000AD55 /* DemoCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoCaller.m; sourceTree = "<group>"; };
+		49A471450F52E60D008ADED3 /* AMFArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFArchiver.h; sourceTree = "<group>"; };
+		49A471460F52E60D008ADED3 /* AMFArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFArchiver.m; sourceTree = "<group>"; };
+		49A471470F52E60D008ADED3 /* AMFUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFUnarchiver.m; sourceTree = "<group>"; };
+		49A471480F52E60D008ADED3 /* AMFUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFUnarchiver.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,18 +161,16 @@
 			isa = PBXGroup;
 			children = (
 				2CE53F0C0F1A6AB40000AD55 /* AMF.h */,
-				2CE53F0D0F1A6AB40000AD55 /* AMF0KeyedArchiver.h */,
-				2CE53F0E0F1A6AB40000AD55 /* AMF0KeyedArchiver.m */,
-				2CE53F0F0F1A6AB40000AD55 /* AMF3KeyedArchiver.h */,
-				2CE53F100F1A6AB40000AD55 /* AMF3KeyedArchiver.m */,
 				2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */,
 				2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */,
-				2CE53F130F1A6AB40000AD55 /* AMFByteArray.h */,
-				2CE53F140F1A6AB40000AD55 /* AMFByteArray.m */,
 				2CE53F150F1A6AB40000AD55 /* AMFGateway.h */,
 				2CE53F160F1A6AB40000AD55 /* AMFGateway.m */,
 				2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */,
 				2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */,
+				49A471450F52E60D008ADED3 /* AMFArchiver.h */,
+				49A471460F52E60D008ADED3 /* AMFArchiver.m */,
+				49A471480F52E60D008ADED3 /* AMFUnarchiver.h */,
+				49A471470F52E60D008ADED3 /* AMFUnarchiver.m */,
 				2CE53F190F1A6AB40000AD55 /* ASObject.h */,
 				2CE53F1A0F1A6AB40000AD55 /* ASObject.m */,
 				2CE53F320F1A6B550000AD55 /* NSObject-iPhoneExtensions.h */,
@@ -242,15 +237,14 @@
 				2CE53EF20F1A69EC0000AD55 /* AsyncSocket.m in Sources */,
 				2CE53EFE0F1A6A050000AD55 /* AppDelegate.m in Sources */,
 				2CE53EFF0F1A6A050000AD55 /* main.m in Sources */,
-				2CE53F1D0F1A6AB40000AD55 /* AMF0KeyedArchiver.m in Sources */,
-				2CE53F1E0F1A6AB40000AD55 /* AMF3KeyedArchiver.m in Sources */,
 				2CE53F1F0F1A6AB40000AD55 /* AMFActionMessage.m in Sources */,
-				2CE53F200F1A6AB40000AD55 /* AMFByteArray.m in Sources */,
 				2CE53F210F1A6AB40000AD55 /* AMFGateway.m in Sources */,
 				2CE53F220F1A6AB40000AD55 /* AMFRemotingCall.m in Sources */,
 				2CE53F230F1A6AB40000AD55 /* ASObject.m in Sources */,
 				2CE53F340F1A6B550000AD55 /* NSObject-iPhoneExtensions.m in Sources */,
 				2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */,
+				49A471490F52E60D008ADED3 /* AMFArchiver.m in Sources */,
+				49A4714A0F52E60D008ADED3 /* AMFUnarchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,14 +8,25 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "AMF.h"
-#import "AMFByteArray.h"
+#import "AMFUnarchiver.h"
+#import "AMFArchiver.h"
 
 
 @interface AbstractAMFTest : SenTestCase 
 {
 
 }
+- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFVersion *)version;
+- (AMFUnarchiver *)unarchiverForPath:(NSString *)path;
+- (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj;
+- (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path;
+@end
 
-- (void)assertAMF0Data:(const char *)data length:(uint32_t)length equalsObject:(id)obj;
 
+@interface Spam : NSObject <NSCoding>
+{
+	NSString *baz;
+	NSString *x;
+}
+@property (nonatomic, retain) NSString *baz;
 @end

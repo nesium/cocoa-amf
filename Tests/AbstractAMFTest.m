@@ -8,36 +8,87 @@
 
 #import "AbstractAMFTest.h"
 
+#define TEST_DATA_PATH @"../../Tests/data"
+
 
 @implementation AbstractAMFTest
 
-- (void)assertAMF0Data:(const char *)data length:(uint32_t)length equalsObject:(id)obj;
+- (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj
 {
-	AMFByteArray *byteArray = [[AMFByteArray alloc] 
-		initWithData:[NSData dataWithBytes:data length:length] encoding:kAMF0Version];
-	id deserializedObj = [byteArray readObject];
+	AMFVersion version;
+	path = [self fullPathForTestFile:path version:&version];
+	id deserializedObj = [AMFUnarchiver unarchiveObjectWithFile:path encoding:version];
+	BOOL isEqual = (obj == nil) ? deserializedObj == nil : [deserializedObj isEqual:obj];
+	if (!isEqual) NSLog(@"Assertion failure: %@ should be %@", deserializedObj, obj);
+	return isEqual;
+}
+
+- (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path
+{
+	AMFVersion version;
+	path = [self fullPathForTestFile:path version:&version];
+
+	NSData *data = [AMFArchiver archivedDataWithRootObject:obj encoding:version];
+	BOOL isEqual = [[NSData dataWithContentsOfFile:path] isEqual:data];
 	
-	if (obj == [NSNull null])
+	if (!isEqual)
 	{
-		STAssertTrue(deserializedObj == obj, @"%@ should be %@", 
-			deserializedObj, obj);	
+		[data writeToFile:[[@"~/Desktop" stringByExpandingTildeInPath] stringByAppendingPathComponent:
+			[path lastPathComponent]] atomically:NO];
 	}
-	else if ([obj isKindOfClass:[NSArray class]])
+	return isEqual;
+}
+
+- (AMFUnarchiver *)unarchiverForPath:(NSString *)path
+{
+	AMFVersion version;
+	path = [self fullPathForTestFile:path version:&version];
+	AMFUnarchiver *unarchiver = [[AMFUnarchiver alloc] 
+		initForReadingWithData:[NSData dataWithContentsOfFile:path] encoding:version];
+	return [unarchiver autorelease];
+}
+
+- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFVersion *)version
+{
+	if (version != nil)
 	{
-		STAssertTrue([deserializedObj isEqualToArray:obj], @"%@ should be %@", 
-			deserializedObj, obj);
+		*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
+			? kAMF0Version : kAMF3Version;
 	}
-	else if ([obj isKindOfClass:[NSDictionary class]])
+	return [[TEST_DATA_PATH stringByAppendingPathComponent:[file pathExtension]] 
+		stringByAppendingPathComponent:file];
+}
+
+@end
+
+
+@implementation Spam
+@synthesize baz;
+
+- (void)dealloc
+{
+	[baz release];
+	[super dealloc];
+}
+
+- (BOOL)isEqual:(id)obj
+{
+	if (![obj isMemberOfClass:[Spam class]]) return NO;
+	return [[(Spam *)obj baz] isEqual:baz];
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super init])
 	{
-		STAssertTrue([deserializedObj isEqualToDictionary:obj], @"%@ should be %@", 
-			deserializedObj, obj);
+		self.baz = [coder decodeObjectForKey:@"baz"];
 	}
-	else
-	{
-		STAssertTrue([deserializedObj isEqual:obj], @"%@ should be %@", 
-			deserializedObj, obj);
-	}
-	[byteArray release];
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:baz forKey:@"baz"];
 }
 
 @end

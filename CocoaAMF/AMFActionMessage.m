@@ -23,8 +23,8 @@
 {
 	if (self = [super init])
 	{
-		m_headers = nil;
-		m_bodies = nil;
+		m_headers = [[NSMutableArray alloc] init];
+		m_bodies = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -33,33 +33,33 @@
 {
 	if (self = [super init])
 	{
-		AMFByteArray *ba = [[AMFByteArray alloc] initWithData:data encoding:kAMF0Version];
-		m_version = [ba readUnsignedShort];
-		uint16_t numHeaders = [ba readUnsignedShort];
+		AMFUnarchiver *ba = [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version];
+		m_version = [ba decodeUnsignedShort];
+		uint16_t numHeaders = [ba decodeUnsignedShort];
 		NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];
 		for (uint16_t i = 0; i < numHeaders; i++)
 		{
 			AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
-			header.name = [ba readUTF];
-			header.mustUnderstand = [ba readBoolean];
+			header.name = [ba decodeUTF];
+			header.mustUnderstand = [ba decodeBool];
 			// Header length
-			[ba readUnsignedInt];
-			header.data = [ba readObject];
+			[ba decodeUnsignedInt];
+			header.data = [ba decodeObject];
 			[headers addObject:header];
 			[header release];
 		}
 		m_headers = [headers copy];
 		
-		uint16_t numBodies = [ba readUnsignedShort];
+		uint16_t numBodies = [ba decodeUnsignedShort];
 		NSMutableArray *bodies = [NSMutableArray arrayWithCapacity:numBodies];
 		for (uint16_t i = 0; i < numBodies; i++)
 		{
 			AMFMessageBody *body = [[AMFMessageBody alloc] init];
-			body.targetURI = [ba readUTF];
-			body.responseURI = [ba readUTF];
+			body.targetURI = [ba decodeUTF];
+			body.responseURI = [ba decodeUTF];
 			// Body length
-			[ba readUnsignedInt];
-			body.data = [ba readObject];
+			[ba decodeUnsignedInt];
+			body.data = [ba decodeObject];
 			[bodies addObject:body];
 		}
 		m_bodies = [bodies copy];
@@ -81,45 +81,72 @@
 
 - (NSData *)data
 {
-	AMFByteArray *ba = [[AMFByteArray alloc] initWithData:[NSMutableData data] 
+	AMFArchiver *ba = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 		encoding:kAMF0Version];
-	[ba writeUnsignedShort:m_version];
-	[ba writeUnsignedShort:[m_headers count]];
+	[ba encodeUnsignedShort:m_version];
+	[ba encodeUnsignedShort:[m_headers count]];
 	for (AMFMessageHeader *header in m_headers)
 	{
-		[ba writeUTF:header.name];
-		[ba writeBoolean:header.mustUnderstand];
-		AMFByteArray *headerBa = [[AMFByteArray alloc] initWithData:[NSMutableData data] 
+		[ba encodeUTF:header.name];
+		[ba encodeBool:header.mustUnderstand];
+		AMFArchiver *headerBa = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 			encoding:m_version];
 		if (m_version == kAMF3Version)
 		{
-			[headerBa writeUnsignedByte:kAMF0AVMPlusObjectType];
+			[headerBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
-		[headerBa writeObject:header.data];
-		[ba writeUnsignedInt:[headerBa.data length]];
-		[ba writeBytes:headerBa.data];
+		[headerBa encodeObject:header.data];
+		[ba encodeUnsignedInt:[headerBa.data length]];
+		[ba encodeDataObject:headerBa.data];
 		[headerBa release];
 	}
-	[ba writeUnsignedShort:[m_bodies count]];
+	[ba encodeUnsignedShort:[m_bodies count]];
 	for (AMFMessageBody *body in m_bodies)
 	{
-		body.targetURI != nil ? [ba writeUTF:body.targetURI] : [ba writeUTF:@"null"];
-		body.responseURI != nil ? [ba writeUTF:body.responseURI] : [ba writeUTF:@"null"];
-		AMFByteArray *bodyBa = [[AMFByteArray alloc] initWithData:[NSMutableData data] 
+		body.targetURI != nil ? [ba encodeUTF:body.targetURI] : [ba encodeUTF:@"null"];
+		body.responseURI != nil ? [ba encodeUTF:body.responseURI] : [ba encodeUTF:@"null"];
+		AMFArchiver *bodyBa = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 			encoding:m_version];
 		if (m_version == kAMF3Version)
 		{
-			[bodyBa writeUnsignedByte:kAMF0AVMPlusObjectType];
+			[bodyBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
-		[bodyBa writeObject:body.data];
-		[ba writeUnsignedInt:[bodyBa.data length]];
-		[ba writeBytes:bodyBa.data];
+		[bodyBa encodeObject:body.data];
+		[ba encodeUnsignedInt:[bodyBa.data length]];
+		[ba encodeDataObject:bodyBa.data];
 		[bodyBa release];
 	}
 	NSData *data = [[ba.data retain] autorelease];
 	[ba release];
 	
 	return data;
+}
+
+- (void)addBodyWithTargetURI:(NSString *)targetURI responseURI:(NSString *)responseURI data:(id)data
+{
+	AMFMessageBody *body = [[AMFMessageBody alloc] init];
+	body.targetURI = targetURI;
+	body.responseURI = responseURI;
+	body.data = data;
+	[m_bodies addObject:body];
+	[body release];
+}
+
+- (void)addHeaderWithName:(NSString *)name mustUnderstand:(BOOL)mustUnderstand data:(id)data
+{
+	AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
+	header.name = name;
+	header.mustUnderstand = mustUnderstand;
+	header.data = data;
+	[m_headers addObject:header];
+	[header release];
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | version: %d | headers: %d bodies: %d>\nheaders:\n%@\nbodies:\n%@", 
+		[self class], (long)self, m_version, [m_headers count], [m_bodies count], 
+		m_headers, m_bodies];
 }
 
 @end
@@ -158,6 +185,12 @@
 	[super dealloc];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | name: %@ | mustUnderstand: %d>\n%@", 
+		[self class], (long)self, m_name, m_mustUnderstand, m_data];
+}
+
 @end
 
 
@@ -192,6 +225,12 @@
 	[m_responseURI release];
 	[m_data release];
 	[super dealloc];
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | targetURI: %@ | responseURI: %@>\n%@", 
+		[self class], (long)self, m_targetURI, m_responseURI, m_data];
 }
 
 @end
