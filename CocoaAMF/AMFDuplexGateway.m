@@ -23,7 +23,7 @@
 
 @implementation AMFDuplexGateway
 
-@synthesize delegate=m_delegate;
+@synthesize delegate=m_delegate, mode=m_mode;
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
@@ -36,6 +36,7 @@
 		[m_socket setDelegate:self];
 		m_services = [[NSMutableDictionary alloc] init];
 		m_remoteGateways = [[NSMutableSet alloc] init];
+		m_mode = kAMFDuplexGatewayModeNotConnected;
 	}
 	return self;
 }
@@ -56,17 +57,40 @@
 
 - (BOOL)startOnPort:(uint16_t)port error:(NSError **)error
 {
+	if (m_mode != kAMFDuplexGatewayModeNotConnected)
+		[self stop];
+
 	if (![m_socket acceptOnPort:port error:error])
 	{
 		NSLog(@"Error starting server: %@", error);
 		return NO;
 	}
+	m_mode = kAMFDuplexGatewayModeServer;
 	NSLog(@"Server started on port %d", [m_socket localPort]);
+	return YES;
+}
+
+- (BOOL)connectToRemote:(NSString *)server port:(uint16_t)port error:(NSError **)error
+{
+	if (m_mode != kAMFDuplexGatewayModeNotConnected)
+		[self stop];
+		
+	if (![m_socket connectToHost:server onPort:port error:error])
+		return NO;
+	
+	m_mode = kAMFDuplexGatewayModeClient;
+	AMFRemoteGateway *gateway = [[AMFRemoteGateway alloc] initWithDelegate:self socket:m_socket];
+	[m_remoteGateways addObject:gateway];
+	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidConnect:)])
+		objc_msgSend(m_delegate, @selector(gateway:remoteGatewayDidConnect:), self, gateway);
+	[gateway release];
 	return YES;
 }
 
 - (void)stop
 {
+	[m_remoteGateways removeAllObjects];
+	m_mode = kAMFDuplexGatewayModeNotConnected;
 	[m_socket disconnect];
 }
 
@@ -159,6 +183,7 @@
 	[am release];
 	AMFInvocationResult *result = [AMFInvocationResult invocationResultForService:serviceName 
 		methodName:methodName arguments:arguments index:m_invocationCount++];
+	result.gateway = self;
 	[m_pendingInvocations addObject:result];
 	return result;
 }
@@ -329,7 +354,7 @@
 
 @implementation AMFInvocationResult
 
-@synthesize serviceName, methodName, arguments, invocationIndex, result, status, context, 
+@synthesize gateway, serviceName, methodName, arguments, invocationIndex, result, status, context, 
 	action, target;
 
 + (AMFInvocationResult *)invocationResultForService:(NSString *)aServiceName 

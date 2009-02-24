@@ -14,6 +14,13 @@
 @class AMFInvocationResult;
 @class AMFRemoteGateway;
 
+typedef enum _AMFDuplexGatewayMode
+{
+	kAMFDuplexGatewayModeNotConnected,
+	kAMFDuplexGatewayModeServer,
+	kAMFDuplexGatewayModeClient
+} AMFDuplexGatewayMode;
+
 @protocol AMFRemoteGatewayDelegate
 - (id)serviceWithName:(NSString *)name;
 - (void)remoteGatewayDidDisconnect:(AMFRemoteGateway *)remoteGateway;
@@ -26,10 +33,13 @@
 	NSMutableSet *m_remoteGateways;
 	NSMutableDictionary *m_services;
 	id m_delegate;
+	AMFDuplexGatewayMode m_mode;
 }
 @property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) AMFDuplexGatewayMode mode;
 
 - (BOOL)startOnPort:(uint16_t)port error:(NSError **)error;
+- (BOOL)connectToRemote:(NSString *)server port:(uint16_t)port error:(NSError **)error;
 - (void)stop;
 
 - (void)registerService:(id)service withName:(NSString *)name;
@@ -64,6 +74,7 @@
 
 @interface AMFInvocationResult : NSObject
 {
+	AMFRemoteGateway *gateway;
 	NSString *serviceName;
 	NSString *methodName;
 	NSArray *arguments;
@@ -76,6 +87,7 @@
 	SEL action;
 	id target;
 }
+@property (nonatomic, assign) AMFRemoteGateway *gateway;
 @property (nonatomic, retain) NSString *serviceName;
 @property (nonatomic, retain) NSString *methodName;
 @property (nonatomic, retain) NSArray *arguments;
