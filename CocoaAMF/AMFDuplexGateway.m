@@ -94,6 +94,11 @@
 	[m_socket disconnect];
 }
 
+- (UInt16)localPort
+{
+	return [m_socket localPort];
+}
+
 - (void)registerService:(id)service withName:(NSString *)name
 {
 	[m_services setObject:service forKey:name];

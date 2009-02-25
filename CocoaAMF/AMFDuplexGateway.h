@@ -6,7 +6,7 @@
 //  Copyright 2009 nesiumdotcom. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "AMF.h"
 #import "AMFActionMessage.h"
 #import "AsyncSocket.h"
@@ -41,6 +41,8 @@ typedef enum _AMFDuplexGatewayMode
 - (BOOL)startOnPort:(uint16_t)port error:(NSError **)error;
 - (BOOL)connectToRemote:(NSString *)server port:(uint16_t)port error:(NSError **)error;
 - (void)stop;
+
+- (UInt16)localPort;
 
 - (void)registerService:(id)service withName:(NSString *)name;
 - (void)unregisterServiceWithName:(NSString *)name;
