@@ -10,6 +10,7 @@
 #import "AMF.h"
 #import "AMFActionMessage.h"
 #import "AsyncSocket.h"
+#import "NSInvocation-AMFExtensions.h"
 
 @class AMFInvocationResult;
 @class AMFRemoteGateway;

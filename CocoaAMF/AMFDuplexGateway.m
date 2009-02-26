@@ -250,7 +250,30 @@
 			continue;
 		}
 		id service = [m_delegate serviceWithName:serviceName];
-		SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@:", methodName]);
+		NSArray *methodNameComponents = [methodName componentsSeparatedByString:@"_"];
+		
+		if (([body.data isKindOfClass:[NSArray class]] && 
+			[(NSArray *)body.data count] != [methodNameComponents count]) || 
+			![body.data isKindOfClass:[NSArray class]] && [methodNameComponents count] > 1)
+		{
+			NSLog(@"FAIL!");
+			return;
+		}
+		
+		NSString *selectorName;
+		if ([(NSArray *)body.data count] == 0)
+		{
+			selectorName = [@"gateway" stringByAppendingString:[methodName 
+				stringByReplacingCharactersInRange:(NSRange){0, 1} 
+				withString:[[methodName substringToIndex:1] uppercaseString]]];
+		}
+		else
+		{
+			selectorName = [NSString stringWithFormat:@"gateway:%@:", 
+				[methodNameComponents componentsJoinedByString:@":"]];
+		}
+		NSLog(@"selectorName: %@", selectorName);
+		SEL selector = NSSelectorFromString(selectorName);
 		
 		if (![service respondsToSelector:selector])
 		{
@@ -259,15 +282,20 @@
 		}
 		
 		NSMethodSignature *signature = [service methodSignatureForSelector:selector];
-		NSMutableArray *amData = [body.data isKindOfClass:[NSArray class]] 
-			? [body.data mutableCopy]
-			: [[NSMutableArray alloc] initWithObjects:body.data, nil];
-		[amData insertObject:self atIndex:0];
-		id result = [service performSelector:selector withObject:amData];
-		[amData release];
+		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+		[invocation setSelector:selector];
+		[invocation setTarget:service];
+		[invocation setArgument:&self atIndex:2];
+		uint32_t i = 3;
+		for (id argument in (NSArray *)body.data)
+		{
+			[invocation setArgument:&argument atIndex:i];
+		}
+		[invocation invoke];
 		
 		if (![signature isOneway])
 		{
+			id result = [invocation returnValueAsObject];
 			AMFActionMessage *ram = [[AMFActionMessage alloc] init];
 			[ram addBodyWithTargetURI:[NSString stringWithFormat:@"%@%@/onResult", body.targetURI, 
 					body.responseURI] responseURI:@"null" data:result];
