@@ -104,6 +104,10 @@
 			[self getReturnValue:&value];
 			return value;
 		}
+		case 'v':
+		{
+			return nil;
+		}
 		default:
 		{
 			[NSException raise:NSInternalInconsistencyException
