@@ -280,7 +280,6 @@
 			NSLog(@"Ouch. Either a service or a method is not existing. (%@)", body.targetURI);
 			continue;
 		}
-		
 		NSMethodSignature *signature = [service methodSignatureForSelector:selector];
 		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
 		[invocation setSelector:selector];
@@ -289,7 +288,7 @@
 		uint32_t i = 3;
 		for (id argument in (NSArray *)body.data)
 		{
-			[invocation setArgument:&argument atIndex:i];
+			[invocation setArgument:&argument atIndex:i++];
 		}
 		[invocation invoke];
 		
