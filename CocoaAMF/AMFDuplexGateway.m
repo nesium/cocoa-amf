@@ -272,12 +272,12 @@
 			selectorName = [NSString stringWithFormat:@"gateway:%@:", 
 				[methodNameComponents componentsJoinedByString:@":"]];
 		}
-		NSLog(@"selectorName: %@", selectorName);
 		SEL selector = NSSelectorFromString(selectorName);
 		
 		if (![service respondsToSelector:selector])
 		{
 			NSLog(@"Ouch. Either a service or a method is not existing. (%@)", body.targetURI);
+			NSLog(@"selectorName: %@", selectorName);
 			continue;
 		}
 		NSMethodSignature *signature = [service methodSignatureForSelector:selector];
