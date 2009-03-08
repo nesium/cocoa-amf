@@ -17,7 +17,7 @@
 
 @implementation ServerService
 
-- (NSArray *)sayHello:(NSString *)to
+- (NSArray *)gateway:(AMFRemoteGateway *)gateway sayHello:(NSString *)to
 {
 	NSLog(@"[server] hello %@", to);
 	return [NSArray arrayWithObjects:@"1", @"2", @"3", @"4", nil];
@@ -50,9 +50,9 @@
 
 @implementation ClientService
 
-- (NSString *)sayHello:(NSArray *)array
+- (NSString *)gateway:(AMFRemoteGateway *)gateway sayHello:(NSString *)aString
 {
-	NSLog(@"[client] hello %@", [array objectAtIndex:1]);
+	NSLog(@"[client] hello %@", aString);
 	return @"A return value";
 }
 

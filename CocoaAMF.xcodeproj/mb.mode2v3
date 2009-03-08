@@ -264,18 +264,16 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 									<array>
 										<string>29B97314FDCFA39411CA2CEA</string>
-										<string>2C85008D0EDF39490058EBE0</string>
-										<string>2C8500980EDF39690058EBE0</string>
-										<string>2C8500B30EDF41890058EBE0</string>
-										<string>2C8500B40EDF41890058EBE0</string>
-										<string>2C8500990EDF39700058EBE0</string>
+										<string>2C35A4650EA401CB000B2452</string>
+										<string>2C73A8350F193EFA00EA16AD</string>
+										<string>2CF1040C0F4F662E00A99429</string>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>6</integer>
-											<integer>4</integer>
-											<integer>3</integer>
+											<integer>24</integer>
+											<integer>23</integer>
+											<integer>21</integer>
 											<integer>0</integer>
 										</array>
 									</array>
@@ -443,8 +441,8 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>2C5DD2DB0EE621E900605A85</string>
-				<string>2C5DD2DC0EE621E900605A85</string>
+				<string>2C1337F50F6449B7001CE24E</string>
+				<string>2C1337F60F6449B7001CE24E</string>
 				<string>1C9437FD063B20B00039CFAC</string>
 				<string>1C9437FE063B20B00039CFAC</string>
 				<string>1C9437FF063B20B00039CFAC</string>
@@ -477,7 +475,12 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>/Users/mb/Desktop/rsf/1_CocoaAMF/project/CocoaAMF.xcodeproj</string>
+		<string>2C13380F0F644ADD001CE24E</string>
+		<string>2C1338100F644ADD001CE24E</string>
+		<string>1C530D5B069F1CE1000CFCEE</string>
+		<string>1C530D52069F1CE1000CFCEE</string>
+		<string>1C530D54069F1CE1000CFCEE</string>
+		<string>/Users/mb/Desktop/Contexts/1_CocoaAMF/project/CocoaAMF.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>26 76 382 775 0 0 1440 878 </string>
@@ -658,8 +661,6 @@
 							<string>395pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -699,7 +700,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D52069F1CE1000CFCEE</string>
-				<string>2C5DD2610EE6032300605A85</string>
+				<string>2C1337F70F6449B7001CE24E</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -819,13 +820,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D54069F1CE1000CFCEE</string>
-				<string>2C5DD2620EE6032300605A85</string>
+				<string>2C1337F80F6449B7001CE24E</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>2C5DD2630EE6032300605A85</string>
-				<string>2C5DD2640EE6032300605A85</string>
-				<string>2C5DD2650EE6032300605A85</string>
-				<string>2C5DD2660EE6032300605A85</string>
-				<string>2C5DD2670EE6032300605A85</string>
+				<string>2C1337F90F6449B7001CE24E</string>
+				<string>2C1337FA0F6449B7001CE24E</string>
+				<string>2C1337FB0F6449B7001CE24E</string>
+				<string>2C1337FC0F6449B7001CE24E</string>
+				<string>2C1337FD0F6449B7001CE24E</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -958,7 +959,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1278, 561}}</string>
 								<key>RubberWindowFrame</key>
-								<string>81 150 1278 602 0 0 1440 878 </string>
+								<string>63 106 1278 602 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -981,13 +982,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D5B069F1CE1000CFCEE</string>
-				<string>2C5DD2680EE6032300605A85</string>
+				<string>2C1337FF0F6449CB001CE24E</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>81 150 1278 602 0 0 1440 878 </string>
+			<string>63 106 1278 602 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>1C530D5B069F1CE1000CFCEE</string>
 			<key>WindowToolIsVisible</key>
