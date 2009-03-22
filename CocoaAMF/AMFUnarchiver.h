@@ -39,6 +39,8 @@
 
 - (BOOL)allowsKeyedCoding;
 - (void)finishDecoding;
+- (NSUInteger)bytesAvailable;
+- (BOOL)isAtEnd;
 - (Class)classForClassName:(NSString *)codedName;
 + (Class)classForClassName:(NSString *)codedName;
 - (void)setClass:(Class)cls forClassName:(NSString *)codedName;

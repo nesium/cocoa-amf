@@ -7,13 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMFDeserializer.h"
-#import "AMF0Deserializer.h"
+#import "AMFUnarchiver.h"
 
 
-@interface SODeserializer : AMFDeserializer
+@interface SODeserializer : NSObject
 {
 
 }
-
+- (NSDictionary *)deserialize:(NSData *)data;
 @end

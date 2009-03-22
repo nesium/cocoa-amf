@@ -121,6 +121,16 @@ static NSMutableDictionary *g_registeredClasses = nil;
 {
 }
 
+- (NSUInteger)bytesAvailable
+{
+	return [m_data length] - m_position;
+}
+
+- (BOOL)isAtEnd
+{
+	return !(m_position < [m_data length]);
+}
+
 - (Class)classForClassName:(NSString *)codedName
 {
 	return [m_registeredClasses objectForKey:codedName];

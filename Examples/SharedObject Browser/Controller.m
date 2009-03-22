@@ -36,10 +36,8 @@
 		return;
 	}
 
-	AMFInputStream *inStream = [[AMFInputStream alloc] initWithData:
-		[NSData dataWithContentsOfFile:path]];
-	SODeserializer *deserializer = [[SODeserializer alloc] initWithStream:inStream];
-	m_dataSource.rootObject = [deserializer deserialize];
+	SODeserializer *deserializer = [[SODeserializer alloc] init];
+	m_dataSource.rootObject = [deserializer deserialize:[NSData dataWithContentsOfFile:path]];
 	[m_outlineView reloadData];
 	[m_outlineView expandItem:[m_outlineView itemAtRow:0] expandChildren:YES];
 	[deserializer release];

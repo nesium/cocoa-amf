@@ -11,38 +11,44 @@
 
 @implementation SODeserializer
 
-- (NSDictionary *)deserialize
+- (NSDictionary *)deserialize:(NSData *)data
 {
+	AMFUnarchiver *headerUnarchiver = [[AMFUnarchiver alloc] initForReadingWithData:data 
+		encoding:kAMF0Version];
+
 	// padding
-	[m_stream readUInt16];
+	[headerUnarchiver decodeUnsignedShort];
 	// length
-	[m_stream readUInt32];
+	[headerUnarchiver decodeUnsignedInt];
 	// signature
-	[m_stream readDataWithLength:10];
-	
-	NSString *name = [m_stream readUTF8:[m_stream readUInt16]];
-	NSLog(@"name: %@", name);
-	
+	[headerUnarchiver decodeBytes:10];
+	// name
+	[headerUnarchiver decodeUTF];
 	// padding
-	[m_stream readUInt16];
-	uint16_t version = [m_stream readUInt16];
+	[headerUnarchiver decodeUnsignedShort];
 	
-	AMFDeserializer *deserializer = version == 0 
-		? [[AMF0Deserializer alloc] initWithStream:m_stream]
-		: [[AMF3Deserializer alloc] initWithStream:m_stream];
+	uint16_t version = [headerUnarchiver decodeUnsignedShort];
+	
+	AMFUnarchiver *bodyUnarchiver = [headerUnarchiver retain];
+	if (version == kAMF3Version)
+	{
+		NSUInteger startOffset = [data length] - [headerUnarchiver bytesAvailable];
+		bodyUnarchiver = [[AMFUnarchiver alloc] initForReadingWithData:
+			[data subdataWithRange:(NSRange){startOffset, [headerUnarchiver bytesAvailable]}]  
+			encoding:kAMF3Version];
+	}
+	[headerUnarchiver release];
 	
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	
-	while ([m_stream availableBytes])
+	while (![bodyUnarchiver isAtEnd])
 	{
-		NSString *key = [deserializer readString];
-		id value = [deserializer deserialize];
+		NSString *key = [bodyUnarchiver decodeUTF];
+		id value = [bodyUnarchiver decodeObject];
 		[dict setObject:value forKey:key];
 		// read padding byte
-		[m_stream readUInt8];
+		[bodyUnarchiver decodeUnsignedChar];
 	}
-	
-	[deserializer release];
+	[bodyUnarchiver release];
 	return dict;
 }
 

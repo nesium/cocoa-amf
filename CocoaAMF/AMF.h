@@ -51,3 +51,6 @@ typedef enum _AMF3Type
 	kAMF3XMLType = 0xB,
 	kAMF3ByteArrayType = 0xC
 } AMF3Type;
+
+NSString * NSStringFromAMF0Type(AMF0Type type);
+NSString * NSStringFromAMF3Type(AMF3Type type);

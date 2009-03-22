@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMF3Deserializer.h"
-#import "AMFInputStream.h"
+#import "AMF.h"
+#import "AMFUnarchiver.h"
 #import "SODeserializer.h"
 #import "OutlineViewDataSource.h"
 #import "FileSystemRepNode.h"
