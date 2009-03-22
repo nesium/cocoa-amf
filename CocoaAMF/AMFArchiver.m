@@ -237,7 +237,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	{
 		[self _encodeNumber:(NSNumber *)value];
 	}
-	else if ([value isKindOfClass:[NSDate date]])
+	else if ([value isKindOfClass:[NSDate class]])
 	{
 		[self _encodeDate:(NSDate *)value];
 	}
