@@ -542,6 +542,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type
 {
+	//NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
 	id value = nil;
 	switch (type)
 	{
@@ -617,6 +618,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		default:
 			[self _cannotDecodeType:"Unknown type"];
 	}
+	//NSLog(@"%@", value);
 	return value;
 }
 
@@ -805,6 +807,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
+	//NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
 	id value = nil;
 	switch (type)
 	{
@@ -865,6 +868,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 			[self _cannotDecodeType:"Unknown type"];
 			break;
 	}
+	//NSLog(@"%@", value);
 	return value;
 }
 

@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "AMFGateway.h"
 #import "DirectoryService.h"
+#import "PassthroughService.h"
 
 int main (int argc, const char * argv[])
 {
@@ -21,6 +22,7 @@ int main (int argc, const char * argv[])
 	
 	AMFGateway *gateway = [[AMFGateway alloc] init];
 	[gateway registerService:[[[DirectoryService alloc] init] autorelease]];
+	[gateway registerService:[[[PassthroughService alloc] init] autorelease]];
 	
 	if (![gateway startOnPort:port error:&error])
 	{

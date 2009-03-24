@@ -30,6 +30,7 @@
 @interface AMF3Archiver (Private)
 - (void)_encodeTraits:(AMF3TraitsInfo *)traits;
 - (void)_encodeData:(NSData *)value;
+- (void)_encodeMixedArray:(NSDictionary *)value;
 @end
 
 
@@ -650,7 +651,49 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeDictionary:(NSDictionary *)value
 {
+	for (id key in value)
+	{
+		if ([key isKindOfClass:[NSNumber class]])
+		{
+			[self _encodeMixedArray:value];
+			return;
+		}
+	}
 	[self _encodeASObject:[ASObject asObjectWithDictionary:value]];
+}
+
+- (void)_encodeMixedArray:(NSDictionary *)value
+{
+	[self encodeUnsignedChar:kAMF3ArrayType];
+	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
+	{
+		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
+		return;
+	}
+
+	NSMutableArray *numericKeys = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *stringKeys = [[[NSMutableArray alloc] init] autorelease];
+	for (id key in value)
+	{
+		if ([key isKindOfClass:[NSString class]])
+			[stringKeys addObject:key];
+		else if ([key isKindOfClass:[NSNumber class]])
+			[numericKeys addObject:key];
+		else
+			[NSException raise:NSInconsistentArchiveException 
+				format:@"Cannot encode dictionary with key of class %@", [key className]];
+	}
+	[self encodeUnsignedInt29:(([numericKeys count] << 1) | 1)];
+	for (NSString *key in stringKeys)
+	{
+		[self _encodeString:key omitType:YES];
+		[self encodeObject:[value objectForKey:key]];
+	}
+	[self encodeUnsignedChar:((0 << 1) | 1)];
+	for (NSNumber *key in numericKeys)
+	{
+		[self encodeObject:[value objectForKey:key]];
+	}
 }
 
 - (void)_encodeDate:(NSDate *)value
@@ -726,6 +769,8 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	{
 		if (traits.dynamic)
 		{
+			if (![key isKindOfClass:[NSString class]])
+				key = [key description];
 			[self _encodeString:key omitType:YES];
 		}
 		[self encodeObject:[value.properties objectForKey:key]];

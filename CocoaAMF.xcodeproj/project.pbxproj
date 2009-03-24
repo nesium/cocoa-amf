@@ -17,6 +17,8 @@
 		2C18798C0F76FAA000DF747D /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
 		2C18799B0F76FABC00DF747D /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
 		2C1879B50F76FC8200DF747D /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
+		2C2199E20F7964EE0027AFD6 /* PassthroughService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2199E10F7964EE0027AFD6 /* PassthroughService.m */; };
+		2C219A660F7992ED0027AFD6 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2C3554540F784C45003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
 		2C35545B0F784C61003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
 		2C35545D0F784C6C003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
@@ -137,6 +139,8 @@
 		2C1879700F76F63100DF747D /* SODeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SODeserializer.m; sourceTree = "<group>"; };
 		2C1879710F76F63100DF747D /* SODeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SODeserializer.h; sourceTree = "<group>"; };
 		2C1879B40F76FC8200DF747D /* AMF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF.m; sourceTree = "<group>"; };
+		2C2199E00F7964EE0027AFD6 /* PassthroughService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughService.h; sourceTree = "<group>"; };
+		2C2199E10F7964EE0027AFD6 /* PassthroughService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughService.m; sourceTree = "<group>"; };
 		2C35542D0F7846B5003A31C4 /* FlexDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexDataTypes.h; sourceTree = "<group>"; };
 		2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexDataTypes.m; sourceTree = "<group>"; };
 		2C35A4660EA401CB000B2452 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
@@ -423,6 +427,8 @@
 				2C73A8170F193CD200EA16AD /* main.m */,
 				2C73A8910F1942FE00EA16AD /* DirectoryService.h */,
 				2C73A8920F1942FE00EA16AD /* DirectoryService.m */,
+				2C2199E00F7964EE0027AFD6 /* PassthroughService.h */,
+				2C2199E10F7964EE0027AFD6 /* PassthroughService.m */,
 				2C73A8E80F19536400EA16AD /* README.txt */,
 			);
 			name = ServerExample;
@@ -802,6 +808,8 @@
 				2C73A8ED0F1954E100EA16AD /* AMFRemotingCall.m in Sources */,
 				49A471320F52E4FE008ADED3 /* AMFArchiver.m in Sources */,
 				2C3554670F784CA8003A31C4 /* FlexDataTypes.m in Sources */,
+				2C2199E20F7964EE0027AFD6 /* PassthroughService.m in Sources */,
+				2C219A660F7992ED0027AFD6 /* AMF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

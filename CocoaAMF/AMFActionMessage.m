@@ -33,6 +33,11 @@
 {
 	if (self = [super init])
 	{
+		// DEBUG
+		[data writeToFile:[@"~/Desktop/actionmessage_request.amf" 
+			stringByExpandingTildeInPath] atomically:NO];
+		// /DEBUG
+	
 		AMFUnarchiver *ba = [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version];
 		m_version = [ba decodeUnsignedShort];
 		uint16_t numHeaders = [ba decodeUnsignedShort];
@@ -58,7 +63,16 @@
 			body.targetURI = [ba decodeUTF];
 			body.responseURI = [ba decodeUTF];
 			// Body length
+			/*uint32_t length = */
 			[ba decodeUnsignedInt];
+			// DEBUG
+//			NSLog(@"init");
+//			NSData *subdata = [data subdataWithRange:(NSRange){[data length] - [ba bytesAvailable], 
+//				length}];
+//			NSString *path = [NSString stringWithFormat:[@"~/Desktop/body_request_%d.amf" 
+//				stringByExpandingTildeInPath], i];
+//			[subdata writeToFile:path atomically:NO];
+			// /DEBUG
 			body.data = [ba decodeObject];
 			[bodies addObject:body];
 		}
@@ -101,6 +115,9 @@
 		[headerBa release];
 	}
 	[ba encodeUnsignedShort:[m_bodies count]];
+	// DEBUG
+//	int i = 0;
+	// /DEBUG
 	for (AMFMessageBody *body in m_bodies)
 	{
 		body.targetURI != nil ? [ba encodeUTF:body.targetURI] : [ba encodeUTF:@"null"];
@@ -111,6 +128,13 @@
 		{
 			[bodyBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
+		// DEBUG
+//		NSLog(@"data");
+//		NSData *subdata = [AMFArchiver archivedDataWithRootObject:body.data encoding:m_version];
+//		NSString *path = [NSString stringWithFormat:[@"~/Desktop/body_response_%d.amf" 
+//			stringByExpandingTildeInPath], i++];
+//		[subdata writeToFile:path atomically:NO];
+		// /DEBUG
 		[bodyBa encodeObject:body.data];
 		[ba encodeUnsignedInt:[bodyBa.data length]];
 		[ba encodeDataObject:bodyBa.data];

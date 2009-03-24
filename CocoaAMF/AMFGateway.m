@@ -200,6 +200,7 @@
 		AMFActionMessage *amfRequest = [[AMFActionMessage alloc] 
 			initWithData:(NSData *)messageBody];
 		
+		NSLog(@"version: %d", amfRequest.version);
 		AMFActionMessage *amfResponse = [[AMFActionMessage alloc] init];
 		amfResponse.version = amfRequest.version;
 		amfResponse.headers = nil;
