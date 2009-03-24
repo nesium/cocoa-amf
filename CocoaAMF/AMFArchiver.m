@@ -11,6 +11,7 @@
 @class AMF3TraitsInfo;
 
 @interface AMFArchiver (Private)
+- (void)_createExternalizableDataHolderIfNeeded;
 - (void)_ensureLength:(unsigned)length;
 - (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
 
@@ -56,6 +57,9 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		m_bytes = [m_data mutableBytes];
 		m_objectTable = [[NSMutableArray alloc] init];
 		m_currentSerializedObject = nil;
+		m_currentSerializedData = m_data;
+		m_currentSerializedBytes = [m_currentSerializedData mutableBytes];
+		m_currentSerializedPosition = m_position;
 		m_registeredClasses = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -77,6 +81,9 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		[data retain];
 		[m_data release];
 		m_data = data;
+		m_bytes = [m_data mutableBytes];
+		m_currentSerializedData = m_data;
+		m_currentSerializedBytes = [m_currentSerializedData mutableBytes];
 	}
 	return self;
 }
@@ -190,38 +197,39 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)encodeChar:(int8_t)value
 {
-	m_bytes[m_position++] = value;
+	m_currentSerializedBytes[m_currentSerializedPosition++] = value;
 }
 
 - (void)encodeDataObject:(NSData *)value
 {
-	[m_data appendData:value];
-	m_bytes = [m_data mutableBytes];
-	m_position = [m_data length];
+	[self _createExternalizableDataHolderIfNeeded];
+	[m_currentSerializedData appendData:value];
+	m_currentSerializedBytes = [m_currentSerializedData mutableBytes];
+	m_currentSerializedPosition = [m_currentSerializedData length];
 }
 
 - (void)encodeDouble:(double)value
 {
 	uint8_t *ptr = (void *)&value;
 	[self _ensureLength:8];
-	m_bytes[m_position++] = ptr[7];
-	m_bytes[m_position++] = ptr[6];
-	m_bytes[m_position++] = ptr[5];
-	m_bytes[m_position++] = ptr[4];
-	m_bytes[m_position++] = ptr[3];
-	m_bytes[m_position++] = ptr[2];
-	m_bytes[m_position++] = ptr[1];
-	m_bytes[m_position++] = ptr[0];	
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[7];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[6];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[5];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[4];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[3];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[2];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[1];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[0];	
 }
 
 - (void)encodeFloat:(float)value
 {
 	uint8_t *ptr = (void *)&value;
 	[self _ensureLength:4];
-	m_bytes[m_position++] = ptr[3];
-	m_bytes[m_position++] = ptr[2];
-	m_bytes[m_position++] = ptr[1];
-	m_bytes[m_position++] = ptr[0];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[3];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[2];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[1];
+	m_currentSerializedBytes[m_currentSerializedPosition++] = ptr[0];
 }
 
 - (void)encodeInt:(int32_t)value
@@ -303,14 +311,14 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (void)encodeUnsignedChar:(uint8_t)value
 {
 	[self _ensureLength:1];
-	m_bytes[m_position++] = value;
+	m_currentSerializedBytes[m_currentSerializedPosition++] = value;
 }
 
 - (void)encodeUnsignedShort:(uint16_t)value
 {
 	[self _ensureLength:2];
-	m_bytes[m_position++] = (value >> 8) & 0xFF;
-	m_bytes[m_position++] = value & 0xFF;
+	m_currentSerializedBytes[m_currentSerializedPosition++] = (value >> 8) & 0xFF;
+	m_currentSerializedBytes[m_currentSerializedPosition++] = value & 0xFF;
 }
 
 - (void)encodeUnsignedInt29:(uint32_t)value
@@ -318,28 +326,28 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (value < 0x80)
 	{
 		[self _ensureLength:1];
-		m_bytes[m_position++] = value;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = value;
 	}
 	else if (value < 0x4000)
 	{
 		[self _ensureLength:2];
-		m_bytes[m_position++] = ((value >> 7) & 0x7F) | 0x80;
-		m_bytes[m_position++] = (value & 0x7F);
+		m_currentSerializedBytes[m_currentSerializedPosition++] = ((value >> 7) & 0x7F) | 0x80;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = (value & 0x7F);
 	}
 	else if (value < 0x200000)
 	{
 		[self _ensureLength:3];
-		m_bytes[m_position++] = ((value >> 14) & 0x7F) | 0x80;
-		m_bytes[m_position++] = ((value >> 7) & 0x7F) | 0x80;
-		m_bytes[m_position++] = (value & 0x7F);
+		m_currentSerializedBytes[m_currentSerializedPosition++] = ((value >> 14) & 0x7F) | 0x80;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = ((value >> 7) & 0x7F) | 0x80;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = (value & 0x7F);
 	}
 	else
 	{
 		[self _ensureLength:4];
-		m_bytes[m_position++] = ((value >> 22) & 0x7F) | 0x80;
-		m_bytes[m_position++] = ((value >> 15) & 0x7F) | 0x80;
-		m_bytes[m_position++] = ((value >> 8) & 0x7F) | 0x80;
-		m_bytes[m_position++] = (value & 0xFF);
+		m_currentSerializedBytes[m_currentSerializedPosition++] = ((value >> 22) & 0x7F) | 0x80;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = ((value >> 15) & 0x7F) | 0x80;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = ((value >> 8) & 0x7F) | 0x80;
+		m_currentSerializedBytes[m_currentSerializedPosition++] = (value & 0xFF);
 	}
 }
 
@@ -350,8 +358,9 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_ensureLength:(unsigned)length
 {
-	[m_data setLength:[m_data length] + length];
-	m_bytes = [m_data mutableBytes];
+	[self _createExternalizableDataHolderIfNeeded];
+	[m_currentSerializedData setLength:[m_currentSerializedData length] + length];
+	m_currentSerializedBytes = [m_currentSerializedData mutableBytes];
 }
 
 - (void)_encodeCustomObject:(id)value
@@ -360,7 +369,24 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	obj.type = [[self class] classNameForClass:[value class]];
 	if (!obj.type) obj.type = [self classNameForClass:[value class]];
 	if (!obj.type) obj.type = [value className];
+	
+	NSMutableData *lastSerializedData = m_currentSerializedData;
+	uint32_t lastSerializedPosition = m_currentSerializedPosition;
+	uint8_t *lastSerializedBytes = m_currentSerializedBytes;
+	
+	m_currentSerializedData = nil;
 	[value encodeWithCoder:self];
+	obj.data = m_currentSerializedData;
+	
+	obj.isExternalizable = m_currentSerializedData != nil;
+	[m_currentSerializedData release];
+	m_currentSerializedData = lastSerializedData;
+	m_currentSerializedPosition = lastSerializedPosition;
+	m_currentSerializedBytes = lastSerializedBytes;
+	
+	if (m_currentSerializedData == m_data)
+		m_currentSerializedPosition = [m_data length];
+	
 	[self _encodeASObject:obj];
 }
 
@@ -369,7 +395,17 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	[self _ensureLength:length];
 	uint8_t *chars = (uint8_t *)bytes;
 	for (NSUInteger i = 0; i < length; i++)
-		m_bytes[m_position++] = chars[i];
+		m_currentSerializedBytes[m_currentSerializedPosition++] = chars[i];
+}
+
+- (void)_createExternalizableDataHolderIfNeeded
+{
+	if (m_currentSerializedData == nil)
+	{
+		m_currentSerializedData = [[NSMutableData alloc] init];
+		m_currentSerializedBytes = [m_currentSerializedData mutableBytes];
+		m_currentSerializedPosition = 0;
+	}
 }
 @end
 
@@ -680,6 +716,11 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	
 	NSEnumerator *keyEnumerator = [value.properties keyEnumerator];
 	NSString *key;
+	
+	if (value.isExternalizable)
+	{
+		[self encodeDataObject:value.data];
+	}
 	
 	while (key = [keyEnumerator nextObject])
 	{

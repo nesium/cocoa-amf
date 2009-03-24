@@ -11,7 +11,7 @@
 
 @implementation ASObject
 
-@synthesize type=m_type, properties=m_properties, isExternalizable=m_isExternalizable;
+@synthesize type=m_type, properties=m_properties, isExternalizable=m_isExternalizable, data=m_data;
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
@@ -40,6 +40,7 @@
 {
 	[m_type release];
 	[m_properties release];
+	[m_data release];
 	[super dealloc];
 }
 

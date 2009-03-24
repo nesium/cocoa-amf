@@ -237,6 +237,7 @@
 		@"ArrayCollections do not match.");
 	STAssertTrue([self assertEncodedObject:coll isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 
 		@"ArrayCollection data is not equal");
+	[coll release];
 }
 
 @end

@@ -21,6 +21,9 @@
 	NSMutableArray *m_objectTable;
 	NSMutableDictionary *m_registeredClasses;
 	ASObject *m_currentSerializedObject;
+	NSMutableData *m_currentSerializedData;
+	uint8_t *m_currentSerializedBytes;
+	uint32_t m_currentSerializedPosition;
 }
 
 //--------------------------------------------------------------------------------------------------
