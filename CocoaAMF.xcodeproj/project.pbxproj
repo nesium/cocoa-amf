@@ -17,6 +17,13 @@
 		2C18798C0F76FAA000DF747D /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
 		2C18799B0F76FABC00DF747D /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
 		2C1879B50F76FC8200DF747D /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
+		2C3554540F784C45003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
+		2C35545B0F784C61003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
+		2C35545D0F784C6C003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
+		2C3554610F784C8B003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
+		2C3554640F784C9C003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
+		2C3554670F784CA8003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
+		2C3554690F784CB3003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
 		2C35A4870EA401CB000B2452 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
 		2C35A4900EA401CB000B2452 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C38B4A20EE4A04A0083BCF5 /* CAMFFieldEditor.m */; };
@@ -130,6 +137,8 @@
 		2C1879700F76F63100DF747D /* SODeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SODeserializer.m; sourceTree = "<group>"; };
 		2C1879710F76F63100DF747D /* SODeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SODeserializer.h; sourceTree = "<group>"; };
 		2C1879B40F76FC8200DF747D /* AMF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF.m; sourceTree = "<group>"; };
+		2C35542D0F7846B5003A31C4 /* FlexDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexDataTypes.h; sourceTree = "<group>"; };
+		2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexDataTypes.m; sourceTree = "<group>"; };
 		2C35A4660EA401CB000B2452 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
 		2C35A46F0EA401CB000B2452 /* AMFActionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFActionMessage.h; sourceTree = "<group>"; };
 		2C35A4700EA401CB000B2452 /* AMFActionMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFActionMessage.m; sourceTree = "<group>"; };
@@ -324,29 +333,71 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2C35A4650EA401CB000B2452 /* CocoaAMF */ = {
+		2C3554280F784551003A31C4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				2C35A4660EA401CB000B2452 /* AMF.h */,
 				2C1879B40F76FC8200DF747D /* AMF.m */,
-				2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */,
-				2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */,
 				2C8500E30EDF42DF0058EBE0 /* AMFUnarchiver.h */,
 				2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */,
 				2C80A67E0F1C1FA700D761BB /* AMFArchiver.h */,
 				2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */,
 				2C35A46F0EA401CB000B2452 /* AMFActionMessage.h */,
 				2C35A4700EA401CB000B2452 /* AMFActionMessage.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		2C3554290F784568003A31C4 /* Datatypes */ = {
+			isa = PBXGroup;
+			children = (
 				2C35A4810EA401CB000B2452 /* ASObject.h */,
 				2C35A4820EA401CB000B2452 /* ASObject.m */,
+				2C35542D0F7846B5003A31C4 /* FlexDataTypes.h */,
+				2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */,
+			);
+			name = Datatypes;
+			sourceTree = "<group>";
+		};
+		2C35542A0F784579003A31C4 /* Connection Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2C8500E10EDF42DF0058EBE0 /* AMFGateway.h */,
+				2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */,
 				2C73A8EB0F1954E100EA16AD /* AMFRemotingCall.h */,
 				2C73A8EC0F1954E100EA16AD /* AMFRemotingCall.m */,
 				2CF104190F4F669700A99429 /* AMFDuplexGateway.h */,
 				2CF1041A0F4F669700A99429 /* AMFDuplexGateway.m */,
+			);
+			name = "Connection Classes";
+			sourceTree = "<group>";
+		};
+		2C35542B0F7845AC003A31C4 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
 				2C1338040F644A23001CE24E /* NSInvocation-AMFExtensions.h */,
 				2C1338050F644A23001CE24E /* NSInvocation-AMFExtensions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		2C35542C0F7845C1003A31C4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
 				2C1879710F76F63100DF747D /* SODeserializer.h */,
 				2C1879700F76F63100DF747D /* SODeserializer.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		2C35A4650EA401CB000B2452 /* CocoaAMF */ = {
+			isa = PBXGroup;
+			children = (
+				2C3554280F784551003A31C4 /* Core */,
+				2C35542A0F784579003A31C4 /* Connection Classes */,
+				2C3554290F784568003A31C4 /* Datatypes */,
+				2C35542B0F7845AC003A31C4 /* Categories */,
+				2C35542C0F7845C1003A31C4 /* Utils */,
 			);
 			path = CocoaAMF;
 			sourceTree = "<group>";
@@ -732,7 +783,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n#\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -750,6 +801,7 @@
 				2C73A8930F1942FE00EA16AD /* DirectoryService.m in Sources */,
 				2C73A8ED0F1954E100EA16AD /* AMFRemotingCall.m in Sources */,
 				49A471320F52E4FE008ADED3 /* AMFArchiver.m in Sources */,
+				2C3554670F784CA8003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +817,7 @@
 				2C73A9130F19688300EA16AD /* ASObject.m in Sources */,
 				2C73A9240F196A2E00EA16AD /* AsyncSocket.m in Sources */,
 				49A471370F52E579008ADED3 /* AMFArchiver.m in Sources */,
+				2C3554640F784C9C003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +843,7 @@
 				2C109BE10EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m in Sources */,
 				2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */,
 				2C80A6800F1C1FA700D761BB /* AMFArchiver.m in Sources */,
+				2C3554690F784CB3003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,6 +858,7 @@
 				2CB5B4CF0F16D27500C71818 /* ASObject.m in Sources */,
 				49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */,
 				49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */,
+				2C3554610F784C8B003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +876,7 @@
 				2CF104450F4F7D6600A99429 /* ASObject.m in Sources */,
 				2CF104480F4F7D7700A99429 /* AsyncSocket.m in Sources */,
 				2C1338060F644A23001CE24E /* NSInvocation-AMFExtensions.m in Sources */,
+				2C35545B0F784C61003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,6 +890,7 @@
 				49A46CB20F4C2AEE008ADED3 /* AMFUnarchiver.m in Sources */,
 				49A46CB30F4C2AEF008ADED3 /* ASObject.m in Sources */,
 				49A46CC30F4C2B99008ADED3 /* main.m in Sources */,
+				2C35545D0F784C6C003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +910,7 @@
 				2C18798C0F76FAA000DF747D /* AMFArchiver.m in Sources */,
 				2C18799B0F76FABC00DF747D /* AsyncSocket.m in Sources */,
 				2C1879B50F76FC8200DF747D /* AMF.m in Sources */,
+				2C3554540F784C45003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

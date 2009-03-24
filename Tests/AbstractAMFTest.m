@@ -55,8 +55,11 @@
 		*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
 			? kAMF0Version : kAMF3Version;
 	}
-	return [[TEST_DATA_PATH stringByAppendingPathComponent:[file pathExtension]] 
-		stringByAppendingPathComponent:file];
+	NSString *testDataPath = [[[[NSBundle bundleForClass:[self class]] bundlePath] 
+		stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[TEST_DATA_PATH 
+			stringByAppendingPathComponent:[file pathExtension]] 
+			stringByAppendingPathComponent:file]];
+	return testDataPath;
 }
 
 @end

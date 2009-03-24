@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AMF.h"
 #import "ASObject.h"
+#import "FlexDataTypes.h"
 
 #if TARGET_OS_IPHONE
 #import "NSObject-iPhoneExtensions.h"

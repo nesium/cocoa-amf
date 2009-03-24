@@ -10,6 +10,7 @@
 #import "AMF.h"
 #import "AMFUnarchiver.h"
 #import "ASObject.h"
+#import "FlexDataTypes.h"
 
 
 @interface AMFArchiver : NSCoder 

@@ -53,6 +53,14 @@ static NSMutableDictionary *g_registeredClasses = nil;
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
++ (void)initialize
+{
+	[[self class] setClass:[FlexArrayCollection class] 
+		forClassName:@"flex.messaging.io.ArrayCollection"];
+	[[self class] setClass:[FlexObjectProxy class] 
+		forClassName:@"flex.messaging.io.ObjectProxy"];
+}
+
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
 {
 	NSZone *temp = [self zone];  // Must not call methods after release

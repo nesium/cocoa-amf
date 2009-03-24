@@ -10,6 +10,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2C35552A0F785A03003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3555290F785A03003A31C4 /* FlexDataTypes.m */; };
 		2CE53EF10F1A69EC0000AD55 /* AsyncSocket Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */; };
 		2CE53EF20F1A69EC0000AD55 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */; };
 		2CE53EF30F1A69EC0000AD55 /* changes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EF00F1A69EC0000AD55 /* changes.txt */; };
@@ -32,6 +33,8 @@
 		1D6058910D05DD3D006BFB54 /* CocoaAMF-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CocoaAMF-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2C3555280F785A03003A31C4 /* FlexDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexDataTypes.h; sourceTree = "<group>"; };
+		2C3555290F785A03003A31C4 /* FlexDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexDataTypes.m; sourceTree = "<group>"; };
 		2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "AsyncSocket Documentation.html"; sourceTree = "<group>"; };
 		2CE53EEE0F1A69EC0000AD55 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
@@ -115,6 +118,51 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2C3555220F7859C8003A31C4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F0C0F1A6AB40000AD55 /* AMF.h */,
+				2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */,
+				2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */,
+				49A471450F52E60D008ADED3 /* AMFArchiver.h */,
+				49A471460F52E60D008ADED3 /* AMFArchiver.m */,
+				49A471480F52E60D008ADED3 /* AMFUnarchiver.h */,
+				49A471470F52E60D008ADED3 /* AMFUnarchiver.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		2C3555230F7859D9003A31C4 /* Connection Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F150F1A6AB40000AD55 /* AMFGateway.h */,
+				2CE53F160F1A6AB40000AD55 /* AMFGateway.m */,
+				2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */,
+				2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */,
+			);
+			name = "Connection Classes";
+			sourceTree = "<group>";
+		};
+		2C3555240F7859EE003A31C4 /* Datatypes */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F190F1A6AB40000AD55 /* ASObject.h */,
+				2CE53F1A0F1A6AB40000AD55 /* ASObject.m */,
+				2C3555280F785A03003A31C4 /* FlexDataTypes.h */,
+				2C3555290F785A03003A31C4 /* FlexDataTypes.m */,
+			);
+			name = Datatypes;
+			sourceTree = "<group>";
+		};
+		2C35552B0F785A0E003A31C4 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				2CE53F320F1A6B550000AD55 /* NSObject-iPhoneExtensions.h */,
+				2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		2CE53EEB0F1A69EC0000AD55 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,21 +208,10 @@
 		2CE53F0B0F1A6AB40000AD55 /* CocoaAMF */ = {
 			isa = PBXGroup;
 			children = (
-				2CE53F0C0F1A6AB40000AD55 /* AMF.h */,
-				2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */,
-				2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */,
-				2CE53F150F1A6AB40000AD55 /* AMFGateway.h */,
-				2CE53F160F1A6AB40000AD55 /* AMFGateway.m */,
-				2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */,
-				2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */,
-				49A471450F52E60D008ADED3 /* AMFArchiver.h */,
-				49A471460F52E60D008ADED3 /* AMFArchiver.m */,
-				49A471480F52E60D008ADED3 /* AMFUnarchiver.h */,
-				49A471470F52E60D008ADED3 /* AMFUnarchiver.m */,
-				2CE53F190F1A6AB40000AD55 /* ASObject.h */,
-				2CE53F1A0F1A6AB40000AD55 /* ASObject.m */,
-				2CE53F320F1A6B550000AD55 /* NSObject-iPhoneExtensions.h */,
-				2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */,
+				2C3555220F7859C8003A31C4 /* Core */,
+				2C3555230F7859D9003A31C4 /* Connection Classes */,
+				2C3555240F7859EE003A31C4 /* Datatypes */,
+				2C35552B0F785A0E003A31C4 /* Categories */,
 			);
 			path = CocoaAMF;
 			sourceTree = "<group>";
@@ -245,6 +282,7 @@
 				2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */,
 				49A471490F52E60D008ADED3 /* AMFArchiver.m in Sources */,
 				49A4714A0F52E60D008ADED3 /* AMFUnarchiver.m in Sources */,
+				2C35552A0F785A03003A31C4 /* FlexDataTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

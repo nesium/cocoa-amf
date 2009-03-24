@@ -39,6 +39,14 @@ static NSMutableDictionary *g_registeredClasses = nil;
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
++ (void)initialize
+{
+	[[self class] setClassName:@"flex.messaging.io.ArrayCollection" 
+		forClass:[FlexArrayCollection class]];
+	[[self class] setClassName:@"flex.messaging.io.ObjectProxy" 
+		forClass:[FlexObjectProxy class]];
+}
+
 - (id)init
 {
 	if (self = [super init])

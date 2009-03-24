@@ -223,11 +223,20 @@
 	[archiver encodeRootObject:spam];
 	NSData *data = [NSData dataWithContentsOfFile:[self fullPathForTestFile:@"typedobject_0.amf3" 
 		version:nil]];
-	[[archiver archiverData] writeToFile:@"/Users/marc/Desktop/test.amf3" atomically:NO];
 	STAssertTrue([data isEqual:[archiver archiverData]], @"Registered typed object data is not equal");
 	[archiver release];
 	
 	[spam release];
+}
+
+- (void)testFlexDataTypes
+{
+	FlexArrayCollection *coll = [[FlexArrayCollection alloc] initWithSource:
+		[NSDictionary dictionaryWithObjectsAndKeys:@"eggs", @"spam", nil]];
+	STAssertTrue([self assertDataOfFile:@"flexdatatypes_0.amf3" isEqualTo:coll], 
+		@"ArrayCollections do not match.");
+	STAssertTrue([self assertEncodedObject:coll isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 
+		@"ArrayCollection data is not equal");
 }
 
 @end
