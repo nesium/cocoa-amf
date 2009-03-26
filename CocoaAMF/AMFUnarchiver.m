@@ -449,10 +449,12 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		{
 			if (!(cls = objc_getClass([className cStringUsingEncoding:NSUTF8StringEncoding])))
 			{
+				NSLog(@"BYE BYE %@", className);
 				return object;
 			}
 		}
 	}
+	NSLog(@"DESERIALIZE %@", className);
 	ASObject *lastDeserializedObject = m_currentDeserializedObject;
 	m_currentDeserializedObject = object;
 	NSObject <NSCoding> *desObject = [cls allocWithZone:NULL];

@@ -63,15 +63,14 @@
 			body.targetURI = [ba decodeUTF];
 			body.responseURI = [ba decodeUTF];
 			// Body length
-			/*uint32_t length = */
-			[ba decodeUnsignedInt];
+			uint32_t length = [ba decodeUnsignedInt];
 			// DEBUG
-//			NSLog(@"init");
-//			NSData *subdata = [data subdataWithRange:(NSRange){[data length] - [ba bytesAvailable], 
-//				length}];
-//			NSString *path = [NSString stringWithFormat:[@"~/Desktop/body_request_%d.amf" 
-//				stringByExpandingTildeInPath], i];
-//			[subdata writeToFile:path atomically:NO];
+			NSLog(@"init");
+			NSData *subdata = [data subdataWithRange:(NSRange){[data length] - [ba bytesAvailable], 
+				length}];
+			NSString *path = [NSString stringWithFormat:[@"~/Desktop/body_request_%d.amf" 
+				stringByExpandingTildeInPath], i];
+			[subdata writeToFile:path atomically:NO];
 			// /DEBUG
 			body.data = [ba decodeObject];
 			[bodies addObject:body];
@@ -116,7 +115,7 @@
 	}
 	[ba encodeUnsignedShort:[m_bodies count]];
 	// DEBUG
-//	int i = 0;
+	int i = 0;
 	// /DEBUG
 	for (AMFMessageBody *body in m_bodies)
 	{
@@ -129,11 +128,11 @@
 			[bodyBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
 		// DEBUG
-//		NSLog(@"data");
-//		NSData *subdata = [AMFArchiver archivedDataWithRootObject:body.data encoding:m_version];
-//		NSString *path = [NSString stringWithFormat:[@"~/Desktop/body_response_%d.amf" 
-//			stringByExpandingTildeInPath], i++];
-//		[subdata writeToFile:path atomically:NO];
+		NSLog(@"data");
+		NSData *subdata = [AMFArchiver archivedDataWithRootObject:body.data encoding:m_version];
+		NSString *path = [NSString stringWithFormat:[@"~/Desktop/body_response_%d.amf" 
+			stringByExpandingTildeInPath], i++];
+		[subdata writeToFile:path atomically:NO];
 		// /DEBUG
 		[bodyBa encodeObject:body.data];
 		[ba encodeUnsignedInt:[bodyBa.data length]];

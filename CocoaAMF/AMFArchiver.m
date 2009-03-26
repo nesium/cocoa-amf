@@ -377,6 +377,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	
 	m_currentSerializedData = nil;
 	[value encodeWithCoder:self];
+	NSLog(@"DATA %@", m_currentSerializedData);
 	obj.data = m_currentSerializedData;
 	
 	obj.isExternalizable = m_currentSerializedData != nil;
@@ -386,7 +387,9 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	m_currentSerializedBytes = lastSerializedBytes;
 	
 	if (m_currentSerializedData == m_data)
+	{
 		m_currentSerializedPosition = [m_data length];
+	}
 	
 	[self _encodeASObject:obj];
 }
@@ -742,6 +745,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_encodeASObject:(ASObject *)value
 {
+	NSLog(@"ENCODE AS OBJ %@", value);
 	[self encodeUnsignedChar:kAMF3ObjectType];
 	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound)
 	{

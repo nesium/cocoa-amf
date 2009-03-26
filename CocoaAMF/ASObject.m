@@ -77,8 +77,8 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | type: %@>\n%@", 
-		[self class], (long)self, m_type, m_properties];
+	return [NSString stringWithFormat:@"<%@ = 0x%08X | type: %@>\n%@\ndata: %@", 
+		[self class], (long)self, m_type, m_properties, m_data];
 }
 
 @end
