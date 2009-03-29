@@ -11,7 +11,6 @@
 @class AMF3TraitsInfo;
 
 @interface AMFArchiver (Private)
-- (void)_createExternalizableDataHolderIfNeeded;
 - (void)_ensureLength:(unsigned)length;
 - (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
 
@@ -214,7 +213,6 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		[m_currentSerializedObject addObject:value];
 		return;
 	}
-	[self _createExternalizableDataHolderIfNeeded];
 	[m_data appendData:value];
 	m_bytes = [m_data mutableBytes];
 	m_position = [m_data length];
@@ -455,7 +453,6 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)_ensureLength:(unsigned)length
 {
-	[self _createExternalizableDataHolderIfNeeded];
 	[m_data setLength:[m_data length] + length];
 	m_bytes = [m_data mutableBytes];
 }
@@ -484,10 +481,6 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	uint8_t *chars = (uint8_t *)bytes;
 	for (NSUInteger i = 0; i < length; i++)
 		m_bytes[m_position++] = chars[i];
-}
-
-- (void)_createExternalizableDataHolderIfNeeded
-{
 }
 @end
 
