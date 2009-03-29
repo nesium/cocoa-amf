@@ -32,6 +32,7 @@
 + (NSData *)archivedDataWithRootObject:(id)rootObject encoding:(AMFVersion)encoding;
 + (BOOL)archiveRootObject:(id)rootObject encoding:(AMFVersion)encoding toFile:(NSString *)path;
 
+- (BOOL)allowsKeyedCoding;
 - (NSData *)data;
 - (NSMutableData *)archiverData;
 - (void)encodeRootObject:(id)rootObject;

@@ -41,6 +41,14 @@
 + (AMFStringData *)stringDataWithData:(NSData *)theData;
 @end
 
+@interface AMFPlainData : NSObject
+{
+	NSData *data;
+}
+@property (nonatomic, retain) NSData *data;
++ (AMFPlainData *)plainDataWithData:(NSData *)theData;
+@end
+
 
 @implementation AMFArchiver
 
@@ -118,6 +126,13 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 #pragma mark -
 #pragma mark Public methods
+
+- (BOOL)allowsKeyedCoding
+{
+	if (m_currentSerializedObject == nil || m_currentSerializedObject.data != nil)
+		return NO;
+	return YES;
+}
 
 - (NSData *)data
 {
@@ -228,7 +243,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 {
 	if (m_currentSerializedObject != nil)
 	{
-		[m_currentSerializedObject addObject:value];
+		[m_currentSerializedObject addObject:[AMFPlainData plainDataWithData:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -368,6 +383,16 @@ static NSMutableDictionary *g_registeredClasses = nil;
 			return;
 		}
 		[self encodeDataObject:[(AMFStringData *)value data]];
+	}
+	else if ([value isKindOfClass:[AMFPlainData class]])
+	{
+		if (m_currentSerializedObject != nil)
+		{
+			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
+			return;
+		}
+		[self encodeDataObject:[(AMFPlainData *)value data]];
 	}
 	else
 	{
@@ -961,4 +986,23 @@ not allow externalizable objects (non-keyed archiving)!"];
 	[data release];
 	[super dealloc];
 }
+@end
+
+@implementation AMFPlainData
+
+@synthesize data;
+
++ (AMFPlainData *)plainDataWithData:(NSData *)theData
+{
+	AMFPlainData *pData = [[AMFPlainData alloc] init];
+	pData.data = theData;
+	return [pData autorelease];
+}
+
+- (void)dealloc
+{
+	[data release];
+	[super dealloc];
+}
+
 @end
