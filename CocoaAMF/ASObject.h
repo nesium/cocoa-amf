@@ -14,14 +14,15 @@
 	NSString *m_type;
 	BOOL m_isExternalizable;
 	NSMutableDictionary *m_properties;
-	NSData *m_data;
+	NSMutableArray *m_data;
 }
 @property (nonatomic, retain) NSString *type;
-@property (nonatomic, retain) NSMutableDictionary *properties;
 @property (nonatomic, assign) BOOL isExternalizable;
-@property (nonatomic, retain) NSData *data;
+@property (nonatomic, retain) NSMutableDictionary *properties;
+@property (nonatomic, retain) NSMutableArray *data;
 
 + (ASObject *)asObjectWithDictionary:(NSDictionary *)dict;
+- (void)addObject:(id)obj;
 - (NSUInteger)count;
 
 @end

@@ -200,7 +200,7 @@
 		AMFActionMessage *amfRequest = [[AMFActionMessage alloc] 
 			initWithData:(NSData *)messageBody];
 		
-		NSLog(@"version: %d", amfRequest.version);
+		//NSLog(@"version: %d", amfRequest.version);
 		AMFActionMessage *amfResponse = [[AMFActionMessage alloc] init];
 		amfResponse.version = amfRequest.version;
 		amfResponse.headers = nil;
@@ -216,8 +216,8 @@
 			amfResponseBody.data = nil;
 			[(NSMutableArray *)amfResponse.bodies addObject:amfResponseBody];
 			[amfResponseBody release];
-			NSLog(@"%@ - %@, %@", amfRequestBody.targetURI, amfRequestBody.responseURI, 
-				amfRequestBody.data);
+//			NSLog(@"%@ - %@, %@", amfRequestBody.targetURI, amfRequestBody.responseURI, 
+//				amfRequestBody.data);
 			NSArray *targetComponents = [amfRequestBody.targetURI 
 				componentsSeparatedByString:@"."];
 			if ([targetComponents count] < 2)

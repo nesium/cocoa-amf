@@ -449,12 +449,10 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		{
 			if (!(cls = objc_getClass([className cStringUsingEncoding:NSUTF8StringEncoding])))
 			{
-				NSLog(@"BYE BYE %@", className);
 				return object;
 			}
 		}
 	}
-	NSLog(@"DESERIALIZE %@", className);
 	ASObject *lastDeserializedObject = m_currentDeserializedObject;
 	m_currentDeserializedObject = object;
 	NSObject <NSCoding> *desObject = [cls allocWithZone:NULL];
@@ -1092,11 +1090,18 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	{
 		return NO;
 	}
-	if ([[(AMF3TraitsInfo *)anObject className] isEqualToString:m_className] &&
-		[(AMF3TraitsInfo *)anObject dynamic] == m_dynamic &&
-		[(AMF3TraitsInfo *)anObject externalizable] == m_externalizable &&
-		[(AMF3TraitsInfo *)anObject count] == m_count &&
-		[[(AMF3TraitsInfo *)anObject properties] isEqualToArray:m_properties])
+	AMF3TraitsInfo *traits = (AMF3TraitsInfo *)anObject;
+	BOOL classNameIdentical = m_className == nil 
+		? traits.className == nil 
+		: [traits.className isEqualToString:m_className];
+	BOOL propertiesIdentical = m_properties == nil 
+		? traits.properties == nil 
+		: [traits.properties isEqualToArray:m_properties];
+	if (classNameIdentical &&
+		traits.dynamic == m_dynamic &&
+		traits.externalizable == m_externalizable &&
+		[traits count] == m_count &&
+		propertiesIdentical)
 	{
 		return YES;
 	}

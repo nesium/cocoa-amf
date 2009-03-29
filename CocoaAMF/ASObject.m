@@ -20,7 +20,8 @@
 {
 	if (self = [super init])
 	{
-		m_properties = [[NSMutableDictionary alloc] init];
+		m_properties = nil;
+		m_data = nil;
 		m_type = nil;
 		m_isExternalizable = NO;
 	}
@@ -52,7 +53,10 @@
 	}
 	ASObject *asObj = (ASObject *)obj;
 	return ((asObj.type == nil && m_type == nil) || [asObj.type isEqual:m_type]) && 
-		asObj.isExternalizable == m_isExternalizable && [asObj.properties isEqual:m_properties];
+		asObj.isExternalizable == m_isExternalizable && 
+		(m_isExternalizable 
+			? [asObj.data isEqual:m_data] 
+			: [asObj.properties isEqual:m_properties]);
 }
 
 
@@ -62,6 +66,8 @@
 
 - (void)setValue:(id)value forKey:(NSString *)key
 {
+	if (m_properties == nil)
+		m_properties = [[NSMutableDictionary alloc] init];
 	[m_properties setValue:value forKey:key];
 }
 
@@ -70,9 +76,19 @@
 	return [m_properties valueForKey:key];
 }
 
+- (void)addObject:(id)obj
+{
+	if (m_data == nil)
+	{
+		m_data = [[NSMutableArray alloc] init];
+		m_isExternalizable = YES;
+	}
+	[m_data addObject:obj];
+}
+
 - (NSUInteger)count
 {
-	return [m_properties count];
+	return m_isExternalizable ? [m_data count] : [m_properties count];
 }
 
 - (NSString *)description

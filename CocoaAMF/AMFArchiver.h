@@ -19,11 +19,9 @@
 	uint8_t *m_bytes;
 	uint32_t m_position;
 	NSMutableArray *m_objectTable;
+	NSMutableArray *m_serializationStack;
 	NSMutableDictionary *m_registeredClasses;
 	ASObject *m_currentSerializedObject;
-	NSMutableData *m_currentSerializedData;
-	uint8_t *m_currentSerializedBytes;
-	uint32_t m_currentSerializedPosition;
 }
 
 //--------------------------------------------------------------------------------------------------

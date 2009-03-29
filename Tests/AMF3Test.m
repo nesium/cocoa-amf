@@ -232,7 +232,14 @@
 - (void)testFlexDataTypes
 {
 	FlexArrayCollection *coll = [[FlexArrayCollection alloc] initWithSource:
-		[NSDictionary dictionaryWithObjectsAndKeys:@"eggs", @"spam", nil]];
+		[NSArray arrayWithObjects:
+			@"bla", 
+			[[FlexArrayCollection alloc] initWithSource:
+				[NSArray arrayWithObjects:
+					[NSNumber numberWithInt:1], 
+					[NSNumber numberWithInt:2], 
+					[NSNumber numberWithInt:3],
+					nil]], nil]];
 	STAssertTrue([self assertDataOfFile:@"flexdatatypes_0.amf3" isEqualTo:coll], 
 		@"ArrayCollections do not match.");
 	STAssertTrue([self assertEncodedObject:coll isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 

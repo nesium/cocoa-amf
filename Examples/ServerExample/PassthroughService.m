@@ -16,7 +16,7 @@
 	if ([args count] < 1)
 		return nil;
 	id obj = [args objectAtIndex:0];
-	NSLog(@"received %@: %@", [obj className], obj);
+//	NSLog(@"received %@: %@", [obj className], obj);
 	return obj;
 }
 
