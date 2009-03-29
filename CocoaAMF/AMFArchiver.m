@@ -33,6 +33,14 @@
 - (void)_encodeMixedArray:(NSDictionary *)value;
 @end
 
+@interface AMFStringData : NSObject
+{
+	NSData *data;
+}
+@property (nonatomic, retain) NSData *data;
++ (AMFStringData *)stringDataWithData:(NSData *)theData;
+@end
+
 
 @implementation AMFArchiver
 
@@ -281,7 +289,8 @@ static NSMutableDictionary *g_registeredClasses = nil;
 {
 	if (m_currentSerializedObject != nil)
 	{
-		[m_currentSerializedObject addObject:[value dataUsingEncoding:encoding]];
+		[m_currentSerializedObject addObject:[AMFStringData stringDataWithData:
+			[value dataUsingEncoding:encoding]]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -350,6 +359,16 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		}
 		[self _encodeASObject:(ASObject *)value];
 	}
+	else if ([value isKindOfClass:[AMFStringData class]])
+	{
+		if (m_currentSerializedObject != nil)
+		{
+			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
+			return;
+		}
+		[self encodeDataObject:[(AMFStringData *)value data]];
+	}
 	else
 	{
 		[self _encodeCustomObject:value];
@@ -382,15 +401,15 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 - (void)encodeUTF:(NSString *)value
 {
+	if (m_currentSerializedObject != nil)
+	{
+		[m_currentSerializedObject addObject:(value == nil ? [NSString string] : value)];
+		[self _ensureIntegrityOfSerializedObject];
+		return;
+	}
 	if (value == nil)
 	{
 		[self encodeUnsignedShort:0];
-		return;
-	}
-	if (m_currentSerializedObject != nil)
-	{
-		[m_currentSerializedObject addObject:value];
-		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
@@ -406,7 +425,8 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	}
 	if (m_currentSerializedObject != nil)
 	{
-		[m_currentSerializedObject addObject:[value dataUsingEncoding:NSUTF8StringEncoding]];
+		[m_currentSerializedObject addObject:[AMFStringData stringDataWithData:[value 
+			dataUsingEncoding:NSUTF8StringEncoding]]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -922,4 +942,23 @@ not allow externalizable objects (non-keyed archiving)!"];
 	}
 }
 
+@end
+
+
+@implementation AMFStringData
+
+@synthesize data;
+
++ (AMFStringData *)stringDataWithData:(NSData *)theData
+{
+	AMFStringData *sData = [[AMFStringData alloc] init];
+	sData.data = theData;
+	return [sData autorelease];
+}
+
+- (void)dealloc
+{
+	[data release];
+	[super dealloc];
+}
 @end

@@ -24,3 +24,9 @@
 {
 }
 @end
+
+@interface PlainStringEncoder : NSObject
+{
+	NSString *m_string;
+}
+@end

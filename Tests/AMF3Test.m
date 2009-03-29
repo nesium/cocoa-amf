@@ -15,8 +15,49 @@
 	[coder encodeObject:@"foo"];
 	[coder encodeObject:@"foo" forKey:@"bar"];
 }
-
 @end
+
+@implementation PlainStringEncoder
+
+- (id)init
+{
+	if (self = [super init])
+	{
+		m_string = [@"Hello World" retain];
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[m_string release];
+	[super dealloc];
+}
+
+- (BOOL)isEqual:(id)obj
+{
+	if (![obj isMemberOfClass:[self class]])
+	{
+		return NO;
+	}
+	return [((PlainStringEncoder *)obj)->m_string isEqual:m_string];
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super init])
+	{
+		m_string = [[(AMFUnarchiver *)coder decodeUTFBytes:11] retain];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[(AMFArchiver *)coder encodeUTFBytes:m_string];
+}
+@end
+
 
 
 
@@ -264,6 +305,15 @@
 	WrongSerializedCustomObject *obj = [[WrongSerializedCustomObject alloc] init];
 	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF3Version], 
 		@"Keyed/non-keyed archiving was mixed without an exception");
+}
+
+- (void)testExternalizable
+{
+	PlainStringEncoder *obj = [[PlainStringEncoder alloc] init];
+	STAssertTrue([self assertDataOfFile:@"plainstringexternalizable_0.amf3" isEqualTo:obj], 
+		@"Could not deserialize utf bytes");
+	STAssertTrue([self assertEncodedObject:obj isEqualToContentsOfFile:@"plainstringexternalizable_0.amf3"], 
+		@"Could not serialize utf bytes properly");
 }
 
 @end
