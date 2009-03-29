@@ -217,6 +217,14 @@
 		isEqualTo:obj], @"forceAMF3 test failed");
 }
 
+- (void)testExternalizableObjectNotSupported
+{
+	FlexArrayCollection *obj = [[FlexArrayCollection alloc] initWithSource:
+		[NSArray arrayWithObjects:@"a", @"b", @"c", nil]];
+	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF0Version], 
+		@"Encoding externalizable object did not throw");
+}
+
 //- (void)testReadDate
 //{
 //	NSDate *date = [NSDate dateWithTimeIntervalSince1970:1042326000];

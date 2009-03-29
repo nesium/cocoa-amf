@@ -8,6 +8,18 @@
 
 #import "AMF3Test.h"
 
+@implementation WrongSerializedCustomObject
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:@"foo"];
+	[coder encodeObject:@"foo" forKey:@"bar"];
+}
+
+@end
+
+
+
 
 @implementation AMF3Test
 
@@ -245,6 +257,13 @@
 	STAssertTrue([self assertEncodedObject:coll isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 
 		@"ArrayCollection data is not equal");
 	[coll release];
+}
+
+- (void)testKeyedNonKeyedIntegrity
+{
+	WrongSerializedCustomObject *obj = [[WrongSerializedCustomObject alloc] init];
+	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF3Version], 
+		@"Keyed/non-keyed archiving was mixed without an exception");
 }
 
 @end

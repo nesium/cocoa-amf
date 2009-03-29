@@ -17,5 +17,10 @@
 {
 
 }
+@end
 
+
+@interface WrongSerializedCustomObject : NSObject
+{
+}
 @end

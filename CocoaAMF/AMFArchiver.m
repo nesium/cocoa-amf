@@ -12,6 +12,7 @@
 
 @interface AMFArchiver (Private)
 - (void)_ensureLength:(unsigned)length;
+- (void)_ensureIntegrityOfSerializedObject;
 - (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
 
 - (void)_encodeDate:(NSDate *)value;
@@ -149,36 +150,43 @@ static NSMutableDictionary *g_registeredClasses = nil;
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:[NSNumber numberWithBool:value] forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeDouble:(double)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:[NSNumber numberWithDouble:value] forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeFloat:(float)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:[NSNumber numberWithFloat:value] forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeInt32:(int32_t)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:[NSNumber numberWithInt:value] forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeInt64:(int64_t)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:[NSNumber numberWithInteger:value] forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeInt:(int)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:[NSNumber numberWithInt:value] forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeObject:(id)value forKey:(NSString *)key
 {
 	[m_currentSerializedObject setValue:value forKey:key];
+	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeValueOfObjCType:(const char *)valueType at:(const void *)address
@@ -190,6 +198,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithBool:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[self encodeUnsignedChar:(value ? 1 : 0)];
@@ -200,6 +209,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithChar:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[self _ensureLength:1];
@@ -211,6 +221,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:value];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[m_data appendData:value];
@@ -223,6 +234,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithDouble:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	uint8_t *ptr = (void *)&value;
@@ -242,6 +254,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithFloat:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	uint8_t *ptr = (void *)&value;
@@ -257,6 +270,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithInt:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	value = CFSwapInt32HostToBig(value);
@@ -268,6 +282,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[value dataUsingEncoding:encoding]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[self encodeDataObject:[value dataUsingEncoding:encoding]];
@@ -280,6 +295,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		if (m_currentSerializedObject != nil)
 		{
 			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
 		[self _encodeString:(NSString *)value omitType:NO];
@@ -289,6 +305,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		if (m_currentSerializedObject != nil)
 		{
 			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
 		[self _encodeNumber:(NSNumber *)value];
@@ -298,6 +315,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		if (m_currentSerializedObject != nil)
 		{
 			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
 		[self _encodeDate:(NSDate *)value];
@@ -307,6 +325,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		if (m_currentSerializedObject != nil)
 		{
 			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}	
 		[self _encodeArray:(NSArray *)value];
@@ -316,6 +335,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		if (m_currentSerializedObject != nil)
 		{
 			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
 		[self _encodeDictionary:(NSDictionary *)value];
@@ -325,6 +345,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		if (m_currentSerializedObject != nil)
 		{
 			[m_currentSerializedObject addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
 		[self _encodeASObject:(ASObject *)value];
@@ -340,6 +361,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithShort:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	value = CFSwapInt16HostToBig(value);
@@ -351,6 +373,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedInt:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	value = CFSwapInt32HostToBig(value);
@@ -367,6 +390,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:value];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
@@ -383,6 +407,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[value dataUsingEncoding:NSUTF8StringEncoding]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[self encodeDataObject:[value dataUsingEncoding:NSUTF8StringEncoding]];
@@ -393,6 +418,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedChar:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[self _ensureLength:1];
@@ -404,6 +430,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedShort:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	[self _ensureLength:2];
@@ -416,6 +443,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	if (m_currentSerializedObject != nil)
 	{
 		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedInt:value]];
+		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
 	if (value < 0x80)
@@ -455,6 +483,15 @@ static NSMutableDictionary *g_registeredClasses = nil;
 {
 	[m_data setLength:[m_data length] + length];
 	m_bytes = [m_data mutableBytes];
+}
+
+- (void)_ensureIntegrityOfSerializedObject
+{
+	if (m_currentSerializedObject.data != nil && m_currentSerializedObject.properties != nil)
+	{
+		[NSException raise:NSInternalInconsistencyException format:@"You may not mix keyed archiving \
+and non-keyed archiving on the same object!"];
+	}
 }
 
 - (void)_encodeCustomObject:(id)value
@@ -514,6 +551,15 @@ static NSMutableDictionary *g_registeredClasses = nil;
 
 #pragma mark -
 #pragma mark Private methods
+
+- (void)_ensureIntegrityOfSerializedObject
+{
+	if (m_currentSerializedObject.data != nil)
+	{
+		[NSException raise:NSInternalInconsistencyException format:@"The AMF0 data format does \
+not allow externalizable objects (non-keyed archiving)!"];
+	}
+}
 
 - (void)_encodeString:(NSString *)value omitType:(BOOL)omitType
 {
@@ -621,7 +667,7 @@ static NSMutableDictionary *g_registeredClasses = nil;
 	[self encodeDouble:[value doubleValue]];
 }
 
-- (void)writeDate:(NSDate *)value
+- (void)_encodeDate:(NSDate *)value
 {
 	[self encodeUnsignedChar:kAMF0DateType];
 	[self encodeDouble:([value timeIntervalSince1970] * 1000)];

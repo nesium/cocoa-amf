@@ -10,6 +10,7 @@
 #import "AbstractAMFTest.h"
 #import "ASObject.h"
 #import "AMFArchiver.h"
+#import "FlexDataTypes.h"
 
 
 @interface AMF0Test : AbstractAMFTest
