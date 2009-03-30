@@ -13,7 +13,7 @@
 
 @synthesize source;
 
-- (id)initWithSource:(NSObject *)obj
+- (id)initWithSource:(NSArray *)obj
 {
 	if (self = [super init])
 	{

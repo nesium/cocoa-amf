@@ -46,6 +46,8 @@
 + (Class)classForClassName:(NSString *)codedName;
 - (void)setClass:(Class)cls forClassName:(NSString *)codedName;
 + (void)setClass:(Class)cls forClassName:(NSString *)codedName;
++ (void)setOptions:(uint16_t)options;
++ (uint16_t)options;
 - (BOOL)containsValueForKey:(NSString *)key;
 
 - (BOOL)decodeBoolForKey:(NSString *)key;

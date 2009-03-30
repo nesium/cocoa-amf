@@ -48,6 +48,7 @@
 @implementation AMFUnarchiver
 
 static NSMutableDictionary *g_registeredClasses = nil;
+static uint16_t g_options = 0;
 @synthesize objectEncoding=m_objectEncoding, data=m_data;
 
 #pragma mark -
@@ -56,9 +57,9 @@ static NSMutableDictionary *g_registeredClasses = nil;
 + (void)initialize
 {
 	[[self class] setClass:[FlexArrayCollection class] 
-		forClassName:@"flex.messaging.io.ArrayCollection"];
+		forClassName:kFlexArrayCollectionIdentifier];
 	[[self class] setClass:[FlexObjectProxy class] 
-		forClassName:@"flex.messaging.io.ObjectProxy"];
+		forClassName:kFlexObjectProxyIdentifier];
 }
 
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
@@ -158,6 +159,16 @@ static NSMutableDictionary *g_registeredClasses = nil;
 {
 	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
 	[g_registeredClasses setObject:cls forKey:codedName];
+}
+
++ (void)setOptions:(uint16_t)options
+{
+	g_options = options;
+}
+
++ (uint16_t)options
+{
+	return g_options;
 }
 
 - (BOOL)decodeBoolForKey:(NSString *)key
@@ -442,6 +453,15 @@ static NSMutableDictionary *g_registeredClasses = nil;
 		return object;
 	}
 	NSString *className = object.type;
+	
+	if (((g_options & AMFUnarchiverUnpackArrayCollection) && 
+		[className isEqual:kFlexArrayCollectionIdentifier]) || 
+		((g_options & AMFUnarchiverUnpackObjectProxyOption) && 
+		[className isEqual:kFlexObjectProxyIdentifier]))
+	{
+		return [self decodeObject];
+	}
+	
 	Class cls;
 	if (!(cls = [m_registeredClasses objectForKey:className]))
 	{

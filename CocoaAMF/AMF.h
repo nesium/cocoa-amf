@@ -52,5 +52,19 @@ typedef enum _AMF3Type
 	kAMF3ByteArrayType = 0xC
 } AMF3Type;
 
+enum
+{
+	AMFUnarchiverUnpackArrayCollection = 0x1,
+	AMFUnarchiverUnpackObjectProxyOption = 0x2
+};
+
+enum
+{
+	AMFArchiverPackArrayOption = 0x1 // converts an array to an ArrayCollection
+};
+
+#define kFlexArrayCollectionIdentifier @"flex.messaging.io.ArrayCollection"
+#define kFlexObjectProxyIdentifier @"flex.messaging.io.ObjectProxy"
+
 NSString * NSStringFromAMF0Type(AMF0Type type);
 NSString * NSStringFromAMF3Type(AMF3Type type);

@@ -12,10 +12,10 @@
 
 @interface FlexArrayCollection : NSObject <NSCoding>
 {
-	NSObject *source;
+	NSArray *source;
 }
-@property (nonatomic, retain) NSObject *source;
-- (id)initWithSource:(NSObject *)obj;
+@property (nonatomic, retain) NSArray *source;
+- (id)initWithSource:(NSArray *)obj;
 @end
 
 @interface FlexObjectProxy : NSObject <NSCoding>

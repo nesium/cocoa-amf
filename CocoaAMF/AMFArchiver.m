@@ -53,15 +53,16 @@
 @implementation AMFArchiver
 
 static NSMutableDictionary *g_registeredClasses = nil;
+static uint16_t g_options = 0;
 
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
 + (void)initialize
 {
-	[[self class] setClassName:@"flex.messaging.io.ArrayCollection" 
+	[[self class] setClassName:kFlexArrayCollectionIdentifier 
 		forClass:[FlexArrayCollection class]];
-	[[self class] setClassName:@"flex.messaging.io.ObjectProxy" 
+	[[self class] setClassName:kFlexObjectProxyIdentifier 
 		forClass:[FlexObjectProxy class]];
 }
 
@@ -168,6 +169,16 @@ static NSMutableDictionary *g_registeredClasses = nil;
 + (NSString *)classNameForClass:(Class)cls
 {
 	return [g_registeredClasses objectForKey:cls];
+}
+
++ (void)setOptions:(uint16_t)options
+{
+	g_options = options;
+}
+
++ (uint16_t)options
+{
+	return g_options;
 }
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key

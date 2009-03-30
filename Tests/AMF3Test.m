@@ -300,6 +300,25 @@
 	[coll release];
 }
 
+- (void)testOptions
+{
+	NSArray *arr = [NSArray arrayWithObjects:
+		@"bla",
+		[NSArray arrayWithObjects:
+			[NSNumber numberWithInt:1], 
+			[NSNumber numberWithInt:2], 
+			[NSNumber numberWithInt:3],
+			nil], nil];
+	[AMFUnarchiver setOptions:AMFUnarchiverUnpackArrayCollection];
+	[AMFArchiver setOptions:AMFArchiverPackArrayOption];
+	STAssertTrue([self assertDataOfFile:@"flexdatatypes_0.amf3" isEqualTo:arr], 
+		@"Arrays do not match.");
+//	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 
+//		@"Array data is not equal");
+	[AMFUnarchiver setOptions:0];
+	[AMFArchiver setOptions:0];
+}
+
 - (void)testKeyedNonKeyedIntegrity
 {
 	WrongSerializedCustomObject *obj = [[WrongSerializedCustomObject alloc] init];
