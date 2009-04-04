@@ -63,6 +63,10 @@
 	{
 		return [[[(ASObject *)item properties] allValues] objectAtIndex:index];
 	}
+	else if ([item isKindOfClass:[FlexArrayCollection class]])
+	{
+		return [[(FlexArrayCollection *)item source] objectAtIndex:index];
+	}
 	
 	return nil;
 }
@@ -70,7 +74,8 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
 	return (([item isKindOfClass:[NSArray class]] || [item isKindOfClass:[NSDictionary class]] || 
-		[item isKindOfClass:[ASObject class]]) && [item count] > 0);
+		[item isKindOfClass:[ASObject class]] || [item isKindOfClass:[FlexArrayCollection class]]) && 
+		[item count] > 0);
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
@@ -92,13 +97,17 @@
 		{
 			parent = m_rootObject;
 		}
-		if ([parent isKindOfClass:[NSArray class]])
+		if ([parent isKindOfClass:[NSArray class]] || 
+			[parent isKindOfClass:[FlexArrayCollection class]])
 		{
 			if (parent == m_rootObject)
 			{
 				return @"Parameters";
 			}
-			return [NSString stringWithFormat:@"%i", [(NSArray *)parent indexOfObject:item]];
+			NSArray *arr = [parent isKindOfClass:[FlexArrayCollection class]] 
+				? [(FlexArrayCollection *)parent source] 
+				: (NSArray *)parent;
+			return [NSString stringWithFormat:@"%i", [arr indexOfObject:item]];
 		}
 		else if ([parent isKindOfClass:[NSDictionary class]] || 
 			[parent isKindOfClass:[ASObject class]])
@@ -127,6 +136,10 @@
 	if ([item isKindOfClass:[ASObject class]])
 	{
 		return ([[(ASObject *)item type] length] == 0 ? @"Object" : [(ASObject *)item type]);
+	}
+	else if ([item isKindOfClass:[FlexArrayCollection class]])
+	{
+		return @"ArrayCollection";
 	}
 	else if ([item isKindOfClass:[NSString class]])
 	{

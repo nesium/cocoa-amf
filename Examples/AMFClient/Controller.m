@@ -15,6 +15,15 @@
 
 @implementation Controller
 
++ (void)initialize
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	[dict setObject:@"http://www.nesium.com/amfdemo/gateway.php" forKey:@"LastGateway"];
+	[dict setObject:@"ExampleService.returnArrayCollection" forKey:@"LastService"];
+	[dict setObject:@"[]" forKey:@"LastParams"];
+	[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:dict];
+}
+
 - (void)awakeFromNib
 {
 	m_isLoading = NO;
@@ -202,20 +211,31 @@
 			NULL, NULL, nil, m_errorDescription);
 		goto bailout;
 	}
-	AMFActionMessage *message = [[AMFActionMessage alloc] initWithData:m_receivedData];
+	
+	AMFActionMessage *message = [AMFActionMessage alloc];
+	@try
+	{
+		message = [message initWithData:m_receivedData];
+	}
+	@catch (NSException *e) 
+	{
+		NSBeginAlertSheet(@"Could not deserialize response", @"OK", nil, nil, [NSApp mainWindow], 
+			self, NULL, NULL, nil, [e reason]);
+		goto bailout;
+	}
+	
 	NSObject *data = [[message.bodies objectAtIndex:0] data];
 	m_outlineViewDataSource.rootObject = data;
 	[m_objectOutlineView reloadData];
-	NSLog(@"exp: %d", [m_objectOutlineView isExpandable:m_outlineViewDataSource.rootObject]);
 	[m_objectOutlineView expandItem:[m_objectOutlineView itemAtRow:0]];
 	[m_resultTextView setString:[[CJSONSerializer serializer] serializeObject:data]];
-	[message release];
 	[[NSApp mainWindow] makeFirstResponder:m_objectOutlineView];
 	[m_objectOutlineView selectRow:0 byExtendingSelection:NO];
 	
 	bailout:
 	[m_errorDescription release];
 	[m_connection release];
+	[message release];
 	[self setIsLoading:NO];
 }
 

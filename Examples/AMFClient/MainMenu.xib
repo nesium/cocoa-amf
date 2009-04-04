@@ -9,7 +9,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="29"/>
-			<integer value="446"/>
+			<integer value="448"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2649,6 +2649,18 @@
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
+			<object class="NSUserDefaultsController" id="653832719">
+				<bool key="NSAppliesImmediately">YES</bool>
+			</object>
+			<object class="NSUserDefaultsController" id="337073708">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>LastGateway</string>
+					<string>LastService</string>
+					<string>LastParams</string>
+				</object>
+				<bool key="NSSharedInstance">YES</bool>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -3508,6 +3520,54 @@
 						<reference key="destination" ref="742796781"/>
 					</object>
 					<int key="connectionID">777</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.LastGateway</string>
+						<reference key="source" ref="379538509"/>
+						<reference key="destination" ref="337073708"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="379538509"/>
+							<reference key="NSDestination" ref="337073708"/>
+							<string key="NSLabel">value: values.LastGateway</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.LastGateway</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">785</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.LastService</string>
+						<reference key="source" ref="642813467"/>
+						<reference key="destination" ref="337073708"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="642813467"/>
+							<reference key="NSDestination" ref="337073708"/>
+							<string key="NSLabel">value: values.LastService</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.LastService</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">787</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.LastParams</string>
+						<reference key="source" ref="500912788"/>
+						<reference key="destination" ref="337073708"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="500912788"/>
+							<reference key="NSDestination" ref="337073708"/>
+							<string key="NSLabel">value: values.LastParams</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.LastParams</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">791</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4997,14 +5057,24 @@
 						<reference key="parent" ref="491474310"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">778</int>
+						<int key="objectID">780</int>
 						<reference key="object" ref="607987566"/>
 						<reference key="parent" ref="407548896"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">779</int>
+						<int key="objectID">781</int>
 						<reference key="object" ref="284625277"/>
 						<reference key="parent" ref="407548896"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">782</int>
+						<reference key="object" ref="653832719"/>
+						<reference key="parent" ref="1049"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">783</int>
+						<reference key="object" ref="337073708"/>
+						<reference key="parent" ref="1049"/>
 					</object>
 				</object>
 			</object>
@@ -5312,10 +5382,11 @@
 					<string>77.IBPluginDependency</string>
 					<string>77.ImportedFromIB2</string>
 					<string>775.IBPluginDependency</string>
-					<string>778.IBShouldRemoveOnLegacySave</string>
-					<string>779.IBShouldRemoveOnLegacySave</string>
 					<string>78.IBPluginDependency</string>
 					<string>78.ImportedFromIB2</string>
+					<string>780.IBShouldRemoveOnLegacySave</string>
+					<string>781.IBShouldRemoveOnLegacySave</string>
+					<string>782.IBPluginDependency</string>
 					<string>79.IBPluginDependency</string>
 					<string>79.ImportedFromIB2</string>
 					<string>80.IBPluginDependency</string>
@@ -5520,10 +5591,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{89, 193}, {752, 631}}</string>
+					<string>{{94, 42}, {752, 631}}</string>
 					<boolean value="NO" id="6"/>
 					<reference ref="6"/>
-					<string>{{89, 193}, {752, 631}}</string>
+					<string>{{94, 42}, {752, 631}}</string>
 					<reference ref="5"/>
 					<reference ref="5"/>
 					<string>{514, 496}</string>
@@ -5633,10 +5704,11 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<reference ref="9"/>
 					<reference ref="5"/>
 					<reference ref="5"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<reference ref="9"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5673,7 +5745,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">779</int>
+			<int key="maxID">791</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5796,7 +5868,7 @@
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
-		<string key="IBDocument.LastKnownRelativeProjectPath">../CocoaAMF.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../../CocoaAMF.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 	</data>
 </archive>

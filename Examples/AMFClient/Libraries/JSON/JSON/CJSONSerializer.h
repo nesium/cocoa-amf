@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ASObject.h"
+#import "FlexDataTypes.h"
 
 @interface CJSONSerializer : NSObject {
 }

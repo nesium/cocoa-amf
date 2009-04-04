@@ -48,6 +48,10 @@ else if ([inObject isKindOfClass:[ASObject class]])
 	{
 	theResult = [self serializeDictionary:[(ASObject *)inObject properties]];
 	}
+else if ([inObject isKindOfClass:[FlexArrayCollection class]])
+	{
+	theResult = [self serializeArray:[(FlexArrayCollection *)inObject source]];
+	}
 else
 	{
 	[NSException raise:NSGenericException format:@"Cannot serialize data of type '%@'", NSStringFromClass([inObject class])];

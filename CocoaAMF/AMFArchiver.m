@@ -369,8 +369,9 @@ static uint16_t g_options = 0;
 				([m_currentObjectToWrite isMemberOfClass:[ASObject class]] && 
 				[[(ASObject *)m_currentObjectToWrite type] isEqual:kFlexArrayCollectionIdentifier])))
 		{
-			[self _encodeCustomObject:[[[FlexArrayCollection alloc] initWithSource:(NSArray *)value] 
-				autorelease]];
+			// looks funny, but convices gcc that we really have a FlexArrayCollection here
+			[self _encodeCustomObject:[[(FlexArrayCollection *)[FlexArrayCollection alloc] 
+				initWithSource:(NSArray *)value] autorelease]];
 			return;
 		}
 		

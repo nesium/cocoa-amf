@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "ASObject.h"
+#import "FlexDataTypes.h"
 
 
 @interface OutlineViewDataSource : NSObject 

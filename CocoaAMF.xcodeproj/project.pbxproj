@@ -64,6 +64,7 @@
 		2C8500EE0EDF42DF0058EBE0 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2C8500FC0EDF43380058EBE0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		2C85010D0EDF43D10058EBE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C85010C0EDF43D10058EBE0 /* main.m */; };
+		2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2CB077B90EE0D2DC0059C799 /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
 		2CB078590EE0E3260059C799 /* BGHUDAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
 		2CB0785E0EE0E3410059C799 /* BGHUDAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
@@ -808,6 +809,7 @@
 				2C38B4A30EE4A04A0083BCF5 /* CAMFFieldEditor.m in Sources */,
 				2C80A6800F1C1FA700D761BB /* AMFArchiver.m in Sources */,
 				2C3554690F784CB3003A31C4 /* FlexDataTypes.m in Sources */,
+				2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

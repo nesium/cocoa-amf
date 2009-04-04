@@ -15,6 +15,7 @@
 }
 @property (nonatomic, retain) NSArray *source;
 - (id)initWithSource:(NSArray *)obj;
+- (NSUInteger)count;
 @end
 
 @interface FlexObjectProxy : NSObject <NSCoding>
