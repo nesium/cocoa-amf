@@ -14,6 +14,8 @@
 - (void)_ensureLength:(unsigned)length;
 - (void)_ensureIntegrityOfSerializedObject;
 - (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
+- (void)_setCollectionWriteContext:(NSObject *)obj;
+- (void)_restoreCollectionWriteContext;
 
 - (void)_encodeDate:(NSDate *)value;
 - (void)_encodeArray:(NSArray *)value;
@@ -74,8 +76,11 @@ static uint16_t g_options = 0;
 		m_position = 0;
 		m_bytes = [m_data mutableBytes];
 		m_objectTable = [[NSMutableArray alloc] init];
-		m_currentSerializedObject = nil;
+		m_currentObjectToSerialize = nil;
+		m_currentObjectToWrite = nil;
 		m_registeredClasses = [[NSMutableDictionary alloc] init];
+		m_serializationStack = nil;
+		m_writeStack = nil;
 	}
 	return self;
 }
@@ -120,6 +125,8 @@ static uint16_t g_options = 0;
 	[m_objectTable release];
 	[m_data release];
 	[m_registeredClasses release];
+	[m_serializationStack release];
+	[m_writeStack release];
 	[super dealloc];
 }
 
@@ -130,7 +137,7 @@ static uint16_t g_options = 0;
 
 - (BOOL)allowsKeyedCoding
 {
-	if (m_currentSerializedObject == nil || m_currentSerializedObject.data != nil)
+	if (m_currentObjectToSerialize == nil || m_currentObjectToSerialize.data != nil)
 		return NO;
 	return YES;
 }
@@ -183,43 +190,43 @@ static uint16_t g_options = 0;
 
 - (void)encodeBool:(BOOL)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:[NSNumber numberWithBool:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithBool:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeDouble:(double)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:[NSNumber numberWithDouble:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithDouble:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeFloat:(float)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:[NSNumber numberWithFloat:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithFloat:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeInt32:(int32_t)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:[NSNumber numberWithInt:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithInt:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeInt64:(int64_t)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:[NSNumber numberWithInteger:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithInteger:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeInt:(int)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:[NSNumber numberWithInt:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithInt:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
 - (void)encodeObject:(id)value forKey:(NSString *)key
 {
-	[m_currentSerializedObject setValue:value forKey:key];
+	[m_currentObjectToSerialize setValue:value forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
@@ -229,9 +236,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeBool:(BOOL)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithBool:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithBool:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -240,9 +247,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeChar:(int8_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithChar:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithChar:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -252,9 +259,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeDataObject:(NSData *)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[AMFPlainData plainDataWithData:value]];
+		[m_currentObjectToSerialize addObject:[AMFPlainData plainDataWithData:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -265,9 +272,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeDouble:(double)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithDouble:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithDouble:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -285,9 +292,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeFloat:(float)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithFloat:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithFloat:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -301,9 +308,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeInt:(int32_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithInt:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithInt:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -313,9 +320,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeMultiByteString:(NSString *)value encoding:(NSStringEncoding)encoding
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[AMFStringData stringDataWithData:
+		[m_currentObjectToSerialize addObject:[AMFStringData stringDataWithData:
 			[value dataUsingEncoding:encoding]]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
@@ -327,9 +334,9 @@ static uint16_t g_options = 0;
 {
 	if ([value isKindOfClass:[NSString class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
@@ -337,9 +344,9 @@ static uint16_t g_options = 0;
 	}
 	else if ([value isKindOfClass:[NSNumber class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
@@ -347,9 +354,9 @@ static uint16_t g_options = 0;
 	}
 	else if ([value isKindOfClass:[NSDate class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
@@ -357,39 +364,55 @@ static uint16_t g_options = 0;
 	}
 	else if ([value isKindOfClass:[NSArray class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if ((g_options & AMFArchiverPackArrayOption) && [self isMemberOfClass:[AMF3Archiver class]] && 
+			!([m_currentObjectToSerialize.type isEqual:kFlexArrayCollectionIdentifier] || 
+				([m_currentObjectToWrite isMemberOfClass:[ASObject class]] && 
+				[[(ASObject *)m_currentObjectToWrite type] isEqual:kFlexArrayCollectionIdentifier])))
 		{
-			[m_currentSerializedObject addObject:value];
-			[self _ensureIntegrityOfSerializedObject];
+			[self _encodeCustomObject:[[[FlexArrayCollection alloc] initWithSource:(NSArray *)value] 
+				autorelease]];
 			return;
-		}	
-		[self _encodeArray:(NSArray *)value];
-	}
-	else if ([value isKindOfClass:[NSDictionary class]])
-	{
-		if (m_currentSerializedObject != nil)
+		}
+		
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
+		[self _setCollectionWriteContext:value];
+		[self _encodeArray:(NSArray *)value];
+		[self _restoreCollectionWriteContext];
+	}
+	else if ([value isKindOfClass:[NSDictionary class]])
+	{	
+		if (m_currentObjectToSerialize != nil)
+		{
+			[m_currentObjectToSerialize addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
+			return;
+		}
+		[self _setCollectionWriteContext:value];
 		[self _encodeDictionary:(NSDictionary *)value];
+		[self _restoreCollectionWriteContext];
 	}
 	else if ([value isKindOfClass:[ASObject class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
+		[self _setCollectionWriteContext:value];
 		[self _encodeASObject:(ASObject *)value];
+		[self _restoreCollectionWriteContext];
 	}
 	else if ([value isKindOfClass:[AMFStringData class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
@@ -397,9 +420,9 @@ static uint16_t g_options = 0;
 	}
 	else if ([value isKindOfClass:[AMFPlainData class]])
 	{
-		if (m_currentSerializedObject != nil)
+		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentSerializedObject addObject:value];
+			[m_currentObjectToSerialize addObject:value];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
@@ -413,9 +436,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeShort:(int16_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithShort:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithShort:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -425,9 +448,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeUnsignedInt:(uint32_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedInt:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithUnsignedInt:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -437,9 +460,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeUTF:(NSString *)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:(value == nil ? [NSString string] : value)];
+		[m_currentObjectToSerialize addObject:(value == nil ? [NSString string] : value)];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -459,9 +482,9 @@ static uint16_t g_options = 0;
 	{
 		return;
 	}
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[AMFStringData stringDataWithData:[value 
+		[m_currentObjectToSerialize addObject:[AMFStringData stringDataWithData:[value 
 			dataUsingEncoding:NSUTF8StringEncoding]]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
@@ -471,9 +494,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeUnsignedChar:(uint8_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedChar:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithUnsignedChar:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -483,9 +506,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeUnsignedShort:(uint16_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedShort:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithUnsignedShort:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -496,9 +519,9 @@ static uint16_t g_options = 0;
 
 - (void)encodeUnsignedInt29:(uint32_t)value
 {
-	if (m_currentSerializedObject != nil)
+	if (m_currentObjectToSerialize != nil)
 	{
-		[m_currentSerializedObject addObject:[NSNumber numberWithUnsignedInt:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithUnsignedInt:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
@@ -543,7 +566,7 @@ static uint16_t g_options = 0;
 
 - (void)_ensureIntegrityOfSerializedObject
 {
-	if (m_currentSerializedObject.data != nil && m_currentSerializedObject.properties != nil)
+	if (m_currentObjectToSerialize.data != nil && m_currentObjectToSerialize.properties != nil)
 	{
 		[NSException raise:NSInternalInconsistencyException format:@"You may not mix keyed archiving \
 and non-keyed archiving on the same object!"];
@@ -552,19 +575,27 @@ and non-keyed archiving on the same object!"];
 
 - (void)_encodeCustomObject:(id)value
 {
-	ASObject *lastObj = m_currentSerializedObject;
-	ASObject *obj = m_currentSerializedObject = [[[ASObject alloc] init] autorelease];
+	ASObject *lastObj = m_currentObjectToSerialize;
+	ASObject *obj = m_currentObjectToSerialize = [[[ASObject alloc] init] autorelease];
+	
+	if (m_serializationStack == nil)
+	{
+		m_serializationStack = [[NSMutableArray alloc] init];
+	}
+	[m_serializationStack addObject:m_currentObjectToSerialize];
+	
 	obj.type = [[self class] classNameForClass:[value class]];
 	if (!obj.type) obj.type = [self classNameForClass:[value class]];
 	if (!obj.type) obj.type = [value className];
 	
 	[value encodeWithCoder:self];
 	
-	m_currentSerializedObject = lastObj;
+	m_currentObjectToSerialize = lastObj;
+	[m_serializationStack removeLastObject];
 	
 	if (lastObj == nil)
 	{
-		[self _encodeASObject:obj];
+		[self encodeObject:obj];
 	}
 }
 
@@ -574,6 +605,20 @@ and non-keyed archiving on the same object!"];
 	uint8_t *chars = (uint8_t *)bytes;
 	for (NSUInteger i = 0; i < length; i++)
 		m_bytes[m_position++] = chars[i];
+}
+
+- (void)_setCollectionWriteContext:(NSObject *)obj
+{
+	if (m_writeStack == nil)
+		m_writeStack = [[NSMutableArray alloc] init];
+	[m_writeStack addObject:obj];
+	m_currentObjectToWrite = obj;
+}
+
+- (void)_restoreCollectionWriteContext
+{
+	[m_writeStack removeLastObject];
+	m_currentObjectToWrite = [m_writeStack lastObject];
 }
 @end
 
@@ -610,7 +655,7 @@ and non-keyed archiving on the same object!"];
 
 - (void)_ensureIntegrityOfSerializedObject
 {
-	if (m_currentSerializedObject.data != nil)
+	if (m_currentObjectToSerialize.data != nil)
 	{
 		[NSException raise:NSInternalInconsistencyException format:@"The AMF0 data format does \
 not allow externalizable objects (non-keyed archiving)!"];

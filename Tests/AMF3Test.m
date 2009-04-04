@@ -313,8 +313,8 @@
 	[AMFArchiver setOptions:AMFArchiverPackArrayOption];
 	STAssertTrue([self assertDataOfFile:@"flexdatatypes_0.amf3" isEqualTo:arr], 
 		@"Arrays do not match.");
-//	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 
-//		@"Array data is not equal");
+	STAssertTrue([self assertEncodedObject:arr isEqualToContentsOfFile:@"flexdatatypes_0.amf3"], 
+		@"Array data is not equal");
 	[AMFUnarchiver setOptions:0];
 	[AMFArchiver setOptions:0];
 }

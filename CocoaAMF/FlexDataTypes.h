@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AMFUnarchiver.h"
 
 
 @interface FlexArrayCollection : NSObject <NSCoding>

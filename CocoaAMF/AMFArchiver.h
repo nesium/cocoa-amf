@@ -20,8 +20,10 @@
 	uint32_t m_position;
 	NSMutableArray *m_objectTable;
 	NSMutableArray *m_serializationStack;
+	NSMutableArray *m_writeStack;
 	NSMutableDictionary *m_registeredClasses;
-	ASObject *m_currentSerializedObject;
+	ASObject *m_currentObjectToSerialize;
+	NSObject *m_currentObjectToWrite;
 }
 
 //--------------------------------------------------------------------------------------------------
