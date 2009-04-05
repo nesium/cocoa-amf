@@ -166,6 +166,16 @@
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
++ (AMFMessageHeader *)messageHeaderWithName:(NSString *)name data:(NSObject *)data 
+	mustUnderstand:(BOOL)mustUnderstand
+{
+	AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
+	header.name = name;
+	header.data = data;
+	header.mustUnderstand = mustUnderstand;
+	return [header autorelease];
+}
+
 - (id)init
 {
 	if (self = [super init])

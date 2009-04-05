@@ -34,6 +34,8 @@ static uint32_t g_responseCount = 1;
 		m_isLoading = NO;
 		m_amfVersion = kAMF3Version;
 		m_error = nil;
+		m_amfHeaders = nil;
+		
 		m_request = [[NSMutableURLRequest alloc] init];
 		[m_request setHTTPMethod:@"POST"];
 		[m_request setValue:@"application/x-amf" forHTTPHeaderField:@"Content-Type"];
@@ -71,6 +73,7 @@ static uint32_t g_responseCount = 1;
 	[m_method release];
 	[m_arguments release];
 	[m_error release];
+	[m_amfHeaders release];
 	[super dealloc];
 }
 
@@ -87,14 +90,12 @@ static uint32_t g_responseCount = 1;
 	}
 
 	AMFActionMessage *message = [[AMFActionMessage alloc] init];
-	AMFMessageBody *body = [[AMFMessageBody alloc] init];
-	body.data = m_arguments;
-	body.responseURI = [self _nextResponseURI];
-	body.targetURI = [NSString stringWithFormat:@"%@.%@", m_service, m_method];
-	message.version = m_amfVersion;
-	message.bodies = [NSArray arrayWithObject:body];
+	[message addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", m_service, m_method] 
+		responseURI:[self _nextResponseURI] data:m_arguments];
+	if (m_amfHeaders != nil)
+		message.headers = [m_amfHeaders allValues];
+	
 	[m_request setHTTPBody:[message data]];
-	[body release];
 	[message release];
 	
 	m_error = nil;
@@ -112,6 +113,30 @@ static uint32_t g_responseCount = 1;
 - (NSURL *)URL
 {
 	return [m_request URL];
+}
+
+- (void)addValue:(NSString *)value forHTTPHeaderField:(NSString *)field
+{
+	[m_request addValue:value forHTTPHeaderField:field];
+}
+
+- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field
+{
+	[m_request setValue:value forHTTPHeaderField:field];
+}
+
+- (NSString *)valueForHTTPHeaderField:(NSString *)field
+{
+	return [m_request valueForHTTPHeaderField:field];
+}
+
+- (void)setValue:(NSObject *)value forAMFHeaderField:(NSString *)field 
+	mustUnderstand:(BOOL)mustUnderstand
+{
+	if (m_amfHeaders == nil)
+		m_amfHeaders = [[NSMutableDictionary alloc] init];
+	[m_amfHeaders setValue:[AMFMessageHeader messageHeaderWithName:field data:value 
+		mustUnderstand:mustUnderstand] forKey:field];
 }
 
 

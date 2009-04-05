@@ -30,6 +30,7 @@
 	BOOL m_isLoading;
 	NSError *m_error;
 	NSObject <AMFRemotingCallDelegate> *m_delegate;
+	NSMutableDictionary *m_amfHeaders;
 }
 
 @property (nonatomic, retain) NSURL *URL;
@@ -46,6 +47,11 @@
 
 - (void)start; // starts the request
 
+- (void)addValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
+- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
+- (NSString *)valueForHTTPHeaderField:(NSString *)field;
+- (void)setValue:(NSObject *)value forAMFHeaderField:(NSString *)field 
+	mustUnderstand:(BOOL)mustUnderstand;
 @end
 
 
@@ -61,5 +67,4 @@
 - (void)remotingCallDidFinishLoading:(AMFRemotingCall *)remotingCall 
 	receivedObject:(NSObject *)object;
 - (void)remotingCall:(AMFRemotingCall *)remotingCall didFailWithError:(NSError *)error;
-
 @end

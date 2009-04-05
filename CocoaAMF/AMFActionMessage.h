@@ -38,6 +38,9 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) BOOL mustUnderstand;
 @property (nonatomic, retain) NSObject *data;
+
++ (AMFMessageHeader *)messageHeaderWithName:(NSString *)name data:(NSObject *)data 
+	mustUnderstand:(BOOL)mustUnderstand;
 @end
 
 
