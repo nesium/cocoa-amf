@@ -199,6 +199,8 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+	AMFActionMessage *message = nil;
+	
 	if (!m_error && [m_receivedData length] == 0)
 	{
 		m_error = YES;
@@ -212,7 +214,7 @@
 		goto bailout;
 	}
 	
-	AMFActionMessage *message = [AMFActionMessage alloc];
+	message = [AMFActionMessage alloc];
 	@try
 	{
 		message = [message initWithData:m_receivedData];
