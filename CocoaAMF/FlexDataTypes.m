@@ -61,6 +61,8 @@
 @end
 
 
+#pragma mark -
+
 
 @implementation FlexObjectProxy
 
@@ -100,4 +102,189 @@
 	[object release];
 	[super dealloc];
 }
+@end
+
+
+#pragma mark -
+
+
+@implementation FlexAbstractMessage
+
+@synthesize body, clientId, destination, headers, messageId, timeToLive, timestamp;
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super init])
+	{
+		self.body = [coder decodeObjectForKey:@"body"];
+		self.clientId = [coder decodeObjectForKey:@"clientId"];
+		self.destination = [coder decodeObjectForKey:@"destination"];
+		self.headers = [coder decodeObjectForKey:@"headers"];
+		self.messageId = [coder decodeObjectForKey:@"messageId"];
+		self.timeToLive = [coder decodeInt32ForKey:@"timeToLive"] / 1000;
+		self.timestamp = [coder decodeDoubleForKey:@"timestamp"] / 1000;
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:body forKey:@"body"];
+	[coder encodeObject:clientId forKey:@"clientId"];
+	[coder encodeObject:destination forKey:@"destination"];
+	[coder encodeObject:headers forKey:@"headers"];
+	[coder encodeObject:messageId forKey:@"messageId"];
+	[coder encodeDouble:(timeToLive * 1000) forKey:@"timeToLive"];
+	[coder encodeDouble:(timestamp * 1000) forKey:@"timestamp"];
+}
+
+- (void)dealloc
+{
+	[body release];
+	[clientId release];
+	[destination release];
+	[headers release];
+	[messageId release];
+	[super dealloc];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation FlexAsyncMessage
+
+@synthesize correlationId;
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super initWithCoder:coder])
+	{
+		self.correlationId = [coder decodeObjectForKey:@"correlationId"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:correlationId forKey:@"correlationId"];
+}
+
+- (void)dealloc
+{
+	[correlationId release];
+	[super dealloc];
+}
+
+@end
+
+
+
+#pragma mark -
+
+
+@implementation FlexCommandMessage
+
+@synthesize operation;
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super initWithCoder:coder])
+	{
+		self.operation = [coder decodeIntForKey:@"operation"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[super encodeWithCoder:coder];
+	[coder encodeInt:operation forKey:@"operation"];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation FlexAcknowledgeMessage
+
+@end
+
+
+#pragma mark -
+
+
+@implementation FlexErrorMessage
+
+@synthesize extendedData, faultCode, faultDetail, faultString, rootCause;
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super initWithCoder:coder])
+	{
+		self.extendedData = [coder decodeObjectForKey:@"extendedData"];
+		self.faultCode = [coder decodeObjectForKey:@"faultCode"];
+		self.faultDetail = [coder decodeObjectForKey:@"faultDetail"];
+		self.faultString = [coder decodeObjectForKey:@"faultString"];
+		self.rootCause = [coder decodeObjectForKey:@"rootCause"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:extendedData forKey:@"extendedData"];
+	[coder encodeObject:faultCode forKey:@"faultCode"];
+	[coder encodeObject:faultDetail forKey:@"faultDetail"];
+	[coder encodeObject:faultString forKey:@"faultString"];
+	[coder encodeObject:rootCause forKey:@"rootCause"];
+}
+
+- (void)dealloc
+{
+	[extendedData release];
+	[faultCode release];
+	[faultDetail release];
+	[faultString release];
+	[rootCause release];
+	[super dealloc];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation FlexRemotingMessage
+
+@synthesize operation, source;
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	if (self = [super initWithCoder:coder])
+	{
+		self.operation = [coder decodeObjectForKey:@"operation"];
+		self.source = [coder decodeObjectForKey:@"source"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:operation forKey:@"operation"];
+	[coder encodeObject:source forKey:@"source"];
+}
+
+- (void)dealloc
+{
+	[operation release];
+	[source release];
+	[super dealloc];
+}
+
 @end
