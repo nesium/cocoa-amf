@@ -34,7 +34,7 @@
 	
 	if (nameToPrepend != nil)
 	{
-		if ([methodNameComponents count] == 1)
+		if ([arguments count] < 1)
 		{
 			methodNameComponents = [NSArray arrayWithObject:[nameToPrepend stringByAppendingString:
 				[methodName stringByReplacingCharactersInRange:(NSRange){0, 1} 

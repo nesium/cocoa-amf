@@ -249,58 +249,28 @@
 				responseData:body.data invocationIndex:responseIndex resultType:resultType];
 			continue;
 		}
+
 		id service = [m_delegate serviceWithName:serviceName];
-		NSArray *methodNameComponents = [methodName componentsSeparatedByString:@"_"];
-		
-		if (([body.data isKindOfClass:[NSArray class]] && 
-			[(NSArray *)body.data count] != [methodNameComponents count]) || 
-			![body.data isKindOfClass:[NSArray class]] && [methodNameComponents count] > 1)
+		if (service == nil)
 		{
-			NSLog(@"FAIL!");
-			return;
+			// @TODO handle error
 		}
 		
-		NSString *selectorName;
-		if ([(NSArray *)body.data count] == 0)
+		NSError *error = nil;
+		id result = [service invokeMethodWithName:methodName arguments:(NSArray *)body.data 
+			error:&error prependName:@"gateway" argument:self];
+			
+		if (error != nil)
 		{
-			selectorName = [@"gateway" stringByAppendingString:[methodName 
-				stringByReplacingCharactersInRange:(NSRange){0, 1} 
-				withString:[[methodName substringToIndex:1] uppercaseString]]];
+			// @TODO handle error
+			NSLog(@"%@", error);
 		}
-		else
-		{
-			selectorName = [NSString stringWithFormat:@"gateway:%@:", 
-				[methodNameComponents componentsJoinedByString:@":"]];
-		}
-		SEL selector = NSSelectorFromString(selectorName);
-		
-		if (![service respondsToSelector:selector])
-		{
-			NSLog(@"Ouch. Either a service or a method is not existing. (%@)", body.targetURI);
-			NSLog(@"selectorName: %@", selectorName);
-			continue;
-		}
-		NSMethodSignature *signature = [service methodSignatureForSelector:selector];
-		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-		[invocation setSelector:selector];
-		[invocation setTarget:service];
-		[invocation setArgument:&self atIndex:2];
-		uint32_t i = 3;
-		for (id argument in (NSArray *)body.data)
-		{
-			[invocation setArgument:&argument atIndex:i++];
-		}
-		[invocation invoke];
-		
-		if (![signature isOneway])
-		{
-			id result = [invocation returnValueAsObject];
-			AMFActionMessage *ram = [[AMFActionMessage alloc] init];
-			[ram addBodyWithTargetURI:[NSString stringWithFormat:@"%@%@/onResult", body.targetURI, 
-					body.responseURI] responseURI:@"null" data:result];
-			[self _sendActionMessage:ram];
-			[ram release];
-		}
+			
+		AMFActionMessage *ram = [[AMFActionMessage alloc] init];
+		[ram addBodyWithTargetURI:[NSString stringWithFormat:@"%@%@/onResult", body.targetURI, 
+			body.responseURI] responseURI:@"null" data:result];
+		[self _sendActionMessage:ram];
+		[ram release];
 	}
 }
 
