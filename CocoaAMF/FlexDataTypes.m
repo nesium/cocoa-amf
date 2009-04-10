@@ -13,6 +13,11 @@
 
 @synthesize source;
 
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.io.ArrayCollection";
+}
+
 - (id)initWithSource:(NSArray *)obj
 {
 	if (self = [super init])
@@ -68,6 +73,11 @@
 
 @synthesize object;
 
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.io.ObjectProxy";
+}
+
 - (id)initWithObject:(NSObject *)obj
 {
 	if (self = [super init])
@@ -112,6 +122,22 @@
 
 @synthesize body, clientId, destination, headers, messageId, timeToLive, timestamp;
 
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.messages.AbstractMessage";
+}
+
+- (id)init
+{
+	if (self = [super init])
+	{
+		self.messageId = [NSObject uuid];
+		self.clientId = [NSObject uuid];
+		self.timestamp = [[NSDate date] timeIntervalSince1970];
+	}
+	return self;
+}
+
 - (id)initWithCoder:(NSCoder *)coder
 {
 	if (self = [super init])
@@ -138,6 +164,13 @@
 	[coder encodeDouble:(timestamp * 1000) forKey:@"timestamp"];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, messageId: %@ \
+timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
+	destination, messageId, timeToLive, timestamp, headers, body];
+}
+
 - (void)dealloc
 {
 	[body release];
@@ -158,6 +191,11 @@
 
 @synthesize correlationId;
 
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.messages.AsyncMessage";
+}
+
 - (id)initWithCoder:(NSCoder *)coder
 {
 	if (self = [super initWithCoder:coder])
@@ -169,6 +207,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
+	[super encodeWithCoder:coder];
 	[coder encodeObject:correlationId forKey:@"correlationId"];
 }
 
@@ -188,6 +227,11 @@
 @implementation FlexCommandMessage
 
 @synthesize operation;
+
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.messages.CommandMessage";
+}
 
 - (id)initWithCoder:(NSCoder *)coder
 {
@@ -212,6 +256,11 @@
 
 @implementation FlexAcknowledgeMessage
 
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.messages.AcknowledgeMessage";
+}
+
 @end
 
 
@@ -221,6 +270,21 @@
 @implementation FlexErrorMessage
 
 @synthesize extendedData, faultCode, faultDetail, faultString, rootCause;
+
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.messages.ErrorMessage";
+}
+
++ (FlexErrorMessage *)errorMessageWithError:(NSError *)error
+{
+	FlexErrorMessage *errorMsg = [[FlexErrorMessage alloc] init];
+	errorMsg.faultCode = [NSString stringWithFormat:@"%d", [error code]];
+	errorMsg.faultString = [error domain];
+	errorMsg.faultDetail = [error localizedDescription];
+	errorMsg.extendedData = [error userInfo];
+	return [errorMsg autorelease];
+}
 
 - (id)initWithCoder:(NSCoder *)coder
 {
@@ -237,6 +301,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
+	[super encodeWithCoder:coder];
 	[coder encodeObject:extendedData forKey:@"extendedData"];
 	[coder encodeObject:faultCode forKey:@"faultCode"];
 	[coder encodeObject:faultDetail forKey:@"faultDetail"];
@@ -264,6 +329,11 @@
 
 @synthesize operation, source;
 
++ (NSString *)AMFClassAlias
+{
+	return @"flex.messaging.messages.RemotingMessage";
+}
+
 - (id)initWithCoder:(NSCoder *)coder
 {
 	if (self = [super initWithCoder:coder])
@@ -276,6 +346,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
+	[super encodeWithCoder:coder];
 	[coder encodeObject:operation forKey:@"operation"];
 	[coder encodeObject:source forKey:@"source"];
 }

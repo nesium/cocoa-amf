@@ -98,6 +98,9 @@
 {
 	STAssertTrue([self assertDataOfFile:@"null_0.amf0" 
 		isEqualTo:[NSNull null]], @"Could not read null value");
+		
+	STAssertTrue([self assertEncodedObject:[NSNull null] isEqualToContentsOfFile:@"null_0.amf0"], 
+		@"Null data is not equal");
 }
 
 - (void)testUndefined

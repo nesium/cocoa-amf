@@ -25,6 +25,7 @@
 	{
 		m_headers = [[NSMutableArray alloc] init];
 		m_bodies = [[NSMutableArray alloc] init];
+		m_version = kAMF3Version;
 	}
 	return self;
 }
@@ -121,6 +122,24 @@
 	return data;
 }
 
+- (NSUInteger)messagesCount
+{
+	return [m_bodies count];
+}
+
+- (AMFMessageBody *)bodyAtIndex:(NSUInteger)index
+{
+	return [m_bodies objectAtIndex:index];
+}
+
+- (AMFMessageHeader *)headerAtIndex:(NSUInteger)index
+{
+	// we behave nicely if everyhing seems to be inside the valid bounds
+	if (index >= [m_headers count] && index < [self messagesCount])
+		return nil;
+	return [m_headers objectAtIndex:index];
+}
+
 - (void)addBodyWithTargetURI:(NSString *)targetURI responseURI:(NSString *)responseURI data:(id)data
 {
 	AMFMessageBody *body = [[AMFMessageBody alloc] init];
@@ -139,6 +158,17 @@
 	header.data = data;
 	[m_headers addObject:header];
 	[header release];
+}
+
+- (void)mergeActionMessage:(AMFActionMessage *)message
+{
+	if (message.version != m_version)
+	{
+		[NSException raise:NSInternalInconsistencyException format:@"Cannot merge messages of type \
+%d into a request of type %d", message.version, m_version];
+	}
+	[m_headers addObjectsFromArray:message.headers];
+	[m_bodies addObjectsFromArray:message.bodies];
 }
 
 - (NSString *)description

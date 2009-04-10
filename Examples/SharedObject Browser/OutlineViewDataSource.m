@@ -97,6 +97,11 @@
 		{
 			parent = m_rootObject;
 		}
+		else if ([parent isKindOfClass:[FlexObjectProxy class]])
+		{
+			parent = [(FlexObjectProxy *)parent object];
+		}
+		
 		if ([parent isKindOfClass:[NSArray class]] || 
 			[parent isKindOfClass:[FlexArrayCollection class]])
 		{
@@ -140,6 +145,10 @@
 	else if ([item isKindOfClass:[FlexArrayCollection class]])
 	{
 		return @"ArrayCollection";
+	}
+	else if ([item isKindOfClass:[FlexObjectProxy class]])
+	{
+		return @"FlexProxyObject";
 	}
 	else if ([item isKindOfClass:[NSString class]])
 	{

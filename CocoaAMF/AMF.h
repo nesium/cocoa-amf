@@ -63,8 +63,17 @@ enum
 	AMFArchiverPackArrayOption = 0x1 // converts an array to an ArrayCollection
 };
 
-#define kFlexArrayCollectionIdentifier @"flex.messaging.io.ArrayCollection"
-#define kFlexObjectProxyIdentifier @"flex.messaging.io.ObjectProxy"
-
 NSString * NSStringFromAMF0Type(AMF0Type type);
 NSString * NSStringFromAMF3Type(AMF3Type type);
+
+#define kAMFCoreErrorDomain @"AMFCoreErrorDomain"
+#define kAMFGatewayErrorDomain @"AMFGatewayErrorDomain"
+
+typedef enum _AMFErrorCode
+{
+	kAMFErrorInvalidRequest = 1, 
+	kAMFErrorServiceNotFound = 2, 
+	kAMFErrorMethodNotFound = 3, 
+	kAMFErrorArgumentMismatch = 4,
+	kAMFErrorInvalidArguments = 5
+} AMFErrorCode;

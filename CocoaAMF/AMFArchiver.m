@@ -24,6 +24,7 @@
 - (void)_encodeASObject:(ASObject *)value;
 - (void)_encodeCustomObject:(id)value;
 - (void)_encodeString:(NSString *)value omitType:(BOOL)omitType;
+- (void)_encodeNull;
 @end
 
 @interface AMF0Archiver (Private)
@@ -62,10 +63,18 @@ static uint16_t g_options = 0;
 
 + (void)initialize
 {
-	[[self class] setClassName:kFlexArrayCollectionIdentifier 
+	[[self class] setClassName:[FlexArrayCollection AMFClassAlias] 
 		forClass:[FlexArrayCollection class]];
-	[[self class] setClassName:kFlexObjectProxyIdentifier 
+	[[self class] setClassName:[FlexObjectProxy AMFClassAlias] 
 		forClass:[FlexObjectProxy class]];
+	[[self class] setClassName:[FlexCommandMessage AMFClassAlias] 
+		forClass:[FlexCommandMessage class]];
+	[[self class] setClassName:[FlexAcknowledgeMessage AMFClassAlias] 
+		forClass:[FlexAcknowledgeMessage class]];
+	[[self class] setClassName:[FlexRemotingMessage AMFClassAlias] 
+		forClass:[FlexRemotingMessage class]];
+	[[self class] setClassName:[FlexErrorMessage AMFClassAlias] 
+		forClass:[FlexErrorMessage class]];
 }
 
 - (id)init
@@ -362,12 +371,22 @@ static uint16_t g_options = 0;
 		}
 		[self _encodeDate:(NSDate *)value];
 	}
+	else if ([value isKindOfClass:[NSNull class]])
+	{
+		if (m_currentObjectToSerialize != nil)
+		{
+			[m_currentObjectToSerialize addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
+			return;
+		}
+		[self _encodeNull];
+	}
 	else if ([value isKindOfClass:[NSArray class]])
 	{
 		if ((g_options & AMFArchiverPackArrayOption) && [self isMemberOfClass:[AMF3Archiver class]] && 
-			!([m_currentObjectToSerialize.type isEqual:kFlexArrayCollectionIdentifier] || 
+			!([m_currentObjectToSerialize.type isEqual:[FlexArrayCollection AMFClassAlias]] || 
 				([m_currentObjectToWrite isMemberOfClass:[ASObject class]] && 
-				[[(ASObject *)m_currentObjectToWrite type] isEqual:kFlexArrayCollectionIdentifier])))
+				[[(ASObject *)m_currentObjectToWrite type] isEqual:[FlexArrayCollection AMFClassAlias]])))
 		{
 			// looks funny, but convices gcc that we really have a FlexArrayCollection here
 			[self _encodeCustomObject:[[(FlexArrayCollection *)[FlexArrayCollection alloc] 
@@ -567,6 +586,8 @@ static uint16_t g_options = 0;
 
 - (void)_ensureIntegrityOfSerializedObject
 {
+	// prevents mixing of keyed-archiving (non-externalizable classes) and non-keyed-archiving 
+	// (externalizable classes)
 	if (m_currentObjectToSerialize.data != nil && m_currentObjectToSerialize.properties != nil)
 	{
 		[NSException raise:NSInternalInconsistencyException format:@"You may not mix keyed archiving \
@@ -774,6 +795,11 @@ not allow externalizable objects (non-keyed archiving)!"];
 	[self encodeUnsignedChar:kAMF0DateType];
 	[self encodeDouble:([value timeIntervalSince1970] * 1000)];
 	[self encodeUnsignedShort:([[NSTimeZone localTimeZone] secondsFromGMT] / 60)];
+}
+
+- (void)_encodeNull
+{
+	[self encodeUnsignedChar:kAMF0NullType];
 }
 
 @end
@@ -1022,6 +1048,11 @@ not allow externalizable objects (non-keyed archiving)!"];
 	{
 		[self _encodeString:[traits.properties objectAtIndex:i] omitType:YES];
 	}
+}
+
+- (void)_encodeNull
+{
+	[self encodeUnsignedChar:kAMF3NullType];
 }
 
 @end

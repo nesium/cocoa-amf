@@ -11,12 +11,8 @@
 
 @implementation PassthroughService
 
-- (id)execute:(NSArray *)args
+- (id)execute:(id)obj
 {
-	if ([args count] < 1)
-		return nil;
-	id obj = [args objectAtIndex:0];
-//	NSLog(@"received %@: %@", [obj className], obj);
 	return obj;
 }
 

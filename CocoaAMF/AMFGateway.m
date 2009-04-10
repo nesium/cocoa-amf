@@ -54,8 +54,15 @@
 
 
 @interface AMFGateway (Private)
-- (AMFConnection *)connectionForSocket:(AsyncSocket *)sock;
+- (AMFConnection *)_connectionForSocket:(AsyncSocket *)sock;
+- (AMFActionMessage *)_processAMFRequestWithHeader:(AMFMessageHeader *)requestHeader 
+	body:(AMFMessageBody *)requestBody;
+- (AMFActionMessage *)_processFlexRemoteObjectRequest:(AMFMessageBody *)requestBody;
+- (id)_executeService:(NSString *)serviceName method:(NSString *)methodName 
+	arguments:(NSArray *)arguments error:(NSError **)error;
 @end
+
+#define kAMFGatewayErrorDomain @"AMFGatewayErrorDomain"
 
 
 @implementation AMFGateway
@@ -113,7 +120,7 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (AMFConnection *)connectionForSocket:(AsyncSocket *)sock
+- (AMFConnection *)_connectionForSocket:(AsyncSocket *)sock
 {
 	for (AMFConnection *connection in m_connections)
 	{
@@ -125,7 +132,7 @@
 	return nil;
 }
 
-- (NSObject *)serviceForName:(NSString *)name
+- (NSObject *)_serviceForName:(NSString *)name
 {
 	for (NSObject *service in m_services)
 	{
@@ -137,7 +144,131 @@
 	return nil;
 }
 
-- (void)sendHTTPError:(uint16_t)errorNo toConnection:(AMFConnection *)connection
+- (AMFActionMessage *)_processAMFRequestWithHeader:(AMFMessageHeader *)requestHeader 
+	body:(AMFMessageBody *)requestBody
+{
+	NSArray *targetComponents = [requestBody.targetURI componentsSeparatedByString:@"."];
+	AMFActionMessage *response = [[AMFActionMessage alloc] init];
+	NSString *targetURI = [NSString stringWithFormat:@"%@/onResult", requestBody.responseURI];
+	NSObject *data = nil;
+	NSError *error = nil;
+	
+	if ([targetComponents count] < 2)
+	{
+		error = [NSError errorWithDomain:kAMFGatewayErrorDomain code:kAMFErrorServiceNotFound 
+			userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				@"Either the service or the method to execute was not specified.", 
+				NSLocalizedDescriptionKey, nil]];
+	}
+	else if (![requestBody.data isKindOfClass:[NSArray class]])
+	{
+		error = [NSError errorWithDomain:kAMFGatewayErrorDomain code:kAMFErrorInvalidArguments 
+			userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				@"The root object should be an array", NSLocalizedDescriptionKey, nil]];
+	}
+	else
+	{
+		data = [self _executeService:[targetComponents objectAtIndex:0] 
+			method:[targetComponents objectAtIndex:1] arguments:(NSArray *)requestBody.data 
+			error:&error];
+	}
+	
+	if (error != nil)
+	{
+		targetURI = [NSString stringWithFormat:@"%@/onStatus", requestBody.responseURI];
+		data = [error description];
+	}
+	[response addBodyWithTargetURI:targetURI responseURI:nil data:data];
+	return [response autorelease];
+}
+
+- (AMFActionMessage *)_processFlexRemoteObjectRequest:(AMFMessageBody *)requestBody
+{
+	NSObject *request = [(NSArray *)requestBody.data objectAtIndex:0];
+	NSString *targetURI = [NSString stringWithFormat:@"%@/onResult", requestBody.responseURI];
+	NSObject *body = nil;
+	NSObject *data = nil;
+	NSError *error = nil;
+	
+	if ([request isMemberOfClass:[FlexCommandMessage class]])
+	{
+		if ([(FlexCommandMessage *)request operation] != kFlexCommandMessageClientPingOperation)
+		{
+			error = [NSError errorWithDomain:kAMFGatewayErrorDomain code:kAMFErrorInvalidRequest 
+				userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+					[NSString stringWithFormat:@"Operation type %d not supported.", 
+						[(FlexCommandMessage *)request operation]], 
+					NSLocalizedDescriptionKey, nil]];
+		}
+	}
+	else if ([request isMemberOfClass:[FlexRemotingMessage class]])
+	{
+		FlexRemotingMessage *remotingMessage = (FlexRemotingMessage *)request;
+		if (![remotingMessage.body isKindOfClass:[NSArray class]])
+		{
+			error = [NSError errorWithDomain:kAMFGatewayErrorDomain code:kAMFErrorInvalidArguments 
+				userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+					@"The root object should be an array.", NSLocalizedDescriptionKey, nil]];
+		}
+		else
+		{
+			body = [self _executeService:remotingMessage.destination 
+				method:remotingMessage.operation arguments:(NSArray *)remotingMessage.body 
+				error:&error];
+		}
+	}
+	else if ([request isMemberOfClass:[FlexAsyncMessage class]])
+	{
+	}
+	else
+	{
+		error = [NSError errorWithDomain:kAMFGatewayErrorDomain code:kAMFErrorInvalidRequest 
+			userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				[NSString stringWithFormat:@"Operation type %d not supported.", 
+					[(FlexCommandMessage *)request operation]], 
+				NSLocalizedDescriptionKey, nil]];
+	}
+
+	NSString *correlationId = [request isKindOfClass:[FlexAbstractMessage class]] ? 
+		[(FlexAbstractMessage *)request messageId] : nil;
+	if (error != nil)
+	{
+		FlexErrorMessage *errorMessage = [FlexErrorMessage errorMessageWithError:error];
+		errorMessage.correlationId = correlationId;
+		data = errorMessage;
+		targetURI = [NSString stringWithFormat:@"%@/onStatus", requestBody.responseURI];
+	}
+	else
+	{
+		FlexAcknowledgeMessage *ack = [[FlexAcknowledgeMessage alloc] init];
+		ack.correlationId = correlationId;
+		ack.body = body;
+		data = [ack autorelease];
+	}
+
+	AMFActionMessage *response = [[AMFActionMessage alloc] init];
+	[response addBodyWithTargetURI:targetURI responseURI:nil data:data];
+	return [response autorelease];
+}
+
+- (id)_executeService:(NSString *)serviceName method:(NSString *)methodName 
+	arguments:(NSArray *)arguments error:(NSError **)error
+{
+	NSObject *service = [self _serviceForName:serviceName];
+	// service not found
+	if (service == nil)
+	{
+		*error = [NSError errorWithDomain:kAMFGatewayErrorDomain code:kAMFErrorServiceNotFound 
+			userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				[NSString stringWithFormat:@"Service %@ not found", serviceName], 
+				NSLocalizedDescriptionKey, nil]];
+		return nil;
+	}
+	
+	return [service invokeMethodWithName:methodName arguments:arguments error:error];
+}
+
+- (void)_sendHTTPError:(uint16_t)errorNo toConnection:(AMFConnection *)connection
 {
 	AsyncSocket *socket = connection.socket;
 	CFHTTPMessageRef response = CFHTTPMessageCreateResponse(kCFAllocatorDefault, errorNo, NULL, 
@@ -148,7 +279,7 @@
 	CFRelease(response);
 }
 
-- (void)replyToHTTPRequestWithConnection:(AMFConnection *)connection
+- (void)_replyToHTTPRequestWithConnection:(AMFConnection *)connection
 {
 	AsyncSocket *socket = connection.socket;
 	CFHTTPMessageRef request = connection.request;
@@ -159,7 +290,7 @@
     if(!version || ![version isEqualToString:(NSString *)kCFHTTPVersion1_1])
 	{
 		NSLog(@"HTTP Server: Error 505 - Version Not Supported");
-		[self sendHTTPError:505 toConnection:connection];
+		[self _sendHTTPError:505 toConnection:connection];
         return;
     }
 	
@@ -169,7 +300,7 @@
     if(!method)
 	{
 		NSLog(@"HTTP Server: Error 400 - Bad Request");
-		[self sendHTTPError:400 toConnection:connection];
+		[self _sendHTTPError:400 toConnection:connection];
         return;
     }
 	
@@ -179,7 +310,7 @@
     if ([method isEqualToString:@"GET"] || [method isEqualToString:@"HEAD"])
 	{
 		NSLog(@"HTTP Server: Error 404 - Not Found");
-		[self sendHTTPError:404 toConnection:connection];
+		[self _sendHTTPError:404 toConnection:connection];
 		return;
     }
 	
@@ -192,7 +323,7 @@
 		if (messageBody == NULL)
 		{
 			NSLog(@"HTTP Server: Error 400 - Bad Request");
-			[self sendHTTPError:400 toConnection:connection];
+			[self _sendHTTPError:400 toConnection:connection];
 			CFRelease(contentType);
 			return;
 		}
@@ -200,55 +331,20 @@
 		AMFActionMessage *amfRequest = [[AMFActionMessage alloc] 
 			initWithData:(NSData *)messageBody];
 		
-		//NSLog(@"version: %d", amfRequest.version);
 		AMFActionMessage *amfResponse = [[AMFActionMessage alloc] init];
 		amfResponse.version = amfRequest.version;
-		amfResponse.headers = nil;
-		amfResponse.bodies = [NSMutableArray arrayWithCapacity:[amfRequest.bodies count]];
 		
-		for (uint16_t i = 0; i < [amfRequest.bodies count]; i++)
+		for (uint16_t i = 0; i < [amfRequest messagesCount]; i++)
 		{
-			AMFMessageBody *amfRequestBody = [amfRequest.bodies objectAtIndex:i];
-			AMFMessageBody *amfResponseBody = [[AMFMessageBody alloc] init];
-			amfResponseBody.targetURI = [NSString stringWithFormat:@"%@/onResult",
-				amfRequestBody.responseURI];
-			amfResponseBody.responseURI = nil;
-			amfResponseBody.data = nil;
-			[(NSMutableArray *)amfResponse.bodies addObject:amfResponseBody];
-			[amfResponseBody release];
-//			NSLog(@"%@ - %@, %@", amfRequestBody.targetURI, amfRequestBody.responseURI, 
-//				amfRequestBody.data);
-			NSArray *targetComponents = [amfRequestBody.targetURI 
-				componentsSeparatedByString:@"."];
-			if ([targetComponents count] < 2)
+			AMFMessageBody *amfRequestBody = [amfRequest bodyAtIndex:i];
+			if ([amfRequestBody.targetURI isEqualToString:@"null"])
 			{
-				// @TODO send error message
-				continue;
+				[amfResponse mergeActionMessage:[self _processFlexRemoteObjectRequest:
+					amfRequestBody]];
 			}
-			NSObject *service = [self serviceForName:[targetComponents objectAtIndex:0]];
-			if (service == nil)
-			{
-				amfResponseBody.targetURI = [NSString stringWithFormat:@"%@/onStatus",
-					amfRequestBody.responseURI];
-				amfResponseBody.data = [NSString stringWithFormat:@"Service %@ not found", 
-					[targetComponents objectAtIndex:0]];
-				continue;
-			}
-			SEL methodSelector = NSSelectorFromString([NSString stringWithFormat:@"%@:", 
-				[targetComponents objectAtIndex:1]]);
-			if (![service respondsToSelector:methodSelector])
-			{
-				// @TODO send error message
-				amfResponseBody.targetURI = [NSString stringWithFormat:@"%@/onStatus",
-					amfRequestBody.responseURI];
-				amfResponseBody.data = [NSString stringWithFormat:
-					@"Service %@ does not respond to selector %@", 
-					[targetComponents objectAtIndex:0],
-					[targetComponents objectAtIndex:1]];
-				continue;
-			}
-			amfResponseBody.data = [service performSelector:methodSelector 
-				withObject:amfRequestBody.data];
+			else
+				[amfResponse mergeActionMessage:[self _processAMFRequestWithHeader:
+					[amfRequest headerAtIndex:i] body:amfRequestBody]];
 		}
 		
 		NSData *amfResponseData = [amfResponse data];
@@ -271,7 +367,7 @@
 	
 	CFRelease(contentType);
 	NSLog(@"HTTP Server: Error 405 - Method Not Allowed: %@", method);
-	[self sendHTTPError:405 toConnection:connection];
+	[self _sendHTTPError:405 toConnection:connection];
 }
 
 
@@ -290,7 +386,7 @@
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData*)data withTag:(long)tag
 {
-	AMFConnection *connection = [self connectionForSocket:sock];
+	AMFConnection *connection = [self _connectionForSocket:sock];
 	CFHTTPMessageAppendBytes(connection.request, [data bytes], [data length]);
 	if (!CFHTTPMessageIsHeaderComplete(connection.request))
 	{
@@ -307,7 +403,7 @@
 	else
 	{
 		CFHTTPMessageSetBody(connection.request, (CFDataRef)data);
-		[self replyToHTTPRequestWithConnection:connection];
+		[self _replyToHTTPRequestWithConnection:connection];
 	}
 }
 
@@ -321,7 +417,7 @@
 
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock
 {
-	[m_connections removeObject:[self connectionForSocket:sock]];
+	[m_connections removeObject:[self _connectionForSocket:sock]];
 }
 
 @end

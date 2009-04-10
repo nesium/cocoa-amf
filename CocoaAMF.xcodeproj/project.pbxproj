@@ -64,6 +64,14 @@
 		2C8500EE0EDF42DF0058EBE0 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2C8500FC0EDF43380058EBE0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		2C85010D0EDF43D10058EBE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C85010C0EDF43D10058EBE0 /* main.m */; };
+		2C8F20420F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */; };
+		2C8F20430F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */; };
+		2C8F20440F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */; };
+		2C8F20450F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */; };
+		2C8F20460F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */; };
+		2C8F20470F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */; };
+		2C8F211E0F8FB25A00D7FEF0 /* NSInvocation-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1338050F644A23001CE24E /* NSInvocation-AMFExtensions.m */; };
+		2C8F21CB0F900EC400D7FEF0 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2CB077B90EE0D2DC0059C799 /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
 		2CB078590EE0E3260059C799 /* BGHUDAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
@@ -184,6 +192,8 @@
 		2C8500E40EDF42DF0058EBE0 /* AMFGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFGateway.m; sourceTree = "<group>"; };
 		2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFUnarchiver.m; sourceTree = "<group>"; };
 		2C85010C0EDF43D10058EBE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C8F20400F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-AMFExtensions.h"; sourceTree = "<group>"; };
+		2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-AMFExtensions.m"; sourceTree = "<group>"; };
 		2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
 		2CB5B48C0F16C7D200C71818 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractAMFTest.h; sourceTree = "<group>"; };
@@ -356,6 +366,8 @@
 			children = (
 				2C1338040F644A23001CE24E /* NSInvocation-AMFExtensions.h */,
 				2C1338050F644A23001CE24E /* NSInvocation-AMFExtensions.m */,
+				2C8F20400F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.h */,
+				2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -767,6 +779,8 @@
 				2C3554670F784CA8003A31C4 /* FlexDataTypes.m in Sources */,
 				2C2199E20F7964EE0027AFD6 /* PassthroughService.m in Sources */,
 				2C219A660F7992ED0027AFD6 /* AMF.m in Sources */,
+				2C8F20420F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
+				2C8F211E0F8FB25A00D7FEF0 /* NSInvocation-AMFExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +797,7 @@
 				2C73A9240F196A2E00EA16AD /* AsyncSocket.m in Sources */,
 				49A471370F52E579008ADED3 /* AMFArchiver.m in Sources */,
 				2C3554640F784C9C003A31C4 /* FlexDataTypes.m in Sources */,
+				2C8F20450F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,6 +825,7 @@
 				2C80A6800F1C1FA700D761BB /* AMFArchiver.m in Sources */,
 				2C3554690F784CB3003A31C4 /* FlexDataTypes.m in Sources */,
 				2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */,
+				2C8F20430F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +841,7 @@
 				49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */,
 				49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */,
 				2C3554610F784C8B003A31C4 /* FlexDataTypes.m in Sources */,
+				2C8F20440F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +860,8 @@
 				2CF104480F4F7D7700A99429 /* AsyncSocket.m in Sources */,
 				2C1338060F644A23001CE24E /* NSInvocation-AMFExtensions.m in Sources */,
 				2C35545B0F784C61003A31C4 /* FlexDataTypes.m in Sources */,
+				2C8F20460F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
+				2C8F21CB0F900EC400D7FEF0 /* AMF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +882,7 @@
 				2C18799B0F76FABC00DF747D /* AsyncSocket.m in Sources */,
 				2C1879B50F76FC8200DF747D /* AMF.m in Sources */,
 				2C3554540F784C45003A31C4 /* FlexDataTypes.m in Sources */,
+				2C8F20470F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -57,9 +57,17 @@ static uint16_t g_options = 0;
 + (void)initialize
 {
 	[[self class] setClass:[FlexArrayCollection class] 
-		forClassName:kFlexArrayCollectionIdentifier];
+		forClassName:[FlexArrayCollection AMFClassAlias]];
 	[[self class] setClass:[FlexObjectProxy class] 
-		forClassName:kFlexObjectProxyIdentifier];
+		forClassName:[FlexObjectProxy AMFClassAlias]];
+	[[self class] setClass:[FlexCommandMessage class] 
+		forClassName:[FlexCommandMessage AMFClassAlias]];
+	[[self class] setClass:[FlexAcknowledgeMessage class] 
+		forClassName:[FlexAcknowledgeMessage AMFClassAlias]];
+	[[self class] setClass:[FlexRemotingMessage class] 
+		forClassName:[FlexRemotingMessage AMFClassAlias]];
+	[[self class] setClass:[FlexErrorMessage class] 
+		forClassName:[FlexErrorMessage AMFClassAlias]];
 }
 
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
@@ -455,9 +463,9 @@ static uint16_t g_options = 0;
 	NSString *className = object.type;
 	
 	if (((g_options & AMFUnarchiverUnpackArrayCollection) && 
-		[className isEqual:kFlexArrayCollectionIdentifier]) || 
+		[className isEqual:[FlexArrayCollection AMFClassAlias]]) || 
 		((g_options & AMFUnarchiverUnpackObjectProxyOption) && 
-		[className isEqual:kFlexObjectProxyIdentifier]))
+		[className isEqual:[FlexObjectProxy AMFClassAlias]]))
 	{
 		return [self decodeObject];
 	}

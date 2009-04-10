@@ -7,6 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSObject-AMFExtensions.h"
+
+typedef enum _FlexCommandMessageOperationType
+{
+	kFlexCommandMessageSubscribeOperation = 0, 
+	kFlexCommandMessageUnsubscribeOperation = 1, 
+	kFlexCommandMessagePollOperation = 2, 
+	kFlexCommandMessageClientSyncOperation = 4, 
+	kFlexCommandMessageClientPingOperation = 5, 
+	kFlexCommandMessageClusterRequestOperation = 7, 
+	kFlexCommandMessageLoginOperation = 8, 
+	kFlexCommandMessageLogoutOperation = 9, 
+	kFlexCommandMessageSubscriptionInvalidateOperation = 10, 
+	kFlexCommandMessageMultiSubscribeOperation = 11, 
+	kFlexCommandMessageDisconnectOperation = 12, 
+	kFlexCommandMessageTriggerConnectOperation = 13, 
+	kFlexCommandMessageUnknownOperation = 1000
+} FlexCommandMessageOperationType;
 
 
 @interface FlexArrayCollection : NSObject <NSCoding>
@@ -14,6 +32,7 @@
 	NSArray *source;
 }
 @property (nonatomic, retain) NSArray *source;
++ (NSString *)AMFClassAlias;
 - (id)initWithSource:(NSArray *)obj;
 - (NSUInteger)count;
 @end
@@ -24,6 +43,7 @@
 	NSObject *object;
 }
 @property (nonatomic, retain) NSObject *object;
++ (NSString *)AMFClassAlias;
 - (id)initWithObject:(NSObject *)obj;
 @end
 
@@ -45,6 +65,7 @@
 @property (nonatomic, retain) NSString *messageId;
 @property (nonatomic, assign) NSTimeInterval timeToLive;
 @property (nonatomic, assign) NSTimeInterval timestamp;
++ (NSString *)AMFClassAlias;
 @end
 
 
@@ -58,9 +79,9 @@
 
 @interface FlexCommandMessage : FlexAsyncMessage
 {
-	uint16_t operation;
+	FlexCommandMessageOperationType operation;
 }
-@property (nonatomic, assign) uint16_t operation;
+@property (nonatomic, assign) FlexCommandMessageOperationType operation;
 @end
 
 
@@ -83,6 +104,7 @@
 @property (nonatomic, retain) NSString *faultDetail;
 @property (nonatomic, retain) NSString *faultString;
 @property (nonatomic, retain) NSObject *rootCause;
++ (FlexErrorMessage *)errorMessageWithError:(NSError *)error;
 @end
 
 

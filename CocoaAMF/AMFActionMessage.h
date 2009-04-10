@@ -11,6 +11,7 @@
 #import "AMFArchiver.h"
 #import "AMFUnarchiver.h"
 
+@class AMFMessageHeader, AMFMessageBody;
 
 @interface AMFActionMessage : NSObject 
 {
@@ -24,8 +25,15 @@
 
 - (id)initWithData:(NSData *)data;
 - (NSData *)data;
+
+- (NSUInteger)messagesCount;
+- (AMFMessageBody *)bodyAtIndex:(NSUInteger)index;
+- (AMFMessageHeader *)headerAtIndex:(NSUInteger)index;
+
 - (void)addBodyWithTargetURI:(NSString *)targetURI responseURI:(NSString *)responseURI data:(id)data;
 - (void)addHeaderWithName:(NSString *)name mustUnderstand:(BOOL)mustUnderstand data:(id)data;
+
+- (void)mergeActionMessage:(AMFActionMessage *)message;
 @end
 
 
