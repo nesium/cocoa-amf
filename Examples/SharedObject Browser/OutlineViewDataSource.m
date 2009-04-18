@@ -174,6 +174,10 @@
 	{
 		return @"null";
 	}
+	else if ([item isKindOfClass:[NSDate class]])
+	{
+		return @"Date";
+	}
 	return [item className];
 }
 
@@ -190,6 +194,10 @@
 	else if ([item isKindOfClass:[NSNumber class]])
 	{
 		return [(NSNumber *)item stringValue];
+	}
+	else if ([item isKindOfClass:[NSDate class]])
+	{
+		return [(NSDate *)item description];
 	}
 	return @"";
 }

@@ -230,7 +230,17 @@
 	m_outlineViewDataSource.rootObject = data;
 	[m_objectOutlineView reloadData];
 	[m_objectOutlineView expandItem:[m_objectOutlineView itemAtRow:0]];
-	[m_resultTextView setString:[[CJSONSerializer serializer] serializeObject:data]];
+	
+	NSString *jsonString = @"";
+	@try 
+	{
+		jsonString = [[CJSONSerializer serializer] serializeObject:data];
+	}
+	@catch (NSException *e)
+	{
+		jsonString = @"Could not create JSON representation of response data";
+	}
+	[m_resultTextView setString:jsonString];
 	[[NSApp mainWindow] makeFirstResponder:m_objectOutlineView];
 	[m_objectOutlineView selectRow:0 byExtendingSelection:NO];
 	
