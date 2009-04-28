@@ -47,7 +47,8 @@
 		return NO;
 	}
 	
-	NSString *gatewayURL, *service, *args;
+	NSMutableString *gatewayURL;
+	NSString *service, *args;
 	
 	NSArray *params = [[url query] componentsSeparatedByString:@"&"];
 	NSMutableArray *unusedParams = [NSMutableArray array];
@@ -69,12 +70,12 @@
 			[unusedParams addObject:param];
 		}
 	}
-	gatewayURL = [NSString stringWithFormat:@"http://%@%@", [url host], [url path]];
+	
+	gatewayURL = [NSMutableString stringWithFormat:@"http://%@", [url host]];
+	if ([url port] != nil) [gatewayURL appendFormat:@":%@", [url port]];
+	if ([url path] != nil) [gatewayURL appendString:[url path]];
 	if ([unusedParams count])
-	{
-		gatewayURL = [NSString stringWithFormat:@"%@?%@", gatewayURL, 
-			[unusedParams componentsJoinedByString:@"&"]];
-	}
+		[gatewayURL appendFormat:@"?%@", gatewayURL, [unusedParams componentsJoinedByString:@"&"]];
 	[m_gatewayTextField setStringValue:gatewayURL];
 	[m_serviceTextField setStringValue:service];
 	[m_dataTextView setString:args];
