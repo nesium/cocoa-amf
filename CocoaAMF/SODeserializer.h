@@ -8,11 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMFUnarchiver.h"
+#import "AMFDebugUnarchiver.h"
 
 
 @interface SODeserializer : NSObject
 {
-
+	BOOL useDebugUnarchiver;
 }
-- (NSDictionary *)deserialize:(NSData *)data;
+@property (nonatomic, assign) BOOL useDebugUnarchiver;
+- (NSObject *)deserialize:(NSData *)data;
 @end

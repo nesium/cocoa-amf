@@ -11,7 +11,9 @@
 
 @interface CAMFFieldEditor : NSTextView 
 {
-
 }
+@end
 
+@interface NSObject (FieldEditorDelegateExtensions)
+- (BOOL)fieldEditor:(NSTextView *)aView willPasteText:(NSString *)text;
 @end

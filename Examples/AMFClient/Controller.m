@@ -200,6 +200,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+	AMFActionMessage *debugMessage = nil;
 	AMFActionMessage *message = nil;
 	
 	if (!m_error && [m_receivedData length] == 0)
@@ -215,9 +216,11 @@
 		goto bailout;
 	}
 	
+	debugMessage = [AMFActionMessage alloc];
 	message = [AMFActionMessage alloc];
 	@try
 	{
+		debugMessage = [debugMessage initWithDataUsingDebugUnarchiver:m_receivedData];
 		message = [message initWithData:m_receivedData];
 	}
 	@catch (NSException *e) 
@@ -227,8 +230,9 @@
 		goto bailout;
 	}
 	
+	NSObject *debugData = [[debugMessage.bodies objectAtIndex:0] data];
 	NSObject *data = [[message.bodies objectAtIndex:0] data];
-	m_outlineViewDataSource.rootObject = data;
+	m_outlineViewDataSource.rootObject = debugData;
 	[m_objectOutlineView reloadData];
 	[m_objectOutlineView expandItem:[m_objectOutlineView itemAtRow:0]];
 	
@@ -249,6 +253,7 @@
 	[m_errorDescription release];
 	[m_connection release];
 	[message release];
+	[debugMessage release];
 	[self setIsLoading:NO];
 }
 

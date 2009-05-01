@@ -85,3 +85,81 @@ NSString * NSStringFromAMF3Type(AMF3Type type)
 	}
 	return @"AMF3 Unknown type!";
 }
+
+NSString * NSStringFromAMF0TypeForDisplay(AMF0Type type)
+{
+	switch (type)
+	{
+		case kAMF0NumberType:
+			return @"Number";
+		case kAMF0BooleanType:
+			return @"Boolean";
+		case kAMF0StringType:
+			return @"String";
+		case kAMF0ObjectType:
+			return @"Object";
+		case kAMF0MovieClipType:
+			return @"MovieClip";
+		case kAMF0NullType:
+			return @"Null";
+		case kAMF0UndefinedType:
+			return @"Undefined";
+		case kAMF0ReferenceType:
+			return @"Reference";
+		case kAMF0ECMAArrayType:
+			return @"ECMA Array";
+		case kAMF0ObjectEndType:
+			return @"Object end";
+		case kAMF0StrictArrayType:
+			return @"Strict Array";
+		case kAMF0DateType:
+			return @"Date";
+		case kAMF0LongStringType:
+			return @"Long String";
+		case kAMF0UnsupportedType:
+			return @"Unsupported Type";
+		case kAMF0RecordsetType:
+			return @"Recordset";
+		case kAMF0XMLObjectType:
+			return @"XML";
+		case kAMF0TypedObjectType:
+			return @"Typed Object";
+		case kAMF0AVMPlusObjectType:
+			return @"AVMPlus Object Marker";
+	}
+	return @"Unknown type";
+}
+
+NSString * NSStringFromAMF3TypeForDisplay(AMF3Type type)
+{
+	switch (type)
+	{
+		case kAMF3UndefinedType:
+			return @"Undefined";
+		case kAMF3NullType:
+			return @"Null";
+		case kAMF3FalseType:
+			return @"Boolean";
+		case kAMF3TrueType:
+			return @"Boolean";
+		case kAMF3IntegerType:
+			return @"Integer";
+		case kAMF3DoubleType:
+			return @"Double";
+		case kAMF3StringType:
+			return @"String";
+		case kAMF3XMLDocType:
+			return @"XML Document";
+		case kAMF3DateType:
+			return @"Date";
+		case kAMF3ArrayType:
+			return @"Array";
+		case kAMF3ObjectType:
+			return @"Object";
+		case kAMF3XMLType:
+			return @"XML";
+		case kAMF3ByteArrayType:
+			return @"ByteArray";
+	}
+	return @"Unknown type";
+}

@@ -65,6 +65,8 @@ enum
 
 NSString * NSStringFromAMF0Type(AMF0Type type);
 NSString * NSStringFromAMF3Type(AMF3Type type);
+NSString * NSStringFromAMF0TypeForDisplay(AMF0Type type);
+NSString * NSStringFromAMF3TypeForDisplay(AMF3Type type);
 
 #define kAMFCoreErrorDomain @"AMFCoreErrorDomain"
 #define kAMFGatewayErrorDomain @"AMFGatewayErrorDomain"

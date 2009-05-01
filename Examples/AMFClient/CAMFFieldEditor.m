@@ -14,7 +14,7 @@
 - (BOOL)readSelectionFromPasteboard:(NSPasteboard *)pboard type:(NSString *)type
 {
 	BOOL delegatePerformedAction = NO;
-	NSString *text = [[NSPasteboard generalPasteboard] stringForType:type];
+	NSString *text = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
 	if (![text isKindOfClass:[NSString class]])
 	{
 		return NO;
@@ -29,18 +29,5 @@
 	}
 	return !delegatePerformedAction;
 }
-
-//- (void)insertTab:(id)sender
-//{
-//	NSLog(@"next %@ - %@", [self window], [[self delegate] nextKeyView]);
-//	[super insertTab:sender];
-//	[[self window] selectNextKeyView:[self delegate]];
-//}
-
-//- (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
-//{
-//	NSLog(@"selector: %s", (char *)aSelector);
-//	return NO;
-//}
 
 @end

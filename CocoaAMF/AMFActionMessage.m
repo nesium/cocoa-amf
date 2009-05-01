@@ -8,6 +8,10 @@
 
 #import "AMFActionMessage.h"
 
+@interface AMFActionMessage (Private)
+- (void)_applyData:(NSData *)data;
+@end
+
 
 @implementation AMFActionMessage
 
@@ -26,6 +30,7 @@
 		m_headers = [[NSMutableArray alloc] init];
 		m_bodies = [[NSMutableArray alloc] init];
 		m_version = kAMF3Version;
+		m_useDebugUnarchiver = NO;
 	}
 	return self;
 }
@@ -34,35 +39,17 @@
 {
 	if (self = [super init])
 	{
-		AMFUnarchiver *ba = [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version];
-		m_version = [ba decodeUnsignedShort];
-		uint16_t numHeaders = [ba decodeUnsignedShort];
-		NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];
-		for (uint16_t i = 0; i < numHeaders; i++)
-		{
-			AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
-			header.name = [ba decodeUTF];
-			header.mustUnderstand = [ba decodeBool];
-			// Header length
-			[ba decodeUnsignedInt];
-			header.data = [ba decodeObject];
-			[headers addObject:header];
-			[header release];
-		}
-		m_headers = [headers copy];
-		
-		uint16_t numBodies = [ba decodeUnsignedShort];
-		NSMutableArray *bodies = [NSMutableArray arrayWithCapacity:numBodies];
-		for (uint16_t i = 0; i < numBodies; i++)
-		{
-			AMFMessageBody *body = [[AMFMessageBody alloc] init];
-			body.targetURI = [ba decodeUTF];
-			body.responseURI = [ba decodeUTF];
-			[ba decodeUnsignedInt];
-			body.data = [ba decodeObject];
-			[bodies addObject:body];
-		}
-		m_bodies = [bodies copy];
+		[self _applyData:data];
+	}
+	return self;
+}
+
+- (id)initWithDataUsingDebugUnarchiver:(NSData *)data
+{
+	if (self = [super init])
+	{
+		m_useDebugUnarchiver = YES;
+		[self _applyData:data];
 	}
 	return self;
 }
@@ -176,6 +163,48 @@
 	return [NSString stringWithFormat:@"<%@ = 0x%08X | version: %d | headers: %d bodies: %d>\nheaders:\n%@\nbodies:\n%@", 
 		[self class], (long)self, m_version, [m_headers count], [m_bodies count], 
 		m_headers, m_bodies];
+}
+
+
+
+#pragma mark -
+#pragma mark Private methods
+
+- (void)_applyData:(NSData *)data
+{
+	AMFUnarchiver *ba = m_useDebugUnarchiver 
+		? [[AMFDebugUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version] 
+		: [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version];
+	m_version = [ba decodeUnsignedShort];
+	uint16_t numHeaders = [ba decodeUnsignedShort];
+	NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];
+	for (uint16_t i = 0; i < numHeaders; i++)
+	{
+		AMFMessageHeader *header = [[AMFMessageHeader alloc] init];
+		header.name = [ba decodeUTF];
+		header.mustUnderstand = [ba decodeBool];
+		// Header length
+		[ba decodeUnsignedInt];
+		header.data = [ba decodeObject];
+		[headers addObject:header];
+		[header release];
+	}
+	m_headers = [headers copy];
+	
+	uint16_t numBodies = [ba decodeUnsignedShort];
+	NSMutableArray *bodies = [NSMutableArray arrayWithCapacity:numBodies];
+	for (uint16_t i = 0; i < numBodies; i++)
+	{
+		AMFMessageBody *body = [[AMFMessageBody alloc] init];
+		body.targetURI = [ba decodeUTF];
+		body.responseURI = [ba decodeUTF];
+		[ba decodeUnsignedInt];
+		body.data = [ba decodeObject];
+		[bodies addObject:body];
+		[body release];
+	}
+	m_bodies = [bodies copy];
+	[ba release];
 }
 
 @end

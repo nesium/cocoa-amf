@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ASObject.h"
 #import "FlexDataTypes.h"
+#import "AMFDebugUnarchiver.h"
 
 
 @interface OutlineViewDataSource : NSObject 

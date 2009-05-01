@@ -10,6 +10,7 @@
 #import "AMF.h"
 #import "AMFArchiver.h"
 #import "AMFUnarchiver.h"
+#import "AMFDebugUnarchiver.h"
 
 @class AMFMessageHeader, AMFMessageBody;
 
@@ -18,12 +19,14 @@
 	AMFVersion m_version;
 	NSMutableArray *m_headers;
 	NSMutableArray *m_bodies;
+	BOOL m_useDebugUnarchiver;
 }
 @property (nonatomic, assign) AMFVersion version;
 @property (nonatomic, retain) NSArray *headers;
 @property (nonatomic, retain) NSArray *bodies;
 
 - (id)initWithData:(NSData *)data;
+- (id)initWithDataUsingDebugUnarchiver:(NSData *)data;
 - (NSData *)data;
 
 - (NSUInteger)messagesCount;

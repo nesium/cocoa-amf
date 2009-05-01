@@ -37,6 +37,7 @@
 	}
 
 	SODeserializer *deserializer = [[SODeserializer alloc] init];
+	deserializer.useDebugUnarchiver = YES;
 	m_dataSource.rootObject = [deserializer deserialize:[NSData dataWithContentsOfFile:path]];
 	[m_outlineView reloadData];
 	[m_outlineView expandItem:[m_outlineView itemAtRow:0] expandChildren:YES];

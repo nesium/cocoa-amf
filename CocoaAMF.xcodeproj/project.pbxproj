@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		2C07908A0FAB3B9B00100142 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */; };
+		2C0792630FAB7E0900100142 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */; };
+		2C0792D20FAB90C900100142 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */; };
+		2C0792D40FAB90E000100142 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */; };
+		2C0792D60FAB90ED00100142 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
+		2C0792D90FAB910100100142 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */; };
 		2C109BA40EE347B600AF1643 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C109BA30EE347B600AF1643 /* NSString+URLEncode.m */; };
 		2C109BDD0EE34E0800AF1643 /* AMFClient.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = 2C109BDB0EE34E0800AF1643 /* AMFClient.scriptSuite */; };
 		2C109BDE0EE34E0800AF1643 /* AMFClient.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 2C109BDC0EE34E0800AF1643 /* AMFClient.scriptTerminology */; };
@@ -120,6 +126,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2C0790880FAB3B9B00100142 /* AMFDebugUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFDebugUnarchiver.h; sourceTree = "<group>"; };
+		2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFDebugUnarchiver.m; sourceTree = "<group>"; };
 		2C109BA20EE347B600AF1643 /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
 		2C109BA30EE347B600AF1643 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
 		2C109BDB0EE34E0800AF1643 /* AMFClient.scriptSuite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.scriptSuite; path = AMFClient.scriptSuite; sourceTree = "<group>"; };
@@ -322,6 +330,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2C0790870FAB3B7000100142 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				2C0790880FAB3B9B00100142 /* AMFDebugUnarchiver.h */,
+				2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */,
+			);
+			name = Debug;
+			sourceTree = "<group>";
+		};
 		2C3554280F784551003A31C4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +406,7 @@
 				2C3554290F784568003A31C4 /* Datatypes */,
 				2C35542B0F7845AC003A31C4 /* Categories */,
 				2C35542C0F7845C1003A31C4 /* Utils */,
+				2C0790870FAB3B7000100142 /* Debug */,
 			);
 			path = CocoaAMF;
 			sourceTree = "<group>";
@@ -781,6 +799,7 @@
 				2C219A660F7992ED0027AFD6 /* AMF.m in Sources */,
 				2C8F20420F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 				2C8F211E0F8FB25A00D7FEF0 /* NSInvocation-AMFExtensions.m in Sources */,
+				2C0792D20FAB90C900100142 /* AMFDebugUnarchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +817,8 @@
 				49A471370F52E579008ADED3 /* AMFArchiver.m in Sources */,
 				2C3554640F784C9C003A31C4 /* FlexDataTypes.m in Sources */,
 				2C8F20450F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
+				2C0792D40FAB90E000100142 /* AMFDebugUnarchiver.m in Sources */,
+				2C0792D60FAB90ED00100142 /* AMF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +847,7 @@
 				2C3554690F784CB3003A31C4 /* FlexDataTypes.m in Sources */,
 				2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */,
 				2C8F20430F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
+				2C07908A0FAB3B9B00100142 /* AMFDebugUnarchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,6 +884,7 @@
 				2C35545B0F784C61003A31C4 /* FlexDataTypes.m in Sources */,
 				2C8F20460F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 				2C8F21CB0F900EC400D7FEF0 /* AMF.m in Sources */,
+				2C0792D90FAB910100100142 /* AMFDebugUnarchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,6 +906,7 @@
 				2C1879B50F76FC8200DF747D /* AMF.m in Sources */,
 				2C3554540F784C45003A31C4 /* FlexDataTypes.m in Sources */,
 				2C8F20470F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
+				2C0792630FAB7E0900100142 /* AMFDebugUnarchiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

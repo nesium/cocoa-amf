@@ -16,7 +16,7 @@
 - (NSNumber *)_decodeNumberForKey:(NSString *)key;
 @end
 
-@interface AMF0Unarchiver (Private)
+@interface AMF0Unarchiver (Protected)
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type;
 - (NSArray *)_decodeArray;
 - (NSObject *)_decodeTypedObject;
@@ -28,7 +28,7 @@
 - (NSObject *)_decodeReference;
 @end
 
-@interface AMF3Unarchiver (Private)
+@interface AMF3Unarchiver (Protected)
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type;
 - (NSObject *)_decodeASObject;
 - (NSObject *)_decodeArray;
@@ -99,7 +99,7 @@ static uint16_t g_options = 0;
 	{
 		[NSException raise:@"AMFInvalidArchiveOperationException" format:@"Invalid data"];
 	}
-	AMFUnarchiver *byteArray = [[AMFUnarchiver alloc] initForReadingWithData:data encoding:encoding];
+	AMFUnarchiver *byteArray = [[[self class] alloc] initForReadingWithData:data encoding:encoding];
 	id object = [[byteArray decodeObject] retain];
 	[byteArray release];
 	return [object autorelease];
@@ -471,9 +471,9 @@ static uint16_t g_options = 0;
 	}
 	
 	Class cls;
-	if (!(cls = [m_registeredClasses objectForKey:className]))
+	if (!(cls = [self classForClassName:className]))
 	{
-		if (!(cls = [g_registeredClasses objectForKey:className]))
+		if (!(cls = [[self class] classForClassName:className]))
 		{
 			if (!(cls = objc_getClass([className cStringUsingEncoding:NSUTF8StringEncoding])))
 			{

@@ -11,9 +11,12 @@
 
 @implementation SODeserializer
 
-- (NSDictionary *)deserialize:(NSData *)data
+@synthesize useDebugUnarchiver;
+
+- (NSObject *)deserialize:(NSData *)data
 {
-	AMFUnarchiver *headerUnarchiver = [[AMFUnarchiver alloc] initForReadingWithData:data 
+	Class unarchiverClass = useDebugUnarchiver ? [AMFDebugUnarchiver class] : [AMFUnarchiver class];
+	AMFUnarchiver *headerUnarchiver = [[unarchiverClass alloc] initForReadingWithData:data 
 		encoding:kAMF0Version];
 
 	// padding
@@ -33,7 +36,7 @@
 	if (version == kAMF3Version)
 	{
 		NSUInteger startOffset = [data length] - [headerUnarchiver bytesAvailable];
-		bodyUnarchiver = [[AMFUnarchiver alloc] initForReadingWithData:
+		bodyUnarchiver = [[unarchiverClass alloc] initForReadingWithData:
 			[data subdataWithRange:(NSRange){startOffset, [headerUnarchiver bytesAvailable]}]  
 			encoding:kAMF3Version];
 	}
@@ -49,6 +52,16 @@
 		[bodyUnarchiver decodeUnsignedChar];
 	}
 	[bodyUnarchiver release];
+	
+	if (useDebugUnarchiver)
+	{
+		AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
+		node.version = kAMF0Version;
+		node.type = kAMF0ObjectType;
+		node.data = dict;
+		return node;
+	}
+	
 	return dict;
 }
 

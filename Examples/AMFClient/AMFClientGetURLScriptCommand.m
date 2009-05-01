@@ -12,8 +12,8 @@
 @implementation AMFClientGetURLScriptCommand
 
 - (id)performDefaultImplementation 
-{	
-	[[NSApp delegate] setURLString:[self directParameter]];
+{
+	[[NSApp delegate] performSelector:@selector(setURLString:) withObject:[self directParameter]];
     return nil;
 }
 
