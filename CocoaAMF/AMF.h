@@ -7,6 +7,8 @@
  *
  */
 
+#import <Foundation/Foundation.h>
+
 typedef enum _AMFVersion
 {
 	kAMF0Version = 0x0,
