@@ -14,6 +14,10 @@
 #import "NSString+URLEncode.h"
 #import "OutlineViewDataSource.h"
 #import "CAMFFieldEditor.h"
+#import "NSOutlineView+ContextMenu.h"
+#import "AMFDebugUnarchiver.h"
+#import "SCGenerator.h"
+#import "SCActionscriptGenerator.h"
 
 
 @interface Controller : NSObject 

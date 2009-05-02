@@ -26,6 +26,10 @@
 
 - (void)awakeFromNib
 {
+	NSObject <StubCodeGenerator> *generator = [[SCActionscriptGenerator alloc] init];
+	[[SCGenerator sharedGenerator] registerGenerator:generator forLanguage:@"Actionscript"];
+	[generator release];
+
 	m_isLoading = NO;
 	m_fieldEditor = [[CAMFFieldEditor alloc] init];
 	[m_fieldEditor setFieldEditor:YES];
@@ -34,6 +38,7 @@
 	m_receivedHeaders = nil;
 	m_outlineViewDataSource = [[OutlineViewDataSource alloc] init];
 	[m_objectOutlineView setDataSource:m_outlineViewDataSource];
+	[m_objectOutlineView setDelegate:self];
 	[m_dataTextView setFont:[NSFont fontWithName:@"Monaco" size:10.0]];
 	[m_resultTextView setFont:[NSFont fontWithName:@"Monaco" size:10.0]];
 }
@@ -388,5 +393,55 @@
 	}
 }
 
+
+#pragma mark -
+#pragma mark OutlineView Delegate methods
+
+- (NSMenu *)outlineView:(NSOutlineView *)outlineView contextMenuForItem:(id)item
+{
+	NSString *objectClassName = [(AMFDebugDataNode *)item objectClassName];
+	if (objectClassName == nil)
+	{
+		return nil;
+	}
+	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	NSMenuItem *subMenuItem = [[NSMenuItem alloc] 
+		initWithTitle:[NSString stringWithFormat:@"Copy stub code for %@ ...", objectClassName] 
+			action:NULL keyEquivalent:@""];
+	NSMenu *subMenu = [[NSMenu alloc] init];
+	[subMenuItem setSubmenu:subMenu];
+	NSArray *languages = [[SCGenerator sharedGenerator] languageNames];
+	int i = 0;
+	for (NSString *languageName in languages)
+	{
+		NSMenuItem *menuItem = [[NSMenuItem alloc] 
+			initWithTitle:[NSString stringWithFormat:@"in %@", languageName]
+			action:@selector(copyStubCode:) keyEquivalent:@""];
+		[menuItem setTag:i++];
+		[menuItem setTarget:self];
+		[menuItem setRepresentedObject:item];
+		[subMenu addItem:menuItem];
+		[menuItem release];
+	}
+	[menu addItem:subMenuItem];
+	[subMenuItem release];
+	[subMenu release];
+	return menu;
+}
+
+
+#pragma mark ContextMenu action methods
+
+- (void)copyStubCode:(NSMenuItem *)sender
+{
+	AMFDebugDataNode *node = (AMFDebugDataNode *)[sender representedObject];
+	NSString *languageName = [[[SCGenerator sharedGenerator] languageNames] 
+		objectAtIndex:[sender tag]];
+	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObjects:NSStringPboardType, 
+		nil] owner:nil];
+	[[NSPasteboard generalPasteboard] 
+		setString:[[SCGenerator sharedGenerator] stubCodeForDataNode:node languageName:languageName] 
+		forType:NSStringPboardType];
+}
 
 @end

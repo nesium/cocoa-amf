@@ -25,6 +25,9 @@
 		2C1879B50F76FC8200DF747D /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2C2199E20F7964EE0027AFD6 /* PassthroughService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2199E10F7964EE0027AFD6 /* PassthroughService.m */; };
 		2C219A660F7992ED0027AFD6 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
+		2C2F9A360FACA18E00764AA8 /* NSOutlineView+ContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F9A350FACA18E00764AA8 /* NSOutlineView+ContextMenu.m */; };
+		2C2F9A460FACA64700764AA8 /* SCActionscriptGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F9A450FACA64700764AA8 /* SCActionscriptGenerator.m */; };
+		2C2F9A490FACA67B00764AA8 /* SCGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F9A480FACA67B00764AA8 /* SCGenerator.m */; };
 		2C3554540F784C45003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
 		2C35545B0F784C61003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
 		2C3554610F784C8B003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */; };
@@ -141,6 +144,12 @@
 		2C1879B40F76FC8200DF747D /* AMF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF.m; sourceTree = "<group>"; };
 		2C2199E00F7964EE0027AFD6 /* PassthroughService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughService.h; sourceTree = "<group>"; };
 		2C2199E10F7964EE0027AFD6 /* PassthroughService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughService.m; sourceTree = "<group>"; };
+		2C2F9A340FACA18E00764AA8 /* NSOutlineView+ContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView+ContextMenu.h"; sourceTree = "<group>"; };
+		2C2F9A350FACA18E00764AA8 /* NSOutlineView+ContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+ContextMenu.m"; sourceTree = "<group>"; };
+		2C2F9A440FACA64700764AA8 /* SCActionscriptGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCActionscriptGenerator.h; sourceTree = "<group>"; };
+		2C2F9A450FACA64700764AA8 /* SCActionscriptGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCActionscriptGenerator.m; sourceTree = "<group>"; };
+		2C2F9A470FACA67B00764AA8 /* SCGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGenerator.h; sourceTree = "<group>"; };
+		2C2F9A480FACA67B00764AA8 /* SCGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGenerator.m; sourceTree = "<group>"; };
 		2C35542D0F7846B5003A31C4 /* FlexDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexDataTypes.h; sourceTree = "<group>"; };
 		2C35542E0F7846B5003A31C4 /* FlexDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexDataTypes.m; sourceTree = "<group>"; };
 		2C35A4660EA401CB000B2452 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
@@ -339,6 +348,46 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
+		2C2F9A2F0FACA11C00764AA8 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				2C109BA20EE347B600AF1643 /* NSString+URLEncode.h */,
+				2C109BA30EE347B600AF1643 /* NSString+URLEncode.m */,
+				2C2F9A340FACA18E00764AA8 /* NSOutlineView+ContextMenu.h */,
+				2C2F9A350FACA18E00764AA8 /* NSOutlineView+ContextMenu.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		2C2F9A300FACA13000764AA8 /* Scripting Support */ = {
+			isa = PBXGroup;
+			children = (
+				2C109BDF0EE34EA000AF1643 /* AMFClientGetURLScriptCommand.h */,
+				2C109BE00EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m */,
+			);
+			name = "Scripting Support";
+			sourceTree = "<group>";
+		};
+		2C2F9A330FACA15300764AA8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2C38B4A10EE4A04A0083BCF5 /* CAMFFieldEditor.h */,
+				2C38B4A20EE4A04A0083BCF5 /* CAMFFieldEditor.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		2C2F9A430FACA61C00764AA8 /* StubCode Generators */ = {
+			isa = PBXGroup;
+			children = (
+				2C2F9A470FACA67B00764AA8 /* SCGenerator.h */,
+				2C2F9A480FACA67B00764AA8 /* SCGenerator.m */,
+				2C2F9A440FACA64700764AA8 /* SCActionscriptGenerator.h */,
+				2C2F9A450FACA64700764AA8 /* SCActionscriptGenerator.m */,
+			);
+			name = "StubCode Generators";
+			sourceTree = "<group>";
+		};
 		2C3554280F784551003A31C4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,12 +572,10 @@
 				2C8500AC0EDF3B650058EBE0 /* Controller.h */,
 				2C8500AD0EDF3B650058EBE0 /* Controller.m */,
 				2C85010C0EDF43D10058EBE0 /* main.m */,
-				2C109BA20EE347B600AF1643 /* NSString+URLEncode.h */,
-				2C109BA30EE347B600AF1643 /* NSString+URLEncode.m */,
-				2C109BDF0EE34EA000AF1643 /* AMFClientGetURLScriptCommand.h */,
-				2C109BE00EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m */,
-				2C38B4A10EE4A04A0083BCF5 /* CAMFFieldEditor.h */,
-				2C38B4A20EE4A04A0083BCF5 /* CAMFFieldEditor.m */,
+				2C2F9A430FACA61C00764AA8 /* StubCode Generators */,
+				2C2F9A2F0FACA11C00764AA8 /* Categories */,
+				2C2F9A330FACA15300764AA8 /* Utils */,
+				2C2F9A300FACA13000764AA8 /* Scripting Support */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -848,6 +895,9 @@
 				2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */,
 				2C8F20430F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
 				2C07908A0FAB3B9B00100142 /* AMFDebugUnarchiver.m in Sources */,
+				2C2F9A360FACA18E00764AA8 /* NSOutlineView+ContextMenu.m in Sources */,
+				2C2F9A460FACA64700764AA8 /* SCActionscriptGenerator.m in Sources */,
+				2C2F9A490FACA67B00764AA8 /* SCGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
