@@ -29,6 +29,9 @@
 	NSObject <StubCodeGenerator> *generator = [[SCActionscriptGenerator alloc] init];
 	[[SCGenerator sharedGenerator] registerGenerator:generator forLanguage:@"Actionscript"];
 	[generator release];
+	generator = [[SCObjCGenerator alloc] init];
+	[[SCGenerator sharedGenerator] registerGenerator:generator forLanguage:@"Objective-C"];
+	[generator release];
 
 	m_isLoading = NO;
 	m_fieldEditor = [[CAMFFieldEditor alloc] init];

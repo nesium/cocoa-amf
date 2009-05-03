@@ -18,6 +18,7 @@
 		2C109BDD0EE34E0800AF1643 /* AMFClient.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = 2C109BDB0EE34E0800AF1643 /* AMFClient.scriptSuite */; };
 		2C109BDE0EE34E0800AF1643 /* AMFClient.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 2C109BDC0EE34E0800AF1643 /* AMFClient.scriptTerminology */; };
 		2C109BE10EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C109BE00EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m */; };
+		2C10B1AE0FAE0ED100D4985E /* SCObjCGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C10B1AD0FAE0ED100D4985E /* SCObjCGenerator.m */; };
 		2C1338060F644A23001CE24E /* NSInvocation-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1338050F644A23001CE24E /* NSInvocation-AMFExtensions.m */; };
 		2C1879720F76F63100DF747D /* SODeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879700F76F63100DF747D /* SODeserializer.m */; };
 		2C18798C0F76FAA000DF747D /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
@@ -137,6 +138,8 @@
 		2C109BDC0EE34E0800AF1643 /* AMFClient.scriptTerminology */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.scriptTerminology; path = AMFClient.scriptTerminology; sourceTree = "<group>"; };
 		2C109BDF0EE34EA000AF1643 /* AMFClientGetURLScriptCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFClientGetURLScriptCommand.h; sourceTree = "<group>"; };
 		2C109BE00EE34EA000AF1643 /* AMFClientGetURLScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFClientGetURLScriptCommand.m; sourceTree = "<group>"; };
+		2C10B1AC0FAE0ED100D4985E /* SCObjCGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCObjCGenerator.h; sourceTree = "<group>"; };
+		2C10B1AD0FAE0ED100D4985E /* SCObjCGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCObjCGenerator.m; sourceTree = "<group>"; };
 		2C1338040F644A23001CE24E /* NSInvocation-AMFExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation-AMFExtensions.h"; sourceTree = "<group>"; };
 		2C1338050F644A23001CE24E /* NSInvocation-AMFExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation-AMFExtensions.m"; sourceTree = "<group>"; };
 		2C1879700F76F63100DF747D /* SODeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SODeserializer.m; sourceTree = "<group>"; };
@@ -384,6 +387,8 @@
 				2C2F9A480FACA67B00764AA8 /* SCGenerator.m */,
 				2C2F9A440FACA64700764AA8 /* SCActionscriptGenerator.h */,
 				2C2F9A450FACA64700764AA8 /* SCActionscriptGenerator.m */,
+				2C10B1AC0FAE0ED100D4985E /* SCObjCGenerator.h */,
+				2C10B1AD0FAE0ED100D4985E /* SCObjCGenerator.m */,
 			);
 			name = "StubCode Generators";
 			sourceTree = "<group>";
@@ -898,6 +903,7 @@
 				2C2F9A360FACA18E00764AA8 /* NSOutlineView+ContextMenu.m in Sources */,
 				2C2F9A460FACA64700764AA8 /* SCActionscriptGenerator.m in Sources */,
 				2C2F9A490FACA67B00764AA8 /* SCGenerator.m in Sources */,
+				2C10B1AE0FAE0ED100D4985E /* SCObjCGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

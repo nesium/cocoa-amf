@@ -18,6 +18,7 @@
 #import "AMFDebugUnarchiver.h"
 #import "SCGenerator.h"
 #import "SCActionscriptGenerator.h"
+#import "SCObjCGenerator.h"
 
 
 @interface Controller : NSObject 
