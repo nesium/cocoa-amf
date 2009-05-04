@@ -43,6 +43,8 @@
 	NSMutableArray *m_receivedHeaders;
 	NSURLConnection *m_connection;
 	NSMutableData *m_receivedData;
+	NSString *m_gatewayURLString;
+	BOOL m_gatewayIsEditing;
 	OutlineViewDataSource *m_outlineViewDataSource;
 	NSString *m_errorDescription;
 	BOOL m_error;

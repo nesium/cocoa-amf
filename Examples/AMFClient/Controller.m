@@ -10,6 +10,7 @@
 
 @interface Controller (Private)
 - (void)setIsLoading:(BOOL)bFlag;
+- (void)updateURLField;
 @end
 
 
@@ -33,10 +34,12 @@
 	[[SCGenerator sharedGenerator] registerGenerator:generator forLanguage:@"Objective-C"];
 	[generator release];
 
+	m_gatewayIsEditing = NO;
 	m_isLoading = NO;
 	m_fieldEditor = [[CAMFFieldEditor alloc] init];
 	[m_fieldEditor setFieldEditor:YES];
 	[m_gatewayTextField setDelegate:self];
+	[m_serviceTextField setDelegate:self];
 	m_sentHeaders = nil;
 	m_receivedHeaders = nil;
 	m_outlineViewDataSource = [[OutlineViewDataSource alloc] init];
@@ -44,12 +47,37 @@
 	[m_objectOutlineView setDelegate:self];
 	[m_dataTextView setFont:[NSFont fontWithName:@"Monaco" size:10.0]];
 	[m_resultTextView setFont:[NSFont fontWithName:@"Monaco" size:10.0]];
+
+	m_gatewayURLString = [[[[NSUserDefaultsController sharedUserDefaultsController] values] 
+		valueForKey:@"LastGateway"] copy];
+	[self updateURLField];
+}
+
+- (void)windowDidUpdate:(NSNotification *)notification
+{
+	BOOL isFirstResponder = [[NSApp mainWindow] firstResponder] == m_fieldEditor;
+	if (m_gatewayIsEditing != isFirstResponder)
+	{
+		if (!isFirstResponder)
+		{
+			[m_gatewayURLString release];
+			m_gatewayURLString = [[m_gatewayTextField stringValue] copy];
+		}
+		m_gatewayIsEditing = isFirstResponder;
+		[self updateURLField];
+	}
+}
+
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+	if ([notification object] == m_serviceTextField)
+		[self updateURLField];
 }
 
 - (BOOL)setURLString:(NSString *)urlString
 {
 	NSURL *url = [NSURL URLWithString:urlString];
-	
+
 	if (url == nil)
 	{
 		return NO;
@@ -84,9 +112,10 @@
 	if ([url path] != nil) [gatewayURL appendString:[url path]];
 	if ([unusedParams count])
 		[gatewayURL appendFormat:@"?%@", gatewayURL, [unusedParams componentsJoinedByString:@"&"]];
-	[m_gatewayTextField setStringValue:gatewayURL];
+	m_gatewayURLString = gatewayURL;
 	[m_serviceTextField setStringValue:service];
 	[m_dataTextView setString:args];
+	[self updateURLField];
 	return YES;
 }
 
@@ -96,7 +125,7 @@
 	{
 		return;
 	}
-	
+	[self updateURLField];
 	NSURL *gatewayURL = [NSURL URLWithString:[m_gatewayTextField stringValue]];
 	if (gatewayURL == nil)
 	{
@@ -149,6 +178,25 @@
 	[body release];
 	[message release];
 	[self setIsLoading:YES];
+}
+
+- (void)updateURLField
+{
+	if (m_gatewayIsEditing)
+	{
+		[m_gatewayTextField setStringValue:m_gatewayURLString];
+		return;
+	}
+	NSString *urlString = m_gatewayURLString;
+	NSString *parts = [[m_serviceTextField stringValue] stringByReplacingOccurrencesOfString:@"." 
+		withString:@"/"];
+	NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:urlString];
+	[[str mutableString] appendFormat:@"/%@", parts];
+	[str setAttributes:[NSDictionary dictionaryWithObject:[NSFont systemFontOfSize:11.0] 
+		forKey:NSFontAttributeName] range:(NSRange){0, [str length]}];
+	[str addAttributes:[NSDictionary dictionaryWithObject:[NSColor grayColor] 
+		forKey:NSForegroundColorAttributeName] range:(NSRange){[urlString length], [parts length] + 1}];
+	[m_gatewayTextField setAttributedStringValue:str];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -330,19 +378,14 @@
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)anObject
 {
 	if (anObject == m_gatewayTextField)
-	{
 		return m_fieldEditor;
-	}
 	return nil;
 }
 
 - (BOOL)fieldEditor:(NSTextView *)fieldEditor willPasteText:(NSString *)text
 {
-	if ([[[text substringToIndex:[@"amfclient://" length]] lowercaseString] 
-		isEqualToString:@"amfclient://"])
-	{
+	if ([[text lowercaseString] hasPrefix:@"amfclient://"])	
 		return [self setURLString:text];
-	}
 	return NO;
 }
 
