@@ -11,9 +11,8 @@
 
 @implementation DirectoryService
 
-- (NSArray *)directoryContentsAtPath:(NSArray *)arguments
+- (NSArray *)directoryContentsAtPath:(NSString *)path
 {
-	NSString *path = [arguments objectAtIndex:0];
 	BOOL isDir;
 	if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir] || !isDir)
 	{

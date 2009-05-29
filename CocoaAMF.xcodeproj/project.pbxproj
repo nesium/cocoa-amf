@@ -100,6 +100,8 @@
 		2CF104440F4F7D6500A99429 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8500E60EDF42DF0058EBE0 /* AMFUnarchiver.m */; };
 		2CF104450F4F7D6600A99429 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4820EA401CB000B2452 /* ASObject.m */; };
 		2CF104480F4F7D7700A99429 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C73A87A0F19423F00EA16AD /* AsyncSocket.m */; };
+		490EA8400FCFDCCD000CCD65 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0790890FAB3B9B00100142 /* AMFDebugUnarchiver.m */; };
+		490EA8420FCFDCD4000CCD65 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		49A46C2A0F4C23FB008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
 		49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A46FB30F4EBA3F008ADED3 /* AMF3Test.m */; };
 		49A471320F52E4FE008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80A67F0F1C1FA700D761BB /* AMFArchiver.m */; };
@@ -920,6 +922,8 @@
 				49A46FB40F4EBA3F008ADED3 /* AMF3Test.m in Sources */,
 				2C3554610F784C8B003A31C4 /* FlexDataTypes.m in Sources */,
 				2C8F20440F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m in Sources */,
+				490EA8400FCFDCCD000CCD65 /* AMFDebugUnarchiver.m in Sources */,
+				490EA8420FCFDCD4000CCD65 /* AMF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

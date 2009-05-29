@@ -149,11 +149,6 @@
 
 - (void)mergeActionMessage:(AMFActionMessage *)message
 {
-	if (message.version != m_version)
-	{
-		[NSException raise:NSInternalInconsistencyException format:@"Cannot merge messages of type \
-%d into a request of type %d", message.version, m_version];
-	}
 	[m_headers addObjectsFromArray:message.headers];
 	[m_bodies addObjectsFromArray:message.bodies];
 }
