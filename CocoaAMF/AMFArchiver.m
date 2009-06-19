@@ -928,7 +928,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 		else if ([key isKindOfClass:[NSNumber class]])
 			[numericKeys addObject:key];
 		else
-			[NSException raise:NSInconsistentArchiveException 
+			[NSException raise:NSInternalInconsistencyException 
 				format:@"Cannot encode dictionary with key of class %@", [key className]];
 	}
 	[self encodeUnsignedInt29:(([numericKeys count] << 1) | 1)];

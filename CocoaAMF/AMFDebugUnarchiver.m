@@ -55,7 +55,7 @@
 
 @implementation AMF3DebugUnarchiver
 
-- (NSObject *)_decodeObjectWithType:(AMF0Type)type
+- (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
 	AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
 	node.version = kAMF3Version;

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject-AMFExtensions.h"
+#if TARGET_OS_IPHONE
+#import "NSObject-iPhoneExtensions.h"
+#endif
 
 typedef enum _FlexCommandMessageOperationType
 {
