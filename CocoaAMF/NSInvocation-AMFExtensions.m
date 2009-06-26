@@ -14,6 +14,7 @@
 - (id)returnValueAsObject
 {
 	const char *methodReturnType = [[self methodSignature] methodReturnType];
+	NSLog(@"return type: %s", methodReturnType);
 	switch (*methodReturnType)
 	{
 		case 'c':
@@ -105,6 +106,7 @@
 			return value;
 		}
 		case 'v':
+		case 'V':
 		{
 			return nil;
 		}

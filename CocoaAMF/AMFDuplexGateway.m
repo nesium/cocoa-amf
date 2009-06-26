@@ -153,6 +153,7 @@
 {
 	if (self = [super init])
 	{
+		m_binaryMode = NO;
 		m_delegate = delegate;
 		m_socket = [socket retain];
 		[m_socket setDelegate:self];
@@ -217,6 +218,11 @@
 
 - (void)_continueReading
 {
+	if (!m_binaryMode)
+	{
+		[m_socket readDataToData:[AsyncSocket ZeroData] withTimeout:-1 tag:0];
+		return;
+	}
 	[m_socket readDataToLength:4 withTimeout:-1 tag:kReadDataLengthTag];
 }
 
@@ -341,6 +347,29 @@
 		{
 			[am release];
 			[self _continueReading];
+		}
+	}
+	else if (m_binaryMode == NO)
+	{
+		NSString *message = [NSString stringWithUTF8String:[data bytes]];
+		if ([message isEqualToString:@"<policy-file-request/>"])
+		{
+			NSString *msg = @"<cross-domain-policy>\
+<allow-access-from domain=\"*\" to-ports=\"*\"/>\
+</cross-domain-policy>\0";
+			[m_socket writeData:[msg dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+			[self _continueReading];
+		}
+		else if ([message isEqualToString:@"BIN-INIT"])
+		{
+			NSLog(@"switch to binary mode");
+			m_binaryMode = YES;
+			[self _continueReading];
+		}
+		else
+		{
+			NSLog(@"received unexpected data: %@", message);
+			[m_socket disconnectAfterWriting];
 		}
 	}
 }

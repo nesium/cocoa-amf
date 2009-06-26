@@ -66,6 +66,7 @@ typedef enum _AMFDuplexGatewayMode
 	NSMutableSet *m_queuedInvocations;
 	NSMutableSet *m_pendingInvocations;
 	uint32_t m_invocationCount;
+	BOOL m_binaryMode;
 }
 - (id)initWithDelegate:(id <AMFRemoteGatewayDelegate>)delegate socket:(AsyncSocket *)socket;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
