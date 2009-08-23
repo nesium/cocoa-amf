@@ -11,6 +11,7 @@
 #import "AMFActionMessage.h"
 #import "AsyncSocket.h"
 #import "NSInvocation-AMFExtensions.h"
+#import <objc/runtime.h>
 
 @class AMFInvocationResult;
 @class AMFRemoteGateway;
@@ -22,19 +23,15 @@ typedef enum _AMFDuplexGatewayMode
 	kAMFDuplexGatewayModeClient
 } AMFDuplexGatewayMode;
 
-@protocol AMFRemoteGatewayDelegate
-- (id)serviceWithName:(NSString *)name;
-- (void)remoteGatewayDidDisconnect:(AMFRemoteGateway *)remoteGateway;
-@end
 
-
-@interface AMFDuplexGateway : NSObject <AMFRemoteGatewayDelegate>
+@interface AMFDuplexGateway : NSObject
 {
 	AsyncSocket *m_socket;
 	NSMutableSet *m_remoteGateways;
 	NSMutableDictionary *m_services;
 	id m_delegate;
 	AMFDuplexGatewayMode m_mode;
+	Class m_remoteGatewayClass;
 }
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) AMFDuplexGatewayMode mode;
@@ -49,6 +46,9 @@ typedef enum _AMFDuplexGatewayMode
 - (void)unregisterServiceWithName:(NSString *)name;
 - (id)serviceWithName:(NSString *)name;
 
+- (void)setRemoteGatewayClass:(Class)aClass;
+- (NSSet *)remoteGateways;
+
 - (void)remoteGatewayDidDisconnect:(AMFRemoteGateway *)remoteGateway;
 @end
 
@@ -62,17 +62,21 @@ typedef enum _AMFDuplexGatewayMode
 @interface AMFRemoteGateway : NSObject
 {
 	id m_delegate;
+	AMFDuplexGateway *m_localGateway;
 	AsyncSocket *m_socket;
 	NSMutableSet *m_queuedInvocations;
 	NSMutableSet *m_pendingInvocations;
 	uint32_t m_invocationCount;
 	BOOL m_binaryMode;
 }
-- (id)initWithDelegate:(id <AMFRemoteGatewayDelegate>)delegate socket:(AsyncSocket *)socket;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, readonly) AMFDuplexGateway *localGateway;
+- (id)initWithLocalGateway:(AMFDuplexGateway *)localGateway socket:(AsyncSocket *)socket;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
 	methodName:(NSString *)methodName arguments:(id)firstArgument, ...;
+- (void)disconnect;
 @end
 
 

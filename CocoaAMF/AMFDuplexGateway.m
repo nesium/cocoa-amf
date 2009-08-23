@@ -37,6 +37,7 @@
 		m_services = [[NSMutableDictionary alloc] init];
 		m_remoteGateways = [[NSMutableSet alloc] init];
 		m_mode = kAMFDuplexGatewayModeNotConnected;
+		m_remoteGatewayClass = [AMFRemoteGateway class];
 	}
 	return self;
 }
@@ -79,7 +80,7 @@
 		return NO;
 	
 	m_mode = kAMFDuplexGatewayModeClient;
-	AMFRemoteGateway *gateway = [[AMFRemoteGateway alloc] initWithDelegate:self socket:m_socket];
+	AMFRemoteGateway *gateway = [[AMFRemoteGateway alloc] initWithLocalGateway:self socket:m_socket];
 	[m_remoteGateways addObject:gateway];
 	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidConnect:)])
 		objc_msgSend(m_delegate, @selector(gateway:remoteGatewayDidConnect:), self, gateway);
@@ -114,6 +115,23 @@
 	return [m_services objectForKey:name];
 }
 
+- (void)setRemoteGatewayClass:(Class)aClass
+{
+	if (aClass != [AMFRemoteGateway class] && 
+		class_getSuperclass(aClass) != [AMFRemoteGateway class])
+	{
+		@throw [NSException exceptionWithName:@"AMFDuplexGatewayInvalidRemoteGatewayClassException" 
+			reason:@"You need to supply a class which is a subclass of AMFRemoteGateway" 
+			userInfo:nil];
+	}
+	m_remoteGatewayClass = aClass;
+}
+
+- (NSSet *)remoteGateways
+{
+	return m_remoteGateways;
+}
+
 
 
 #pragma mark -
@@ -121,7 +139,7 @@
  
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
 {
-	AMFRemoteGateway *remoteGateway = [[AMFRemoteGateway alloc] initWithDelegate:self 
+	AMFRemoteGateway *remoteGateway = [[m_remoteGatewayClass alloc] initWithLocalGateway:self 
 		socket:newSocket];
 	[m_remoteGateways addObject:remoteGateway];
 	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidConnect:)])
@@ -146,20 +164,32 @@
 
 @implementation AMFRemoteGateway
 
+@synthesize delegate=m_delegate, 
+			localGateway=m_localGateway;
+
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
-- (id)initWithDelegate:(id <AMFRemoteGatewayDelegate>)delegate socket:(AsyncSocket *)socket;
+- (id)init
 {
 	if (self = [super init])
 	{
-		m_binaryMode = NO;
-		m_delegate = delegate;
-		m_socket = [socket retain];
-		[m_socket setDelegate:self];
+		m_binaryMode = NO;		
 		m_queuedInvocations = [[NSMutableSet alloc] init];
 		m_pendingInvocations = [[NSMutableSet alloc] init];
 		m_invocationCount = 1;
+		m_delegate = nil;
+	}
+	return self;
+}
+
+- (id)initWithLocalGateway:(AMFDuplexGateway *)localGateway socket:(AsyncSocket *)socket;
+{
+	if (self = [self init])
+	{
+		m_localGateway = localGateway;
+		m_socket = [socket retain];
+		[m_socket setDelegate:self];
 		[self _continueReading];
 	}
 	return self;
@@ -183,6 +213,7 @@
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments
 {
 	AMFActionMessage *am = [[AMFActionMessage alloc] init];
+	am.version = 0;
 	[am addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", serviceName, methodName] 
 		responseURI:[NSString stringWithFormat:@"/%d", m_invocationCount] data:arguments];
 	[self _sendActionMessage:am];
@@ -209,6 +240,11 @@
 	}
 	if ([arguments count] == 0) arguments = nil;
 	return [self invokeRemoteService:serviceName methodName:methodName argumentsArray:arguments];
+}
+
+- (void)disconnect
+{
+	[m_socket disconnectAfterWriting];
 }
 
 
@@ -256,7 +292,7 @@
 			continue;
 		}
 
-		id service = [m_delegate serviceWithName:serviceName];
+		id service = [m_localGateway serviceWithName:serviceName];
 		if (service == nil)
 		{
 			// @TODO handle error
@@ -362,7 +398,6 @@
 		}
 		else if ([message isEqualToString:@"BIN-INIT"])
 		{
-			NSLog(@"switch to binary mode");
 			m_binaryMode = YES;
 			[self _continueReading];
 		}
@@ -376,7 +411,7 @@
 
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock
 {
-	[m_delegate remoteGatewayDidDisconnect:self];
+	[m_localGateway remoteGatewayDidDisconnect:self];
 }
 
 @end
