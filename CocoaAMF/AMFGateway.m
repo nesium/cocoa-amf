@@ -359,6 +359,7 @@
 		[socket writeData:amfResponseData withTimeout:WRITE_BODY_TIMEOUT tag:HTTP_RESPONSE];
 		
 		[amfResponse release];
+		[amfRequest release];
 		CFRelease(messageBody);
 		CFRelease(response);
 		CFRelease(contentType);		
