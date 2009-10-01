@@ -90,6 +90,7 @@ static uint32_t g_responseCount = 1;
 	}
 
 	AMFActionMessage *message = [[AMFActionMessage alloc] init];
+	message.version = m_amfVersion;
 	[message addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", m_service, m_method] 
 		responseURI:[self _nextResponseURI] data:m_arguments];
 	if (m_amfHeaders != nil)
@@ -181,7 +182,7 @@ static uint32_t g_responseCount = 1;
 				[NSString stringWithFormat:@"The server returned status code %d at URL %@.", 
 					[(NSHTTPURLResponse *)response statusCode], [[response URL] absoluteString]], 
 				NSLocalizedDescriptionKey, [NSNumber numberWithInt:
-					[(NSHTTPURLResponse *)response statusCode]], kAMFServerStatusCodeKey]] retain];
+					[(NSHTTPURLResponse *)response statusCode]], kAMFServerStatusCodeKey, nil]] retain];
 	}
 	
 	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveResponse:)])

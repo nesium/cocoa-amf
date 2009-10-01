@@ -68,7 +68,6 @@ int main (int argc, const char * argv[])
 	[caller call];
 	
 	CFRunLoopRun();
-	[pool drain];
 	[pool release];
 	return 0;
 }
