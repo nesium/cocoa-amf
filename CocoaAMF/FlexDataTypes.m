@@ -60,8 +60,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"%@", source];
-	//return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
+	return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
 }
 
 @end
