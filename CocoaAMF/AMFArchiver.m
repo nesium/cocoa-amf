@@ -168,13 +168,19 @@ static uint16_t g_options = 0;
 
 - (void)setClassName:(NSString *)codedName forClass:(Class)cls
 {
-	[m_registeredClasses setObject:codedName forKey:cls];
+	if (codedName == nil)
+		[m_registeredClasses removeObjectForKey:cls];
+	else
+		[m_registeredClasses setObject:codedName forKey:cls];
 }
 
 + (void)setClassName:(NSString *)codedName forClass:(Class)cls
 {
 	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
-	[g_registeredClasses setObject:codedName forKey:cls];
+	if (codedName == nil)
+		[g_registeredClasses removeObjectForKey:cls];
+	else
+		[g_registeredClasses setObject:codedName forKey:cls];
 }
 
 - (NSString *)classNameForClass:(Class)cls

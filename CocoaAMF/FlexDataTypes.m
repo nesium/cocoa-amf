@@ -60,7 +60,8 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
+	return [NSString stringWithFormat:@"%@", source];
+	//return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
 }
 
 @end
@@ -317,6 +318,12 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[faultString release];
 	[rootCause release];
 	[super dealloc];
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08x> faultCode: %@, faultDetail: %@, faultString: %@", 
+		[self className], (long)self, faultCode, faultDetail, faultString];
 }
 
 @end

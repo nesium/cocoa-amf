@@ -34,6 +34,7 @@
 		// you may also try the following methods with an empty array as arguments
 		// - hello
 		// - returnArray
+		// - returnArrayCollection
 	}
 	return self;
 }
