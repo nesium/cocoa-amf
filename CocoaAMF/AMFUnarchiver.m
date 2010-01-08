@@ -450,8 +450,13 @@ static uint16_t g_options = 0;
 		return [NSString string];
 	}
 	[self _ensureLength:length];
-	return [[[NSString alloc] initWithData:[self decodeBytes:length] 
-		encoding:NSUTF8StringEncoding] autorelease];
+	NSData *stringBytes = [self decodeBytes:length];
+	NSString *result = [[NSString alloc] initWithData:stringBytes encoding:NSUTF8StringEncoding];
+	if (result == nil)
+	{
+		result = [[NSString alloc] initWithData:stringBytes encoding:NSISOLatin1StringEncoding];
+	}
+	return [result autorelease];
 }
 
 - (NSString *)decodeMultiByteString:(uint32_t)length encoding:(NSStringEncoding)encoding
@@ -580,7 +585,9 @@ static uint16_t g_options = 0;
 
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type
 {
-	//NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
+	#endif
 	id value = nil;
 	switch (type)
 	{
@@ -662,7 +669,9 @@ static uint16_t g_options = 0;
 		default:
 			[self _cannotDecodeType:"Unknown type"];
 	}
-	//NSLog(@"%@", value);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@", value);
+	#endif
 	return value;
 }
 
@@ -851,7 +860,9 @@ static uint16_t g_options = 0;
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
-	//NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
+	#endif
 	id value = nil;
 	switch (type)
 	{
@@ -912,7 +923,9 @@ static uint16_t g_options = 0;
 			[self _cannotDecodeType:"Unknown type"];
 			break;
 	}
-	//NSLog(@"%@", value);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@", value);
+	#endif
 	return value;
 }
 

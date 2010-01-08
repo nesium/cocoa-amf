@@ -1038,6 +1038,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INSTALL_PATH = /usr/local/bin;
+				OTHER_CFLAGS = "-DCAMFDEBUG";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,

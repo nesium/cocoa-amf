@@ -249,6 +249,9 @@
 		
 	STAssertTrue([self assertEncodedObject:str isEqualToContentsOfFile:@"string_1.amf3"], 
 		@"String data is not equal");
+	
+	STAssertTrue([self assertDataOfFile:@"string_2.amf3" isEqualTo:@"Hello World Åäö!"], 
+		@"Could not decode Latin1 string");
 }
 
 - (void)testArray
