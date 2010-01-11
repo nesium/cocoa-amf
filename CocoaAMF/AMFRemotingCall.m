@@ -91,8 +91,10 @@ static uint32_t g_responseCount = 1;
 
 	AMFActionMessage *message = [[AMFActionMessage alloc] init];
 	message.version = m_amfVersion;
-	[message addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", m_service, m_method] 
-		responseURI:[self _nextResponseURI] data:m_arguments];
+	NSString *targetURI = @"null";
+	if (m_service != nil && m_method != nil)
+		targetURI = [NSString stringWithFormat:@"%@.%@", m_service, m_method];
+	[message addBodyWithTargetURI:targetURI responseURI:[self _nextResponseURI] data:m_arguments];
 	if (m_amfHeaders != nil)
 		message.headers = [m_amfHeaders allValues];
 	
