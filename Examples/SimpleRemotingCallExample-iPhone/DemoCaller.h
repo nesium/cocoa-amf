@@ -29,5 +29,5 @@
 
 @protocol DemoCallerDelegate
 - (void)callerDidFinishLoading:(DemoCaller *)caller receivedObject:(NSObject *)object;
-- (void)caller:(DemoCaller *) didFailWithError:(NSError *)error;
+- (void)caller:(DemoCaller *)caller didFailWithError:(NSError *)error;
 @end
