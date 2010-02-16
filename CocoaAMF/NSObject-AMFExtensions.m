@@ -48,7 +48,7 @@
 	}
 	
 	NSString *selectorName = [methodNameComponents componentsJoinedByString:@":"];
-	if ([arguments count] > 0)
+	if ([arguments count] > 0 || argumentToPrepend != nil)
 		selectorName = [selectorName stringByAppendingString:@":"];
 	
 	SEL selector = NSSelectorFromString(selectorName);

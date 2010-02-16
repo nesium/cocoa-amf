@@ -213,7 +213,7 @@
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments
 {
 	AMFActionMessage *am = [[AMFActionMessage alloc] init];
-	am.version = 0;
+	am.version = kAMF0Version;
 	[am addBodyWithTargetURI:[NSString stringWithFormat:@"%@.%@", serviceName, methodName] 
 		responseURI:[NSString stringWithFormat:@"/%d", m_invocationCount] data:arguments];
 	[self _sendActionMessage:am];
@@ -296,8 +296,8 @@
 		if (service == nil)
 		{
 			// @TODO handle error
+			NSLog(@"No service registered with the name '%@'", serviceName);
 		}
-		
 		NSError *error = nil;
 		id result = [service invokeMethodWithName:methodName arguments:(NSArray *)body.data 
 			error:&error prependName:@"gateway" argument:self];
