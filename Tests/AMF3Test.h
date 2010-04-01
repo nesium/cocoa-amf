@@ -30,3 +30,8 @@
 	NSString *m_string;
 }
 @end
+
+@interface ExternalizableDataEncoder : NSObject
+{
+}
+@end

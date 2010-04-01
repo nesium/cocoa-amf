@@ -48,6 +48,7 @@
 @implementation AMFUnarchiver
 
 static NSMutableDictionary *g_registeredClasses = nil;
+static BOOL g_defaultClassesRegistered = NO;
 static uint16_t g_options = 0;
 @synthesize objectEncoding=m_objectEncoding, data=m_data;
 
@@ -56,18 +57,21 @@ static uint16_t g_options = 0;
 
 + (void)initialize
 {
-	[[self class] setClass:[FlexArrayCollection class] 
-		forClassName:[FlexArrayCollection AMFClassAlias]];
-	[[self class] setClass:[FlexObjectProxy class] 
-		forClassName:[FlexObjectProxy AMFClassAlias]];
-	[[self class] setClass:[FlexCommandMessage class] 
-		forClassName:[FlexCommandMessage AMFClassAlias]];
-	[[self class] setClass:[FlexAcknowledgeMessage class] 
-		forClassName:[FlexAcknowledgeMessage AMFClassAlias]];
-	[[self class] setClass:[FlexRemotingMessage class] 
-		forClassName:[FlexRemotingMessage AMFClassAlias]];
-	[[self class] setClass:[FlexErrorMessage class] 
-		forClassName:[FlexErrorMessage AMFClassAlias]];
+	if (!g_defaultClassesRegistered){
+		[[self class] setClass:[FlexArrayCollection class] 
+			forClassName:[FlexArrayCollection AMFClassAlias]];
+		[[self class] setClass:[FlexObjectProxy class] 
+			forClassName:[FlexObjectProxy AMFClassAlias]];
+		[[self class] setClass:[FlexCommandMessage class] 
+			forClassName:[FlexCommandMessage AMFClassAlias]];
+		[[self class] setClass:[FlexAcknowledgeMessage class] 
+			forClassName:[FlexAcknowledgeMessage AMFClassAlias]];
+		[[self class] setClass:[FlexRemotingMessage class] 
+			forClassName:[FlexRemotingMessage AMFClassAlias]];
+		[[self class] setClass:[FlexErrorMessage class] 
+			forClassName:[FlexErrorMessage AMFClassAlias]];
+		g_defaultClassesRegistered = YES;
+	}
 }
 
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
@@ -160,13 +164,19 @@ static uint16_t g_options = 0;
 
 - (void)setClass:(Class)cls forClassName:(NSString *)codedName
 {
-	[m_registeredClasses setObject:cls forKey:codedName];
+	if (cls == NULL)
+		[m_registeredClasses removeObjectForKey:codedName];
+	else
+		[m_registeredClasses setObject:cls forKey:codedName];
 }
 
 + (void)setClass:(Class)cls forClassName:(NSString *)codedName
 {
 	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
-	[g_registeredClasses setObject:cls forKey:codedName];
+	if (cls == NULL)
+		[g_registeredClasses removeObjectForKey:codedName];
+	else
+		[g_registeredClasses setObject:cls forKey:codedName];
 }
 
 + (void)setOptions:(uint16_t)options
@@ -440,8 +450,13 @@ static uint16_t g_options = 0;
 		return [NSString string];
 	}
 	[self _ensureLength:length];
-	return [[[NSString alloc] initWithData:[self decodeBytes:length] 
-		encoding:NSUTF8StringEncoding] autorelease];
+	NSData *stringBytes = [self decodeBytes:length];
+	NSString *result = [[NSString alloc] initWithData:stringBytes encoding:NSUTF8StringEncoding];
+	if (result == nil)
+	{
+		result = [[NSString alloc] initWithData:stringBytes encoding:NSISOLatin1StringEncoding];
+	}
+	return [result autorelease];
 }
 
 - (NSString *)decodeMultiByteString:(uint32_t)length encoding:(NSStringEncoding)encoding
@@ -570,7 +585,9 @@ static uint16_t g_options = 0;
 
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type
 {
-	//NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
+	#endif
 	id value = nil;
 	switch (type)
 	{
@@ -587,10 +604,16 @@ static uint16_t g_options = 0;
 			break;
 			
 		case kAMF0AVMPlusObjectType:
-			value = [AMFUnarchiver unarchiveObjectWithData:[m_data subdataWithRange:
-				(NSRange){m_position, [m_data length] - m_position}] encoding:kAMF3Version];
+		{
+			AMFUnarchiver *amf3Unarchiver = [[AMFUnarchiver alloc] 
+				initForReadingWithData:[m_data subdataWithRange:
+					(NSRange){m_position, [m_data length] - m_position}] 
+				encoding:kAMF3Version];
+			value = [amf3Unarchiver decodeObject];
+			m_position += [m_data length] - m_position - [amf3Unarchiver bytesAvailable];
+			[amf3Unarchiver release];
 			break;
-			
+		}
 		case kAMF0StrictArrayType:
 			value = [self _decodeArray];
 			break;
@@ -646,7 +669,9 @@ static uint16_t g_options = 0;
 		default:
 			[self _cannotDecodeType:"Unknown type"];
 	}
-	//NSLog(@"%@", value);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@", value);
+	#endif
 	return value;
 }
 
@@ -835,7 +860,9 @@ static uint16_t g_options = 0;
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
-	//NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
+	#endif
 	id value = nil;
 	switch (type)
 	{
@@ -896,7 +923,9 @@ static uint16_t g_options = 0;
 			[self _cannotDecodeType:"Unknown type"];
 			break;
 	}
-	//NSLog(@"%@", value);
+	#ifdef CAMFDEBUG
+	NSLog(@"%@", value);
+	#endif
 	return value;
 }
 

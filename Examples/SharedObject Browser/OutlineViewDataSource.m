@@ -83,6 +83,9 @@
 
 - (NSString *)valueForObject:(id)item
 {
+	if ([item isMemberOfClass:[AMFDebugDataNode class]])
+		return [self valueForObject:[(AMFDebugDataNode *)item data]];
+
 	if ([item isKindOfClass:[NSString class]])
 	{
 		return item;

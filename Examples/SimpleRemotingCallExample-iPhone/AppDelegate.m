@@ -59,7 +59,7 @@
 	[self _stopLoading];
 }
 
-- (void)caller:(DemoCaller *) didFailWithError:(NSError *)error
+- (void)caller:(DemoCaller *)caller didFailWithError:(NSError *)error
 {
 	[m_textView setText:[NSString stringWithFormat:@"%@", error]];
 	[self _stopLoading];	

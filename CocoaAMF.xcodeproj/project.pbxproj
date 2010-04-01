@@ -84,8 +84,6 @@
 		2C8F21CB0F900EC400D7FEF0 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2CA3CA2C0F8793B6007E68E0 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1879B40F76FC8200DF747D /* AMF.m */; };
 		2CB077B90EE0D2DC0059C799 /* OutlineViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9D960EA95C3300BFE5CC /* OutlineViewDataSource.m */; };
-		2CB078590EE0E3260059C799 /* BGHUDAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
-		2CB0785E0EE0E3410059C799 /* BGHUDAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */; };
 		2CB5B4970F16C89300C71818 /* AMF0Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C47403F0F16C2890062D1FD /* AMF0Test.m */; };
 		2CB5B4C70F16D24E00C71818 /* AbstractAMFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */; };
 		2CB5B4CC0F16D27000C71818 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C35A4700EA401CB000B2452 /* AMFActionMessage.m */; };
@@ -118,7 +116,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2CB0785E0EE0E3410059C799 /* BGHUDAppKit.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +213,6 @@
 		2C85010C0EDF43D10058EBE0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C8F20400F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-AMFExtensions.h"; sourceTree = "<group>"; };
 		2C8F20410F8F6D0B00D7FEF0 /* NSObject-AMFExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-AMFExtensions.m"; sourceTree = "<group>"; };
-		2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
 		2CB5B48C0F16C7D200C71818 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB5B4B00F16CF5D00C71818 /* AbstractAMFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractAMFTest.h; sourceTree = "<group>"; };
 		2CB5B4B10F16CF5D00C71818 /* AbstractAMFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractAMFTest.m; sourceTree = "<group>"; };
@@ -252,7 +248,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C8500FC0EDF43380058EBE0 /* Cocoa.framework in Frameworks */,
-				2CB078590EE0E3260059C799 /* BGHUDAppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,7 +561,6 @@
 			children = (
 				2C8500980EDF39690058EBE0 /* Classes */,
 				2C8500B30EDF41890058EBE0 /* Libraries */,
-				2CB078570EE0E3260059C799 /* Frameworks */,
 				2C8500990EDF39700058EBE0 /* Resources */,
 			);
 			name = AMFClient;
@@ -643,14 +637,6 @@
 				2C8500C60EDF41890058EBE0 /* CJSONSerializer.m */,
 			);
 			path = JSON;
-			sourceTree = "<group>";
-		};
-		2CB078570EE0E3260059C799 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2CB078580EE0E3260059C799 /* BGHUDAppKit.framework */,
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		2CF1040C0F4F662E00A99429 /* DuplexSocket */ = {
@@ -1052,6 +1038,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INSTALL_PATH = /usr/local/bin;
+				OTHER_CFLAGS = "-DCAMFDEBUG";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,

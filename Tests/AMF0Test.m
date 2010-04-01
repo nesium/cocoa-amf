@@ -142,7 +142,7 @@
 		@"Array data is not equal");
 
 	ASObject *dict = [ASObject asObjectWithDictionary:[NSDictionary 
-		dictionaryWithObjectsAndKeys:@"spam", @"a", @"eggs", @"b"]];
+		dictionaryWithObjectsAndKeys:@"spam", @"a", @"eggs", @"b", nil]];
 	arr = [NSArray arrayWithObject:[NSArray arrayWithObjects:dict, dict, nil]];
 	STAssertTrue([self assertDataOfFile:@"array_4.amf0" 
 		isEqualTo:arr], @"Arrays do not match");
@@ -162,18 +162,19 @@
 		@"Object data is not equal");
 }
 
-- (void)testDictionary
-{
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithInt:1], @"a", 
-		[NSNumber numberWithInt:2], @"b", 
-		[NSNumber numberWithInt:3], @"c", nil];
-	STAssertTrue([self assertDataOfFile:@"dictionary_0.amf0" 
-		isEqualTo:dict], @"Dictionaries do not match");
-		
-	STAssertTrue([self assertEncodedObject:dict isEqualToContentsOfFile:@"dictionary_0.amf0"], 
-		@"Dictionary data is not equal");
-}
+// this test is flawed, since dictionary entries are unordered
+//- (void)testDictionary
+//{
+//	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+//		[NSNumber numberWithInt:1], @"a", 
+//		[NSNumber numberWithInt:2], @"b", 
+//		[NSNumber numberWithInt:3], @"c", nil];
+//	STAssertTrue([self assertDataOfFile:@"dictionary_0.amf0" 
+//		isEqualTo:dict], @"Dictionaries do not match");
+//		
+//	STAssertTrue([self assertEncodedObject:dict isEqualToContentsOfFile:@"dictionary_0.amf0"], 
+//		@"Dictionary data is not equal");
+//}
 
 - (void)testTypedObject
 {

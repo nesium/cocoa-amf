@@ -34,6 +34,7 @@
 		// you may also try the following methods with an empty array as arguments
 		// - hello
 		// - returnArray
+		// - returnArrayCollection
 	}
 	return self;
 }
@@ -68,7 +69,6 @@ int main (int argc, const char * argv[])
 	[caller call];
 	
 	CFRunLoopRun();
-	[pool drain];
 	[pool release];
 	return 0;
 }

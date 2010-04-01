@@ -8,6 +8,10 @@
 
 #import "AMFDebugUnarchiver.h"
 
+@interface AMFUnarchiver (Protected)
+- (id)initForReadingWithData:(NSData *)data;
+@end
+
 @interface AMF0Unarchiver (Protected)
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type;
 @end
@@ -21,8 +25,14 @@
 
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
 {
+	[[self class] setClass:NULL forClassName:[FlexCommandMessage AMFClassAlias]];
+	[[self class] setClass:NULL forClassName:[FlexAcknowledgeMessage AMFClassAlias]];
+	[[self class] setClass:NULL forClassName:[FlexRemotingMessage AMFClassAlias]];
+	[[self class] setClass:NULL forClassName:[FlexErrorMessage AMFClassAlias]];
+
 	NSZone *temp = [self zone];  // Must not call methods after release
 	[self release];              // Placeholder no longer needed
+
 	return (encoding == kAMF0Version)
 		? [[AMF0DebugUnarchiver allocWithZone:temp] initForReadingWithData:data]
 		: [[AMF3DebugUnarchiver allocWithZone:temp] initForReadingWithData:data];

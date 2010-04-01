@@ -319,6 +319,12 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[super dealloc];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08x> faultCode: %@, faultDetail: %@, faultString: %@", 
+		[self className], (long)self, faultCode, faultDetail, faultString];
+}
+
 @end
 
 

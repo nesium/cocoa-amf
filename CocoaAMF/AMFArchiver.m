@@ -168,13 +168,19 @@ static uint16_t g_options = 0;
 
 - (void)setClassName:(NSString *)codedName forClass:(Class)cls
 {
-	[m_registeredClasses setObject:codedName forKey:cls];
+	if (codedName == nil)
+		[m_registeredClasses removeObjectForKey:cls];
+	else
+		[m_registeredClasses setObject:codedName forKey:cls];
 }
 
 + (void)setClassName:(NSString *)codedName forClass:(Class)cls
 {
 	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
-	[g_registeredClasses setObject:codedName forKey:cls];
+	if (codedName == nil)
+		[g_registeredClasses removeObjectForKey:cls];
+	else
+		[g_registeredClasses setObject:codedName forKey:cls];
 }
 
 - (NSString *)classNameForClass:(Class)cls
@@ -446,7 +452,10 @@ static uint16_t g_options = 0;
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
-		[self encodeDataObject:[(AMFPlainData *)value data]];
+		[self encodeUnsignedChar:kAMF3ByteArrayType];
+		NSData *d = [(AMFPlainData *)value data];
+		[self encodeUnsignedInt29:(([d length] << 1) | 1)];
+		[self encodeDataObject:d];
 	}
 	else
 	{
@@ -965,8 +974,6 @@ not allow externalizable objects (non-keyed archiving)!"];
 		return;
 	}
 	[m_objectTable addObject:value];
-	[self encodeUnsignedChar:kAMF3ByteArrayType];
-	[self encodeUnsignedInt29:(([value length] << 1) | 1)];
 	[self encodeDataObject:value];
 }
 
@@ -1005,16 +1012,15 @@ not allow externalizable objects (non-keyed archiving)!"];
 	traits.properties = (traits.dynamic ? nil : (id)[value.properties allKeys]);
 	[self _encodeTraits:traits];
 	
-	NSEnumerator *keyEnumerator = [value.properties keyEnumerator];
-	NSString *key;
-	
 	if (value.isExternalizable)
 	{
 		for (id obj in value.data)
+		{
 			[self encodeObject:obj];
+		}
 	}
 	
-	while (key = [keyEnumerator nextObject])
+	for (NSString *key in value.properties)
 	{
 		if (traits.dynamic)
 		{
@@ -1022,7 +1028,16 @@ not allow externalizable objects (non-keyed archiving)!"];
 				key = [key description];
 			[self _encodeString:key omitType:YES];
 		}
-		[self encodeObject:[value.properties objectForKey:key]];
+
+		NSObject *o = [value.properties objectForKey:key];
+		if ([o isKindOfClass:[NSData class]])
+		{
+			[self encodeObject:[AMFPlainData plainDataWithData:(NSData *)o]];
+		}
+		else
+		{
+			[self encodeObject:o];
+		}
 	}
 	if (traits.dynamic)
 	{
