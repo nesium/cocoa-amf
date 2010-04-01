@@ -79,8 +79,11 @@
 	if (![m_socket connectToHost:server onPort:port error:error])
 		return NO;
 	
+	NSData *headerData = [@"BIN-INIT\0" dataUsingEncoding:NSUTF8StringEncoding];
+	[m_socket writeData:headerData withTimeout:-1 tag:0];
 	m_mode = kAMFDuplexGatewayModeClient;
-	AMFRemoteGateway *gateway = [[AMFRemoteGateway alloc] initWithLocalGateway:self socket:m_socket];
+	AMFRemoteGateway *gateway = [[AMFRemoteGateway alloc] initWithLocalGateway:self socket:m_socket 
+		type:kAMFRemoteGatewayTypeOutgoing];
 	[m_remoteGateways addObject:gateway];
 	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidConnect:)])
 		objc_msgSend(m_delegate, @selector(gateway:remoteGatewayDidConnect:), self, gateway);
@@ -140,7 +143,7 @@
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket
 {
 	AMFRemoteGateway *remoteGateway = [[m_remoteGatewayClass alloc] initWithLocalGateway:self 
-		socket:newSocket];
+		socket:newSocket type:kAMFRemoteGatewayTypeIncoming];
 	[m_remoteGateways addObject:remoteGateway];
 	if ([m_delegate respondsToSelector:@selector(gateway:remoteGatewayDidConnect:)])
 	{
@@ -183,11 +186,14 @@
 	return self;
 }
 
-- (id)initWithLocalGateway:(AMFDuplexGateway *)localGateway socket:(AsyncSocket *)socket;
+- (id)initWithLocalGateway:(AMFDuplexGateway *)localGateway socket:(AsyncSocket *)socket 
+	type:(AMFRemoteGatewayType)gatewayType
 {
 	if (self = [self init])
 	{
 		m_localGateway = localGateway;
+		m_gatewayType = gatewayType;
+		m_binaryMode = m_gatewayType != kAMFRemoteGatewayTypeIncoming;
 		m_socket = [socket retain];
 		[m_socket setDelegate:self];
 		[self _continueReading];
@@ -365,6 +371,7 @@
 		[data getBytes:&ch3 range:(NSRange){2, 1}];
 		[data getBytes:&ch4 range:(NSRange){3, 1}];
 		uint32_t length = (ch1 << 24) + (ch2 << 16) + (ch3 << 8) + ch4;
+		NSLog(@"next message length: %d", length);
 		[sock readDataToLength:length withTimeout:-1 tag:kReadDataTag];
 	}
 	else if (tag == kReadDataTag)

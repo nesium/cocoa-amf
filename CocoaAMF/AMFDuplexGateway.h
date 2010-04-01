@@ -23,6 +23,11 @@ typedef enum _AMFDuplexGatewayMode
 	kAMFDuplexGatewayModeClient
 } AMFDuplexGatewayMode;
 
+typedef enum _AMFRemoteGatewayType{
+	kAMFRemoteGatewayTypeIncoming, 
+	kAMFRemoteGatewayTypeOutgoing
+} AMFRemoteGatewayType;
+
 
 @interface AMFDuplexGateway : NSObject
 {
@@ -67,11 +72,13 @@ typedef enum _AMFDuplexGatewayMode
 	NSMutableSet *m_queuedInvocations;
 	NSMutableSet *m_pendingInvocations;
 	uint32_t m_invocationCount;
+	AMFRemoteGatewayType m_gatewayType;
 	BOOL m_binaryMode;
 }
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, readonly) AMFDuplexGateway *localGateway;
-- (id)initWithLocalGateway:(AMFDuplexGateway *)localGateway socket:(AsyncSocket *)socket;
+- (id)initWithLocalGateway:(AMFDuplexGateway *)localGateway socket:(AsyncSocket *)socket 
+	type:(AMFRemoteGatewayType)gatewayType;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
 	methodName:(NSString *)methodName argumentsArray:(NSArray *)arguments;
 - (AMFInvocationResult *)invokeRemoteService:(NSString *)serviceName 
