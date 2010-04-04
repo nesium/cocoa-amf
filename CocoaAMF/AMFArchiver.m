@@ -377,11 +377,11 @@ static uint16_t g_options = 0;
 		}
 		[self _encodeDate:(NSDate *)value];
 	}
-	else if ([value isKindOfClass:[NSNull class]])
+	else if ([value isKindOfClass:[NSNull class]] || value == nil)
 	{
 		if (m_currentObjectToSerialize != nil)
 		{
-			[m_currentObjectToSerialize addObject:value];
+			[m_currentObjectToSerialize addObject:[NSNull null]];
 			[self _ensureIntegrityOfSerializedObject];
 			return;
 		}
@@ -454,6 +454,12 @@ static uint16_t g_options = 0;
 		}
 		[self encodeUnsignedChar:kAMF3ByteArrayType];
 		NSData *d = [(AMFPlainData *)value data];
+		[self encodeUnsignedInt29:(([d length] << 1) | 1)];
+		[self encodeDataObject:d];
+	}
+	else if ([value isKindOfClass:[NSData class]] && m_currentObjectToSerialize == nil){
+		[self encodeUnsignedChar:kAMF3ByteArrayType];
+		NSData *d = (NSData *)value;
 		[self encodeUnsignedInt29:(([d length] << 1) | 1)];
 		[self encodeDataObject:d];
 	}

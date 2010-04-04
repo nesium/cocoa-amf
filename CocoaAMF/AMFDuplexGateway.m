@@ -307,6 +307,7 @@
 		NSError *error = nil;
 		id result = [service invokeMethodWithName:methodName arguments:(NSArray *)body.data 
 			error:&error prependName:@"gateway" argument:self];
+		NSLog(@"result: %@", result);
 			
 		if (error != nil)
 		{

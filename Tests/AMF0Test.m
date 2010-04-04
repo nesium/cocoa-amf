@@ -101,6 +101,9 @@
 		
 	STAssertTrue([self assertEncodedObject:[NSNull null] isEqualToContentsOfFile:@"null_0.amf0"], 
 		@"Null data is not equal");
+		
+	STAssertTrue([self assertEncodedObject:nil isEqualToContentsOfFile:@"null_0.amf0"], 
+		@"Nil data is not equal");
 }
 
 - (void)testUndefined

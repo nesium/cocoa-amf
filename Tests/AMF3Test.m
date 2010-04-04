@@ -232,6 +232,9 @@
 		
 	STAssertTrue([self assertEncodedObject:[NSNull null] isEqualToContentsOfFile:@"null_0.amf3"], 
 		@"Null data is not equal");
+		
+	STAssertTrue([self assertEncodedObject:nil isEqualToContentsOfFile:@"null_0.amf3"], 
+		@"Nil data is not equal");
 }
 
 - (void)testString
@@ -369,4 +372,17 @@
 	[obj release];
 }
 
+- (void)testByteArray{
+	NSMutableData *data = [NSMutableData data];
+	uint8_t byte1 = 0x0;
+	uint8_t byte2 = 0x1;
+	uint8_t byte3 = 0x2;
+	[data appendBytes:&byte1 length:sizeof(uint8_t)];
+	[data appendBytes:&byte2 length:sizeof(uint8_t)];
+	[data appendBytes:&byte3 length:sizeof(uint8_t)];
+	STAssertTrue([self assertDataOfFile:@"bytearray_0.amf3" isEqualTo:data], 
+		@"Could not deserialize ByteArray properly");
+	STAssertTrue([self assertEncodedObject:data isEqualToContentsOfFile:@"bytearray_0.amf3"], 
+		@"Could not serialize ByteArray properly");
+}
 @end
