@@ -372,7 +372,6 @@
 		[data getBytes:&ch3 range:(NSRange){2, 1}];
 		[data getBytes:&ch4 range:(NSRange){3, 1}];
 		uint32_t length = (ch1 << 24) + (ch2 << 16) + (ch3 << 8) + ch4;
-		NSLog(@"next message length: %d", length);
 		[sock readDataToLength:length withTimeout:-1 tag:kReadDataTag];
 	}
 	else if (tag == kReadDataTag)
