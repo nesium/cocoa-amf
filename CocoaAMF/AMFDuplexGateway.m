@@ -63,11 +63,9 @@
 
 	if (![m_socket acceptOnPort:port error:error])
 	{
-		NSLog(@"Error starting server: %@", error);
 		return NO;
 	}
 	m_mode = kAMFDuplexGatewayModeServer;
-	NSLog(@"Server started on port %d", [m_socket localPort]);
 	return YES;
 }
 
