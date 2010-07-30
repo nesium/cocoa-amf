@@ -22,7 +22,7 @@
 - (NSObject *)_decodeTypedObject;
 - (NSObject *)_decodeASObject:(NSString *)className;
 - (NSString *)_decodeLongString;
-- (NSString *)_decodeXML;
+- (NSObject *)_decodeXML;
 - (NSDate *)_decodeDate;
 - (NSDictionary *)_decodeECMAArray;
 - (NSObject *)_decodeReference;
@@ -32,7 +32,7 @@
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type;
 - (NSObject *)_decodeASObject;
 - (NSObject *)_decodeArray;
-- (NSString *)_decodeXML;
+- (NSObject *)_decodeXML;
 - (NSData *)_decodeByteArray;
 - (NSDate *)_decodeDate;
 - (AMF3TraitsInfo *)_decodeTraits:(uint32_t)infoBits;
@@ -733,10 +733,21 @@ static uint16_t g_options = 0;
 	return [self decodeUTFBytes:length];
 }
 
-- (NSString *)_decodeXML
+- (NSObject *)_decodeXML
 {
-	//@FIXME
-	return [self _decodeLongString];
+	NSString *xmlString = [self _decodeLongString];
+	#if TARGET_OS_IPHONE
+	return xmlString;
+	#else
+	NSError *error = nil;
+	NSXMLDocument *doc = [[[NSXMLDocument alloc] initWithXMLString:xmlString options:0 
+		error:&error] autorelease];
+	if (!doc){
+		NSLog(@"Error parsing XML. %@", error);
+		return xmlString;
+	}
+	return doc;
+	#endif
 }
 
 - (NSDate *)_decodeDate
@@ -1060,10 +1071,21 @@ static uint16_t g_options = 0;
 	return info;
 }
 
-- (NSString *)_decodeXML
+- (NSObject *)_decodeXML
 {
-	// @FIXME
-	return [self decodeUTF];
+	NSString *xmlString = [self decodeUTF];
+	#if TARGET_OS_IPHONE
+	return xmlString;
+	#else
+	NSError *error = nil;
+	NSXMLDocument *doc = [[[NSXMLDocument alloc] initWithXMLString:xmlString options:0 
+		error:&error] autorelease];
+	if (!doc){
+		NSLog(@"Error parsing XML. %@", error);
+		return xmlString;
+	}
+	return doc;
+	#endif
 }
 
 - (NSData *)_decodeByteArray

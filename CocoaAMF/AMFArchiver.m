@@ -465,6 +465,12 @@ static uint16_t g_options = 0;
 	}
 	else
 	{
+		if (m_currentObjectToSerialize != nil)
+		{
+			[m_currentObjectToSerialize addObject:value];
+			[self _ensureIntegrityOfSerializedObject];
+			return;
+		}
 		[self _encodeCustomObject:value];
 	}
 }

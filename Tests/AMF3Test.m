@@ -75,6 +75,52 @@
 @end
 
 
+@implementation AnotherExternalizableObject
+@synthesize child, name;
+
+- (void)dealloc{
+	[child release];
+	[name release];
+	[super dealloc];
+}
+
+- (NSString *)description{
+	return [NSString stringWithFormat:@"<%@ = 0x%08x> name: %@, child:\n-> %@", [self className], 
+		(long)self, name, child];
+}
+
+- (id)initWithCoder:(NSCoder *)aCoder{
+	if (self = [super init]){
+		child = [[aCoder decodeObject] retain];
+		name = [[aCoder decodeObject] retain];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aDecoder{
+	[aDecoder encodeObject:child];
+	[aDecoder encodeObject:name];
+}
+
+- (BOOL)isEqual:(id)anObject{
+	if (![anObject isMemberOfClass:[self class]]){
+		return NO;
+	}
+	AnotherExternalizableObject *other = (AnotherExternalizableObject *)anObject;
+	return ((name == nil && other.name == nil) || 
+				(name == nil && (id)other.name == [NSNull null]) || 
+				((id)name == [NSNull null] && other.name == nil) || 
+				((id)name == [NSNull null] && (id)other.name == [NSNull null]) || 
+				[name isEqualToString:other.name]) && 
+			((child == nil && other.child == nil) || 
+				(child == nil && (id)other.child == [NSNull null]) || 
+				((id)child == [NSNull null] && other.child == nil) || 
+				((id)child == [NSNull null] && (id)other.child == [NSNull null]) || 
+				[child isEqual:other.child]);
+}
+@end
+
+
 
 
 
@@ -370,6 +416,39 @@
 	STAssertTrue([self assertEncodedObject:obj isEqualToContentsOfFile:@"externalizabledata.amf3"], 
 		@"Could not serialize externalizable data properly");
 	[obj release];
+}
+
+- (void)testNestedExternalizable{
+	AnotherExternalizableObject *subChild = [[AnotherExternalizableObject alloc] init];
+	subChild.name = @"subChild";
+	AnotherExternalizableObject *child = [[AnotherExternalizableObject alloc] init];
+	child.name = @"Child";
+	child.child = subChild;
+	AnotherExternalizableObject *parent = [[AnotherExternalizableObject alloc] init];
+	parent.name = @"Parent";
+	parent.child = child;
+	
+	NSMutableData *data = [[NSMutableData alloc] init];
+	AMFArchiver *archiver = [[AMFArchiver alloc] initForWritingWithMutableData:data 
+		encoding:kAMF3Version];
+	[archiver setClassName:@"AnotherExternalizableObject" 
+		forClass:[AnotherExternalizableObject class]];
+	[archiver encodeRootObject:parent];
+	[archiver release];
+	
+	AMFUnarchiver *unarchiver = [[AMFUnarchiver alloc] initForReadingWithData:data 
+		encoding:kAMF3Version];
+	[unarchiver setClass:[AnotherExternalizableObject class] 
+		forClassName:@"AnotherExternalizableObject"];
+	AnotherExternalizableObject *decodedParent = 
+		(AnotherExternalizableObject *)[unarchiver decodeObject];
+	[unarchiver release];
+	[data release];
+		
+	STAssertTrue([parent isEqual:decodedParent], @"Original & decoded objects should be equal");
+	[subChild release];
+	[child release];
+	[parent release];
 }
 
 - (void)testByteArray{
