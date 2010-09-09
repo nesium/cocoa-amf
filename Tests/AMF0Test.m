@@ -203,7 +203,7 @@
 	STAssertTrue([spam isEqual:result], @"Registered typed object test failed.");
 	
 	AMFArchiver *archiver = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
-		encoding:kAMF0Version];
+		encoding:kAMF0Encoding];
 	[archiver setClassName:@"org.pyamf.spam" forClass:[Spam class]];
 	[archiver encodeRootObject:spam];
 	NSData *data = [NSData dataWithContentsOfFile:[self fullPathForTestFile:@"typedobject_0.amf0" 
@@ -228,7 +228,7 @@
 {
 	FlexArrayCollection *obj = [[FlexArrayCollection alloc] initWithSource:
 		[NSArray arrayWithObjects:@"a", @"b", @"c", nil]];
-	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF0Version], 
+	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF0Encoding], 
 		@"Encoding externalizable object did not throw");
 }
 

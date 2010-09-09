@@ -74,11 +74,11 @@ static uint16_t g_options = 0;
 	}
 }
 
-- (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
+- (id)initForReadingWithData:(NSData *)data encoding:(AMFEncoding)encoding
 {
 	NSZone *temp = [self zone];  // Must not call methods after release
 	[self release];              // Placeholder no longer needed
-	return (encoding == kAMF0Version)
+	return (encoding == kAMF0Encoding)
 		? [[AMF0Unarchiver allocWithZone:temp] initForReadingWithData:data]
 		: [[AMF3Unarchiver allocWithZone:temp] initForReadingWithData:data];
 }
@@ -97,7 +97,7 @@ static uint16_t g_options = 0;
 	return self;
 }
 
-+ (id)unarchiveObjectWithData:(NSData *)data encoding:(AMFVersion)encoding
++ (id)unarchiveObjectWithData:(NSData *)data encoding:(AMFEncoding)encoding
 {
 	if (data == nil)
 	{
@@ -109,7 +109,7 @@ static uint16_t g_options = 0;
 	return [object autorelease];
 }
 
-+ (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFVersion)encoding
++ (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFEncoding)encoding
 {
 	NSData *data = [NSData dataWithContentsOfFile:path];
 	return [[self class] unarchiveObjectWithData:data encoding:encoding];
@@ -557,7 +557,7 @@ static uint16_t g_options = 0;
 {
 	if (self = [super initForReadingWithData:data])
 	{
-		m_objectEncoding = kAMF0Version;
+		m_objectEncoding = kAMF0Encoding;
 	}
 	return self;
 }
@@ -585,9 +585,7 @@ static uint16_t g_options = 0;
 
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type
 {
-	#ifdef CAMFDEBUG
 	NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
-	#endif
 	id value = nil;
 	switch (type)
 	{
@@ -608,7 +606,7 @@ static uint16_t g_options = 0;
 			AMFUnarchiver *amf3Unarchiver = [[AMFUnarchiver alloc] 
 				initForReadingWithData:[m_data subdataWithRange:
 					(NSRange){m_position, [m_data length] - m_position}] 
-				encoding:kAMF3Version];
+				encoding:kAMF3Encoding];
 			value = [amf3Unarchiver decodeObject];
 			m_position += [m_data length] - m_position - [amf3Unarchiver bytesAvailable];
 			[amf3Unarchiver release];
@@ -669,9 +667,7 @@ static uint16_t g_options = 0;
 		default:
 			[self _cannotDecodeType:"Unknown type"];
 	}
-	#ifdef CAMFDEBUG
 	NSLog(@"%@", value);
-	#endif
 	return value;
 }
 
@@ -801,7 +797,7 @@ static uint16_t g_options = 0;
 	{
 		m_stringTable = [[NSMutableArray alloc] init];
 		m_traitsTable = [[NSMutableArray alloc] init];
-		m_objectEncoding = kAMF3Version;
+		m_objectEncoding = kAMF3Encoding;
 	}
 	return self;
 }
@@ -871,9 +867,7 @@ static uint16_t g_options = 0;
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
-	#ifdef CAMFDEBUG
 	NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
-	#endif
 	id value = nil;
 	switch (type)
 	{
@@ -934,9 +928,7 @@ static uint16_t g_options = 0;
 			[self _cannotDecodeType:"Unknown type"];
 			break;
 	}
-	#ifdef CAMFDEBUG
 	NSLog(@"%@", value);
-	#endif
 	return value;
 }
 

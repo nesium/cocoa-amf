@@ -16,12 +16,12 @@
 
 @interface AMFActionMessage : NSObject 
 {
-	AMFVersion m_version;
+	AMFEncoding m_version;
 	NSMutableArray *m_headers;
 	NSMutableArray *m_bodies;
 	BOOL m_useDebugUnarchiver;
 }
-@property (nonatomic, assign) AMFVersion version;
+@property (nonatomic, assign) AMFEncoding version;
 @property (nonatomic, retain) NSArray *headers;
 @property (nonatomic, retain) NSArray *bodies;
 

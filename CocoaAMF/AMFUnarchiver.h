@@ -22,21 +22,21 @@
 	NSData *m_data;
 	const uint8_t *m_bytes;
 	uint32_t m_position;
-	AMFVersion m_objectEncoding;
+	AMFEncoding m_objectEncoding;
 	NSMutableDictionary *m_registeredClasses;
 	NSMutableArray *m_objectTable;
 	ASObject *m_currentDeserializedObject;
 }
-@property (nonatomic, readonly) AMFVersion objectEncoding;
+@property (nonatomic, readonly) AMFEncoding objectEncoding;
 @property (nonatomic, readonly) NSData *data;
 
 //--------------------------------------------------------------------------------------------------
 //	Usual NSCoder methods
 //--------------------------------------------------------------------------------------------------
 
-- (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding;
-+ (id)unarchiveObjectWithData:(NSData *)data encoding:(AMFVersion)encoding;
-+ (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFVersion)encoding;
+- (id)initForReadingWithData:(NSData *)data encoding:(AMFEncoding)encoding;
++ (id)unarchiveObjectWithData:(NSData *)data encoding:(AMFEncoding)encoding;
++ (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFEncoding)encoding;
 
 - (BOOL)allowsKeyedCoding;
 - (void)finishDecoding;

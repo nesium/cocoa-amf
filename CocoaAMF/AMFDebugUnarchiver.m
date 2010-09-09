@@ -23,7 +23,7 @@
 
 @implementation AMFDebugUnarchiver
 
-- (id)initForReadingWithData:(NSData *)data encoding:(AMFVersion)encoding
+- (id)initForReadingWithData:(NSData *)data encoding:(AMFEncoding)encoding
 {
 	[[self class] setClass:NULL forClassName:[FlexCommandMessage AMFClassAlias]];
 	[[self class] setClass:NULL forClassName:[FlexAcknowledgeMessage AMFClassAlias]];
@@ -33,7 +33,7 @@
 	NSZone *temp = [self zone];  // Must not call methods after release
 	[self release];              // Placeholder no longer needed
 
-	return (encoding == kAMF0Version)
+	return (encoding == kAMF0Encoding)
 		? [[AMF0DebugUnarchiver allocWithZone:temp] initForReadingWithData:data]
 		: [[AMF3DebugUnarchiver allocWithZone:temp] initForReadingWithData:data];
 }
@@ -49,12 +49,12 @@
 	if (type == kAMF0AVMPlusObjectType)
 	{
 		return [AMFDebugUnarchiver unarchiveObjectWithData:[m_data subdataWithRange:
-			(NSRange){m_position, [m_data length] - m_position}] encoding:kAMF3Version];
+			(NSRange){m_position, [m_data length] - m_position}] encoding:kAMF3Encoding];
 	}
 	else
 	{
 		AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
-		node.version = kAMF0Version;
+		node.version = kAMF0Encoding;
 		node.type = type;
 		node.data = [super _decodeObjectWithType:type];
 		return node;
@@ -68,7 +68,7 @@
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type
 {
 	AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
-	node.version = kAMF3Version;
+	node.version = kAMF3Encoding;
 	node.type = type;
 	node.data = [super _decodeObjectWithType:type];
 	return node;
@@ -160,7 +160,7 @@
 	if (objectClassName != nil)
 		return objectClassName;
 	
-	return version == kAMF0Version 
+	return version == kAMF0Encoding 
 		? NSStringFromAMF0TypeForDisplay(type) 
 		: NSStringFromAMF3TypeForDisplay(type);
 }

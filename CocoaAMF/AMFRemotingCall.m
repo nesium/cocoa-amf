@@ -32,7 +32,7 @@ static uint32_t g_responseCount = 1;
 		m_connection = nil;
 		m_delegate = nil;
 		m_isLoading = NO;
-		m_amfVersion = kAMF3Version;
+		m_amfVersion = kAMF3Encoding;
 		m_error = nil;
 		m_amfHeaders = nil;
 		

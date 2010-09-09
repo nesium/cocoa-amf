@@ -13,8 +13,7 @@
 #import "FlexDataTypes.h"
 
 
-@interface AMFArchiver : NSCoder 
-{
+@interface AMFArchiver : NSCoder{
 	NSMutableData *m_data;
 	uint8_t *m_bytes;
 	uint32_t m_position;
@@ -30,9 +29,9 @@
 //	Usual NSCoder methods
 //--------------------------------------------------------------------------------------------------
 
-- (id)initForWritingWithMutableData:(NSMutableData *)data encoding:(AMFVersion)encoding;
-+ (NSData *)archivedDataWithRootObject:(id)rootObject encoding:(AMFVersion)encoding;
-+ (BOOL)archiveRootObject:(id)rootObject encoding:(AMFVersion)encoding toFile:(NSString *)path;
+- (id)initForWritingWithMutableData:(NSMutableData *)data encoding:(AMFEncoding)encoding;
++ (NSData *)archivedDataWithRootObject:(id)rootObject encoding:(AMFEncoding)encoding;
++ (BOOL)archiveRootObject:(id)rootObject encoding:(AMFEncoding)encoding toFile:(NSString *)path;
 
 - (BOOL)allowsKeyedCoding;
 - (NSData *)data;
@@ -76,15 +75,13 @@
 @end
 
 
-@interface AMF0Archiver : AMFArchiver
-{
+@interface AMF0Archiver : AMFArchiver{
 	AMFArchiver *m_avmPlusByteArray;
 }
 @end
 
 
-@interface AMF3Archiver : AMFArchiver
-{
+@interface AMF3Archiver : AMFArchiver{
 	NSMutableArray *m_stringTable;
 	NSMutableArray *m_traitsTable;
 }

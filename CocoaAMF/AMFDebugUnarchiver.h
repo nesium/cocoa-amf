@@ -29,14 +29,14 @@
 
 @interface AMFDebugDataNode : NSObject
 {
-	AMFVersion version;
+	AMFEncoding version;
 	int type;
 	NSObject *data;
 	NSString *name;
 	NSArray *children;
 	NSString *objectClassName;
 }
-@property (nonatomic, assign) AMFVersion version;
+@property (nonatomic, assign) AMFEncoding version;
 @property (nonatomic, assign) int type;
 @property (nonatomic, retain) NSObject *data;
 @property (nonatomic, retain) NSString *name;

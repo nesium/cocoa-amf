@@ -15,7 +15,7 @@
 
 - (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj
 {
-	AMFVersion version;
+	AMFEncoding version;
 	path = [self fullPathForTestFile:path version:&version];
 	id deserializedObj = [AMFUnarchiver unarchiveObjectWithFile:path encoding:version];
 	BOOL isEqual = (obj == nil) ? deserializedObj == nil : [deserializedObj isEqual:obj];
@@ -25,7 +25,7 @@
 
 - (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path
 {
-	AMFVersion version;
+	AMFEncoding version;
 	path = [self fullPathForTestFile:path version:&version];
 
 	NSData *data = [AMFArchiver archivedDataWithRootObject:obj encoding:version];
@@ -41,19 +41,19 @@
 
 - (AMFUnarchiver *)unarchiverForPath:(NSString *)path
 {
-	AMFVersion version;
+	AMFEncoding version;
 	path = [self fullPathForTestFile:path version:&version];
 	AMFUnarchiver *unarchiver = [[AMFUnarchiver alloc] 
 		initForReadingWithData:[NSData dataWithContentsOfFile:path] encoding:version];
 	return [unarchiver autorelease];
 }
 
-- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFVersion *)version
+- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFEncoding *)version
 {
 	if (version != nil)
 	{
 		*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
-			? kAMF0Version : kAMF3Version;
+			? kAMF0Encoding : kAMF3Encoding;
 	}
 	NSString *testDataPath = [[[[NSBundle bundleForClass:[self class]] bundlePath] 
 		stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[TEST_DATA_PATH 

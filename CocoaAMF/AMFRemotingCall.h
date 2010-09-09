@@ -25,7 +25,7 @@
 	NSString *m_service;
 	NSString *m_method;
 	NSObject *m_arguments;
-	AMFVersion m_amfVersion;
+	AMFEncoding m_amfVersion;
 	NSMutableData *m_receivedData;
 	BOOL m_isLoading;
 	NSError *m_error;
@@ -38,7 +38,7 @@
 @property (nonatomic, retain) NSString *method;
 @property (nonatomic, retain) NSObject *arguments;
 @property (nonatomic, assign) NSObject <AMFRemotingCallDelegate> *delegate;
-@property (nonatomic, assign) AMFVersion amfVersion; // AMF3 is used by default
+@property (nonatomic, assign) AMFEncoding amfVersion; // AMF3 is used by default
 
 + (AMFRemotingCall *)remotingCallWithURL:(NSURL *)url service:(NSString *)service 
 	method:(NSString *)method arguments:(NSObject *)arguments;

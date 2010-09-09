@@ -16,7 +16,7 @@
 {
 
 }
-- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFVersion *)version;
+- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFEncoding *)version;
 - (AMFUnarchiver *)unarchiverForPath:(NSString *)path;
 - (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj;
 - (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path;

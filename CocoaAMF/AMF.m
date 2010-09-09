@@ -8,10 +8,8 @@
 
 #import "AMF.h"
 
-NSString * NSStringFromAMF0Type(AMF0Type type)
-{
-	switch (type)
-	{
+NSString * NSStringFromAMF0Type(AMF0Type type){
+	switch (type){
 		case kAMF0NumberType:
 			return @"AMF0NumberType";
 		case kAMF0BooleanType:
@@ -52,10 +50,8 @@ NSString * NSStringFromAMF0Type(AMF0Type type)
 	return @"AMF0 Unknown type!";
 }
 
-NSString * NSStringFromAMF3Type(AMF3Type type)
-{
-	switch (type)
-	{
+NSString * NSStringFromAMF3Type(AMF3Type type){
+	switch (type){
 		case kAMF3UndefinedType:
 			return @"AMF3UndefinedType";
 		case kAMF3NullType:
@@ -86,10 +82,8 @@ NSString * NSStringFromAMF3Type(AMF3Type type)
 	return @"AMF3 Unknown type!";
 }
 
-NSString * NSStringFromAMF0TypeForDisplay(AMF0Type type)
-{
-	switch (type)
-	{
+NSString * NSStringFromAMF0TypeForDisplay(AMF0Type type){
+	switch (type){
 		case kAMF0NumberType:
 			return @"Number";
 		case kAMF0BooleanType:
@@ -130,10 +124,8 @@ NSString * NSStringFromAMF0TypeForDisplay(AMF0Type type)
 	return @"Unknown type";
 }
 
-NSString * NSStringFromAMF3TypeForDisplay(AMF3Type type)
-{
-	switch (type)
-	{
+NSString * NSStringFromAMF3TypeForDisplay(AMF3Type type){
+	switch (type){
 		case kAMF3UndefinedType:
 			return @"Undefined";
 		case kAMF3NullType:

@@ -344,7 +344,7 @@
 	STAssertTrue([spam isEqual:result], @"Registered typed object test failed.");
 	
 	AMFArchiver *archiver = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
-		encoding:kAMF3Version];
+		encoding:kAMF3Encoding];
 	[archiver setClassName:@"org.pyamf.spam" forClass:[Spam class]];
 	[archiver encodeRootObject:spam];
 	NSData *data = [NSData dataWithContentsOfFile:[self fullPathForTestFile:@"typedobject_0.amf3" 
@@ -395,7 +395,7 @@
 - (void)testKeyedNonKeyedIntegrity
 {
 	WrongSerializedCustomObject *obj = [[WrongSerializedCustomObject alloc] init];
-	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF3Version], 
+	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF3Encoding], 
 		@"Keyed/non-keyed archiving was mixed without an exception");
 	[obj release];
 }
@@ -430,14 +430,14 @@
 	
 	NSMutableData *data = [[NSMutableData alloc] init];
 	AMFArchiver *archiver = [[AMFArchiver alloc] initForWritingWithMutableData:data 
-		encoding:kAMF3Version];
+		encoding:kAMF3Encoding];
 	[archiver setClassName:@"AnotherExternalizableObject" 
 		forClass:[AnotherExternalizableObject class]];
 	[archiver encodeRootObject:parent];
 	[archiver release];
 	
 	AMFUnarchiver *unarchiver = [[AMFUnarchiver alloc] initForReadingWithData:data 
-		encoding:kAMF3Version];
+		encoding:kAMF3Encoding];
 	[unarchiver setClass:[AnotherExternalizableObject class] 
 		forClassName:@"AnotherExternalizableObject"];
 	AnotherExternalizableObject *decodedParent = 

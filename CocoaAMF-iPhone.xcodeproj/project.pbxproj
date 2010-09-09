@@ -10,25 +10,34 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		2C07931A0FAB983300100142 /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0793190FAB983300100142 /* AMFDebugUnarchiver.m */; };
-		2C0793260FAB985100100142 /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0793250FAB985100100142 /* AMF.m */; };
-		2C35552A0F785A03003A31C4 /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3555290F785A03003A31C4 /* FlexDataTypes.m */; };
-		2CE53EF10F1A69EC0000AD55 /* AsyncSocket Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */; };
-		2CE53EF20F1A69EC0000AD55 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */; };
-		2CE53EF30F1A69EC0000AD55 /* changes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EF00F1A69EC0000AD55 /* changes.txt */; };
 		2CE53EFE0F1A6A050000AD55 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */; };
 		2CE53EFF0F1A6A050000AD55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53EFB0F1A6A050000AD55 /* main.m */; };
 		2CE53F000F1A6A050000AD55 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CE53EFC0F1A6A050000AD55 /* MainWindow.xib */; };
-		2CE53F1F0F1A6AB40000AD55 /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */; };
-		2CE53F210F1A6AB40000AD55 /* AMFGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F160F1A6AB40000AD55 /* AMFGateway.m */; };
-		2CE53F220F1A6AB40000AD55 /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */; };
-		2CE53F230F1A6AB40000AD55 /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F1A0F1A6AB40000AD55 /* ASObject.m */; };
-		2CE53F340F1A6B550000AD55 /* NSObject-iPhoneExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */; };
 		2CE53F470F1A6C8E0000AD55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */; };
 		2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5403B0F1A76260000AD55 /* DemoCaller.m */; };
-		49A471490F52E60D008ADED3 /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A471460F52E60D008ADED3 /* AMFArchiver.m */; };
-		49A4714A0F52E60D008ADED3 /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A471470F52E60D008ADED3 /* AMFUnarchiver.m */; };
+		2CEB283E120381A400887DED /* AMF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0793250FAB985100100142 /* AMF.m */; };
+		2CEB283F120381A500887DED /* AMFActionMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */; };
+		2CEB2840120381A700887DED /* AMFArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A471460F52E60D008ADED3 /* AMFArchiver.m */; };
+		2CEB2841120381A800887DED /* AMFDebugUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0793190FAB983300100142 /* AMFDebugUnarchiver.m */; };
+		2CEB2842120381AB00887DED /* AMFRemotingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */; };
+		2CEB2843120381AC00887DED /* AMFUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A471470F52E60D008ADED3 /* AMFUnarchiver.m */; };
+		2CEB2844120381AD00887DED /* ASObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F1A0F1A6AB40000AD55 /* ASObject.m */; };
+		2CEB2845120381AF00887DED /* FlexDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3555290F785A03003A31C4 /* FlexDataTypes.m */; };
+		2CEB2846120381B100887DED /* NSObject-AMFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB280E120380E800887DED /* NSObject-AMFExtensions.m */; };
+		2CEB2847120381B200887DED /* NSObject-iPhoneExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */; };
+		2CEB28661203830200887DED /* libCocoaAMF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CEB28391203818500887DED /* libCocoaAMF.a */; };
+		2CEB28881203882200887DED /* AMFRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB28871203882200887DED /* AMFRequestQueue.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2CEB286A1203830D00887DED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CEB28381203818500887DED /* CocoaAMF (Device 4.0) */;
+			remoteInfo = "CocoaAMF (Device 4.0)";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -40,10 +49,6 @@
 		2C0793250FAB985100100142 /* AMF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF.m; sourceTree = "<group>"; };
 		2C3555280F785A03003A31C4 /* FlexDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexDataTypes.h; sourceTree = "<group>"; };
 		2C3555290F785A03003A31C4 /* FlexDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexDataTypes.m; sourceTree = "<group>"; };
-		2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "AsyncSocket Documentation.html"; sourceTree = "<group>"; };
-		2CE53EEE0F1A69EC0000AD55 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
-		2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
-		2CE53EF00F1A69EC0000AD55 /* changes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changes.txt; sourceTree = "<group>"; };
 		2CE53EF90F1A6A050000AD55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2CE53EFA0F1A6A050000AD55 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2CE53EFB0F1A6A050000AD55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -52,8 +57,6 @@
 		2CE53F0C0F1A6AB40000AD55 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
 		2CE53F110F1A6AB40000AD55 /* AMFActionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFActionMessage.h; sourceTree = "<group>"; };
 		2CE53F120F1A6AB40000AD55 /* AMFActionMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFActionMessage.m; sourceTree = "<group>"; };
-		2CE53F150F1A6AB40000AD55 /* AMFGateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFGateway.h; sourceTree = "<group>"; };
-		2CE53F160F1A6AB40000AD55 /* AMFGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFGateway.m; sourceTree = "<group>"; };
 		2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFRemotingCall.h; sourceTree = "<group>"; };
 		2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFRemotingCall.m; sourceTree = "<group>"; };
 		2CE53F190F1A6AB40000AD55 /* ASObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASObject.h; sourceTree = "<group>"; };
@@ -63,6 +66,11 @@
 		2CE53F460F1A6C8E0000AD55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2CE5403A0F1A76260000AD55 /* DemoCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCaller.h; sourceTree = "<group>"; };
 		2CE5403B0F1A76260000AD55 /* DemoCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoCaller.m; sourceTree = "<group>"; };
+		2CEB280D120380E800887DED /* NSObject-AMFExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject-AMFExtensions.h"; sourceTree = "<group>"; };
+		2CEB280E120380E800887DED /* NSObject-AMFExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-AMFExtensions.m"; sourceTree = "<group>"; };
+		2CEB28391203818500887DED /* libCocoaAMF.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaAMF.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CEB28861203882200887DED /* AMFRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFRequestQueue.h; sourceTree = "<group>"; };
+		2CEB28871203882200887DED /* AMFRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFRequestQueue.m; sourceTree = "<group>"; };
 		49A471450F52E60D008ADED3 /* AMFArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFArchiver.h; sourceTree = "<group>"; };
 		49A471460F52E60D008ADED3 /* AMFArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFArchiver.m; sourceTree = "<group>"; };
 		49A471470F52E60D008ADED3 /* AMFUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFUnarchiver.m; sourceTree = "<group>"; };
@@ -78,6 +86,14 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				2CE53F470F1A6C8E0000AD55 /* CFNetwork.framework in Frameworks */,
+				2CEB28661203830200887DED /* libCocoaAMF.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CEB28371203818500887DED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* CocoaAMFiPhone.app */,
+				2CEB28391203818500887DED /* libCocoaAMF.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,7 +114,6 @@
 			children = (
 				2CE53F0B0F1A6AB40000AD55 /* CocoaAMF */,
 				2CE53EF50F1A69F80000AD55 /* Examples */,
-				2CE53EEB0F1A69EC0000AD55 /* Libraries */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -147,15 +163,15 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
-		2C3555230F7859D9003A31C4 /* Connection Classes */ = {
+		2C3555230F7859D9003A31C4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				2CE53F150F1A6AB40000AD55 /* AMFGateway.h */,
-				2CE53F160F1A6AB40000AD55 /* AMFGateway.m */,
 				2CE53F170F1A6AB40000AD55 /* AMFRemotingCall.h */,
 				2CE53F180F1A6AB40000AD55 /* AMFRemotingCall.m */,
+				2CEB28861203882200887DED /* AMFRequestQueue.h */,
+				2CEB28871203882200887DED /* AMFRequestQueue.m */,
 			);
-			name = "Connection Classes";
+			name = Network;
 			sourceTree = "<group>";
 		};
 		2C3555240F7859EE003A31C4 /* Datatypes */ = {
@@ -172,29 +188,12 @@
 		2C35552B0F785A0E003A31C4 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				2CEB280D120380E800887DED /* NSObject-AMFExtensions.h */,
+				2CEB280E120380E800887DED /* NSObject-AMFExtensions.m */,
 				2CE53F320F1A6B550000AD55 /* NSObject-iPhoneExtensions.h */,
 				2CE53F330F1A6B550000AD55 /* NSObject-iPhoneExtensions.m */,
 			);
 			name = Categories;
-			sourceTree = "<group>";
-		};
-		2CE53EEB0F1A69EC0000AD55 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				2CE53EEC0F1A69EC0000AD55 /* CocoaAsyncSocket */,
-			);
-			path = Libraries;
-			sourceTree = "<group>";
-		};
-		2CE53EEC0F1A69EC0000AD55 /* CocoaAsyncSocket */ = {
-			isa = PBXGroup;
-			children = (
-				2CE53EED0F1A69EC0000AD55 /* AsyncSocket Documentation.html */,
-				2CE53EEE0F1A69EC0000AD55 /* AsyncSocket.h */,
-				2CE53EEF0F1A69EC0000AD55 /* AsyncSocket.m */,
-				2CE53EF00F1A69EC0000AD55 /* changes.txt */,
-			);
-			path = CocoaAsyncSocket;
 			sourceTree = "<group>";
 		};
 		2CE53EF50F1A69F80000AD55 /* Examples */ = {
@@ -224,7 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				2C3555220F7859C8003A31C4 /* Core */,
-				2C3555230F7859D9003A31C4 /* Connection Classes */,
+				2C3555230F7859D9003A31C4 /* Network */,
 				2C3555240F7859EE003A31C4 /* Datatypes */,
 				2C35552B0F785A0E003A31C4 /* Categories */,
 				2C0793170FAB982500100142 /* Debug */,
@@ -233,6 +232,16 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2CEB28351203818500887DED /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		1D6058900D05DD3D006BFB54 /* CocoaAMF-iPhone */ = {
@@ -246,11 +255,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				2CEB286B1203830D00887DED /* PBXTargetDependency */,
 			);
 			name = "CocoaAMF-iPhone";
 			productName = "CocoaAMF-iPhone";
 			productReference = 1D6058910D05DD3D006BFB54 /* CocoaAMFiPhone.app */;
 			productType = "com.apple.product-type.application";
+		};
+		2CEB28381203818500887DED /* CocoaAMF (Device 4.0) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CEB283D1203818A00887DED /* Build configuration list for PBXNativeTarget "CocoaAMF (Device 4.0)" */;
+			buildPhases = (
+				2CEB28351203818500887DED /* Headers */,
+				2CEB28361203818500887DED /* Sources */,
+				2CEB28371203818500887DED /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CocoaAMF (Device 4.0)";
+			productName = "CocoaAMF (Device 4.0)";
+			productReference = 2CEB28391203818500887DED /* libCocoaAMF.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -265,6 +292,7 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* CocoaAMF-iPhone */,
+				2CEB28381203818500887DED /* CocoaAMF (Device 4.0) */,
 			);
 		};
 /* End PBXProject section */
@@ -274,8 +302,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CE53EF10F1A69EC0000AD55 /* AsyncSocket Documentation.html in Resources */,
-				2CE53EF30F1A69EC0000AD55 /* changes.txt in Resources */,
 				2CE53F000F1A6A050000AD55 /* MainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,24 +313,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CE53EF20F1A69EC0000AD55 /* AsyncSocket.m in Sources */,
 				2CE53EFE0F1A6A050000AD55 /* AppDelegate.m in Sources */,
 				2CE53EFF0F1A6A050000AD55 /* main.m in Sources */,
-				2CE53F1F0F1A6AB40000AD55 /* AMFActionMessage.m in Sources */,
-				2CE53F210F1A6AB40000AD55 /* AMFGateway.m in Sources */,
-				2CE53F220F1A6AB40000AD55 /* AMFRemotingCall.m in Sources */,
-				2CE53F230F1A6AB40000AD55 /* ASObject.m in Sources */,
-				2CE53F340F1A6B550000AD55 /* NSObject-iPhoneExtensions.m in Sources */,
 				2CE5403C0F1A76260000AD55 /* DemoCaller.m in Sources */,
-				49A471490F52E60D008ADED3 /* AMFArchiver.m in Sources */,
-				49A4714A0F52E60D008ADED3 /* AMFUnarchiver.m in Sources */,
-				2C35552A0F785A03003A31C4 /* FlexDataTypes.m in Sources */,
-				2C07931A0FAB983300100142 /* AMFDebugUnarchiver.m in Sources */,
-				2C0793260FAB985100100142 /* AMF.m in Sources */,
+				2CEB28881203882200887DED /* AMFRequestQueue.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CEB28361203818500887DED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CEB283E120381A400887DED /* AMF.m in Sources */,
+				2CEB283F120381A500887DED /* AMFActionMessage.m in Sources */,
+				2CEB2840120381A700887DED /* AMFArchiver.m in Sources */,
+				2CEB2841120381A800887DED /* AMFDebugUnarchiver.m in Sources */,
+				2CEB2842120381AB00887DED /* AMFRemotingCall.m in Sources */,
+				2CEB2843120381AC00887DED /* AMFUnarchiver.m in Sources */,
+				2CEB2844120381AD00887DED /* ASObject.m in Sources */,
+				2CEB2845120381AF00887DED /* FlexDataTypes.m in Sources */,
+				2CEB2846120381B100887DED /* NSObject-AMFExtensions.m in Sources */,
+				2CEB2847120381B200887DED /* NSObject-iPhoneExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CEB286B1203830D00887DED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CEB28381203818500887DED /* CocoaAMF (Device 4.0) */;
+			targetProxy = 2CEB286A1203830D00887DED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -317,6 +358,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "Examples/SimpleRemotingCallExample-iPhone/Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = CocoaAMFiPhone;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "91C0DF3D-9849-40D4-A66C-A84C4378DD25";
 			};
@@ -329,7 +374,36 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "Examples/SimpleRemotingCallExample-iPhone/Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = CocoaAMFiPhone;
+			};
+			name = Release;
+		};
+		2CEB283A1203818500887DED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = CocoaAMF;
+			};
+			name = Debug;
+		};
+		2CEB283B1203818500887DED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = "CocoaAMF (Device 4.0)";
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -345,7 +419,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "91C0DF3D-9849-40D4-A66C-A84C4378DD25";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -359,7 +433,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "779C2665-738E-452C-8B5A-30583BAD5BE9";
-				SDKROOT = iphoneos2.2;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
 		};
@@ -371,6 +445,15 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CEB283D1203818A00887DED /* Build configuration list for PBXNativeTarget "CocoaAMF (Device 4.0)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CEB283A1203818500887DED /* Debug */,
+				2CEB283B1203818500887DED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

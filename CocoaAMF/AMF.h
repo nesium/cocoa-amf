@@ -9,14 +9,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum _AMFVersion
-{
-	kAMF0Version = 0x0,
-	kAMF3Version = 0x3
-} AMFVersion;
+typedef enum{
+	kAMF0Encoding = 0x0,
+	kAMF3Encoding = 0x3
+} AMFEncoding;
 
-typedef enum _AMF0Type
-{
+typedef enum{
 	kAMF0NumberType = 0x0,
 	kAMF0BooleanType = 0x1,
 	kAMF0StringType = 0x2,
@@ -37,8 +35,7 @@ typedef enum _AMF0Type
 	kAMF0AVMPlusObjectType = 0x11
 } AMF0Type;
 
-typedef enum _AMF3Type
-{
+typedef enum{
 	kAMF3UndefinedType = 0x0,
 	kAMF3NullType = 0x1,
 	kAMF3FalseType = 0x2,
@@ -54,14 +51,12 @@ typedef enum _AMF3Type
 	kAMF3ByteArrayType = 0xC
 } AMF3Type;
 
-enum
-{
+enum{
 	AMFUnarchiverUnpackArrayCollection = 0x1,
 	AMFUnarchiverUnpackObjectProxyOption = 0x2
 };
 
-enum
-{
+enum{
 	AMFArchiverPackArrayOption = 0x1 // converts an array to an ArrayCollection
 };
 
@@ -73,8 +68,7 @@ NSString * NSStringFromAMF3TypeForDisplay(AMF3Type type);
 #define kAMFCoreErrorDomain @"AMFCoreErrorDomain"
 #define kAMFGatewayErrorDomain @"AMFGatewayErrorDomain"
 
-typedef enum _AMFErrorCode
-{
+typedef enum{
 	kAMFErrorInvalidRequest = 1, 
 	kAMFErrorServiceNotFound = 2, 
 	kAMFErrorMethodNotFound = 3, 

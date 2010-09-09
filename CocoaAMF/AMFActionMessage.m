@@ -29,7 +29,7 @@
 	{
 		m_headers = [[NSMutableArray alloc] init];
 		m_bodies = [[NSMutableArray alloc] init];
-		m_version = kAMF3Version;
+		m_version = kAMF3Encoding;
 		m_useDebugUnarchiver = NO;
 	}
 	return self;
@@ -69,7 +69,7 @@
 - (NSData *)data
 {
 	AMFArchiver *ba = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
-		encoding:kAMF0Version];
+		encoding:kAMF0Encoding];
 	[ba encodeUnsignedShort:m_version];
 	[ba encodeUnsignedShort:[m_headers count]];
 	for (AMFMessageHeader *header in m_headers)
@@ -78,7 +78,7 @@
 		[ba encodeBool:header.mustUnderstand];
 		AMFArchiver *headerBa = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 			encoding:m_version];
-		if (m_version == kAMF3Version)
+		if (m_version == kAMF3Encoding)
 		{
 			[headerBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
@@ -94,7 +94,7 @@
 		body.responseURI != nil ? [ba encodeUTF:body.responseURI] : [ba encodeUTF:@"null"];
 		AMFArchiver *bodyBa = [[AMFArchiver alloc] initForWritingWithMutableData:[NSMutableData data] 
 			encoding:m_version];
-		if (m_version == kAMF3Version)
+		if (m_version == kAMF3Encoding)
 		{
 			[bodyBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
@@ -168,8 +168,8 @@
 - (void)_applyData:(NSData *)data
 {
 	AMFUnarchiver *ba = m_useDebugUnarchiver 
-		? [[AMFDebugUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version] 
-		: [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Version];
+		? [[AMFDebugUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Encoding] 
+		: [[AMFUnarchiver alloc] initForReadingWithData:data encoding:kAMF0Encoding];
 	m_version = [ba decodeUnsignedShort];
 	uint16_t numHeaders = [ba decodeUnsignedShort];
 	NSMutableArray *headers = [NSMutableArray arrayWithCapacity:numHeaders];
