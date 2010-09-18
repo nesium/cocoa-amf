@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ASObject : NSObject
-{
+@interface ASObject : NSObject{
 	NSString *m_type;
 	BOOL m_isExternalizable;
 	NSMutableDictionary *m_properties;
@@ -20,9 +19,7 @@
 @property (nonatomic, assign) BOOL isExternalizable;
 @property (nonatomic, retain) NSMutableDictionary *properties;
 @property (nonatomic, retain) NSMutableArray *data;
-
 + (ASObject *)asObjectWithDictionary:(NSDictionary *)dict;
 - (void)addObject:(id)obj;
 - (NSUInteger)count;
-
 @end

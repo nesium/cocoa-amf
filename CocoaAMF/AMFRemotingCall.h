@@ -18,8 +18,7 @@
 
 @protocol AMFRemotingCallDelegate;
 
-@interface AMFRemotingCall : NSObject 
-{
+@interface AMFRemotingCall : NSObject{
 	NSURLConnection *m_connection;
 	NSMutableURLRequest *m_request;
 	NSString *m_service;

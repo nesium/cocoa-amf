@@ -13,53 +13,43 @@
 
 @synthesize source;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.io.ArrayCollection";
 }
 
-- (id)initWithSource:(NSArray *)obj
-{
-	if (self = [super init])
-	{
+- (id)initWithSource:(NSArray *)obj{
+	if (self = [super init]){
 		self.source = obj;
 	}
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super init])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super init]){
 		self.source = [coder decodeObject];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[coder encodeObject:source];
 }
 
-- (BOOL)isEqual:(id)obj
-{
+- (BOOL)isEqual:(id)obj{
 	return [obj isMemberOfClass:[self class]] && 
 		[source isEqual:[obj source]];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[source release];
 	[super dealloc];
 }
 
-- (NSUInteger)count
-{
+- (NSUInteger)count{
 	return [source count];
 }
 
-- (NSString *)description
-{
+- (NSString *)description{
 	return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
 }
 
@@ -73,42 +63,34 @@
 
 @synthesize object;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.io.ObjectProxy";
 }
 
-- (id)initWithObject:(NSObject *)obj
-{
-	if (self = [super init])
-	{
+- (id)initWithObject:(NSObject *)obj{
+	if (self = [super init]){
 		self.object = obj;
 	}
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super init])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super init]){
 		self.object = [coder decodeObject];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[coder encodeObject:object];
 }
 
-- (BOOL)isEqual:(id)obj
-{
+- (BOOL)isEqual:(id)obj{
 	return [obj isMemberOfClass:[self class]] && 
 		[object isEqual:[obj object]];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[object release];
 	[super dealloc];
 }
@@ -122,15 +104,12 @@
 
 @synthesize body, clientId, destination, headers, messageId, timeToLive, timestamp;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.messages.AbstractMessage";
 }
 
-- (id)init
-{
-	if (self = [super init])
-	{
+- (id)init{
+	if (self = [super init]){
 		self.messageId = [NSObject uuid];
 		self.clientId = [NSObject uuid];
 		self.timestamp = [[NSDate date] timeIntervalSince1970];
@@ -138,10 +117,8 @@
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super init])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super init]){
 		self.body = [coder decodeObjectForKey:@"body"];
 		self.clientId = [coder decodeObjectForKey:@"clientId"];
 		self.destination = [coder decodeObjectForKey:@"destination"];
@@ -153,8 +130,7 @@
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[coder encodeObject:body forKey:@"body"];
 	[coder encodeObject:clientId forKey:@"clientId"];
 	[coder encodeObject:destination forKey:@"destination"];
@@ -164,15 +140,13 @@
 	[coder encodeDouble:(timestamp * 1000) forKey:@"timestamp"];
 }
 
-- (NSString *)description
-{
+- (NSString *)description{
 	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, messageId: %@ \
 timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
 	destination, messageId, timeToLive, timestamp, headers, body];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[body release];
 	[clientId release];
 	[destination release];
@@ -191,28 +165,23 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 @synthesize correlationId;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.messages.AsyncMessage";
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super initWithCoder:coder])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super initWithCoder:coder]){
 		self.correlationId = [coder decodeObjectForKey:@"correlationId"];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[super encodeWithCoder:coder];
 	[coder encodeObject:correlationId forKey:@"correlationId"];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[correlationId release];
 	[super dealloc];
 }
@@ -228,22 +197,18 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 @synthesize operation;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.messages.CommandMessage";
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super initWithCoder:coder])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super initWithCoder:coder]){
 		self.operation = [coder decodeIntForKey:@"operation"];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[super encodeWithCoder:coder];
 	[coder encodeInt:operation forKey:@"operation"];
 }
@@ -256,8 +221,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 @implementation FlexAcknowledgeMessage
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.messages.AcknowledgeMessage";
 }
 
@@ -271,13 +235,11 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 @synthesize extendedData, faultCode, faultDetail, faultString, rootCause;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.messages.ErrorMessage";
 }
 
-+ (FlexErrorMessage *)errorMessageWithError:(NSError *)error
-{
++ (FlexErrorMessage *)errorMessageWithError:(NSError *)error{
 	FlexErrorMessage *errorMsg = [[FlexErrorMessage alloc] init];
 	errorMsg.faultCode = [NSString stringWithFormat:@"%d", [error code]];
 	errorMsg.faultString = [error domain];
@@ -286,10 +248,8 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	return [errorMsg autorelease];
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super initWithCoder:coder])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super initWithCoder:coder]){
 		self.extendedData = [coder decodeObjectForKey:@"extendedData"];
 		self.faultCode = [coder decodeObjectForKey:@"faultCode"];
 		self.faultDetail = [coder decodeObjectForKey:@"faultDetail"];
@@ -299,8 +259,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[super encodeWithCoder:coder];
 	[coder encodeObject:extendedData forKey:@"extendedData"];
 	[coder encodeObject:faultCode forKey:@"faultCode"];
@@ -309,8 +268,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[coder encodeObject:rootCause forKey:@"rootCause"];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[extendedData release];
 	[faultCode release];
 	[faultDetail release];
@@ -319,8 +277,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[super dealloc];
 }
 
-- (NSString *)description
-{
+- (NSString *)description{
 	return [NSString stringWithFormat:@"<%@ = 0x%08x> faultCode: %@, faultDetail: %@, faultString: %@", 
 		[self className], (long)self, faultCode, faultDetail, faultString];
 }
@@ -335,30 +292,25 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 @synthesize operation, source;
 
-+ (NSString *)AMFClassAlias
-{
++ (NSString *)AMFClassAlias{
 	return @"flex.messaging.messages.RemotingMessage";
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super initWithCoder:coder])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super initWithCoder:coder]){
 		self.operation = [coder decodeObjectForKey:@"operation"];
 		self.source = [coder decodeObjectForKey:@"source"];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[super encodeWithCoder:coder];
 	[coder encodeObject:operation forKey:@"operation"];
 	[coder encodeObject:source forKey:@"source"];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[operation release];
 	[source release];
 	[super dealloc];

@@ -14,8 +14,7 @@
 
 @class AMFMessageHeader, AMFMessageBody;
 
-@interface AMFActionMessage : NSObject 
-{
+@interface AMFActionMessage : NSObject{
 	AMFEncoding m_version;
 	NSMutableArray *m_headers;
 	NSMutableArray *m_bodies;
@@ -40,8 +39,7 @@
 @end
 
 
-@interface AMFMessageHeader : NSObject 
-{
+@interface AMFMessageHeader : NSObject{
 	NSString *m_name;
 	BOOL m_mustUnderstand;
 	NSObject *m_data;
@@ -55,8 +53,7 @@
 @end
 
 
-@interface AMFMessageBody : NSObject 
-{
+@interface AMFMessageBody : NSObject{
 	NSString *m_targetURI;
 	NSString *m_responseURI;
 	NSObject *m_data;

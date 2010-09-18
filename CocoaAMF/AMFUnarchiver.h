@@ -17,8 +17,7 @@
 
 #define AMFInvalidArchiveOperationException @"AMFInvalidArchiveOperationException"
 
-@interface AMFUnarchiver : NSCoder 
-{
+@interface AMFUnarchiver : NSCoder{
 	NSData *m_data;
 	const uint8_t *m_bytes;
 	uint32_t m_position;
@@ -85,15 +84,13 @@
 
 
 
-@interface AMF0Unarchiver : AMFUnarchiver
-{
+@interface AMF0Unarchiver : AMFUnarchiver{
 }
 @end
 
 
 
-@interface AMF3Unarchiver : AMFUnarchiver
-{
+@interface AMF3Unarchiver : AMFUnarchiver{
 	NSMutableArray *m_stringTable;
 	NSMutableArray *m_traitsTable;
 }
@@ -101,8 +98,7 @@
 
 
 
-@interface AMF3TraitsInfo : NSObject 
-{
+@interface AMF3TraitsInfo : NSObject{
 	NSString *m_className;
 	BOOL m_dynamic;
 	BOOL m_externalizable;

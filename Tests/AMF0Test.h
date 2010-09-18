@@ -13,9 +13,6 @@
 #import "FlexDataTypes.h"
 
 
-@interface AMF0Test : AbstractAMFTest
-{
-
+@interface AMF0Test : AbstractAMFTest{
 }
-
 @end

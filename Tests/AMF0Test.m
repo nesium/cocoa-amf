@@ -10,8 +10,7 @@
 
 @implementation AMF0Test
 
-- (void)testNumber
-{
+- (void)testNumber{
 	NSNumber *num = [NSNumber numberWithInt:0];
 	STAssertTrue([self assertDataOfFile:@"number_0.amf0" 
 		isEqualTo:num], @"Numbers do not match");
@@ -55,8 +54,7 @@
 		@"Number data is not equal");
 }
 
-- (void)testBoolean
-{
+- (void)testBoolean{
 	STAssertTrue([self assertDataOfFile:@"boolean_0.amf0" 
 		isEqualTo:[NSNumber numberWithBool:YES]], @"Booleans do not match");
 		
@@ -70,8 +68,7 @@
 		isEqualToContentsOfFile:@"boolean_1.amf0"], @"Boolean data is not equal");
 }
 
-- (void)testString
-{
+- (void)testString{
 	NSString *str = @"";
 	STAssertTrue([self assertDataOfFile:@"string_0.amf0" 
 		isEqualTo:str], @"Strings do not match");
@@ -94,10 +91,9 @@
 		@"String data is not equal");
 }
 
-- (void)testNull
-{
+- (void)testNull{
 	STAssertTrue([self assertDataOfFile:@"null_0.amf0" 
-		isEqualTo:[NSNull null]], @"Could not read null value");
+		isEqualTo:nil], @"Could not read null value");
 		
 	STAssertTrue([self assertEncodedObject:[NSNull null] isEqualToContentsOfFile:@"null_0.amf0"], 
 		@"Null data is not equal");
@@ -106,14 +102,12 @@
 		@"Nil data is not equal");
 }
 
-- (void)testUndefined
-{
+- (void)testUndefined{
 	STAssertTrue([self assertDataOfFile:@"undefined_0.amf0" 
-		isEqualTo:[NSNull null]], @"Could not read undefined value");
+		isEqualTo:nil], @"Could not read undefined value");
 }
 
-- (void)testArray
-{
+- (void)testArray{
 	NSArray *arr = [NSArray array];
 	STAssertTrue([self assertDataOfFile:@"array_0.amf0" 
 		isEqualTo:arr], @"Arrays do not match");
@@ -154,8 +148,7 @@
 		@"Array data is not equal");
 }
 
-- (void)testObject
-{
+- (void)testObject{
 	ASObject *obj = [ASObject asObjectWithDictionary:
 			[NSDictionary dictionaryWithObject:@"a" forKey:@"a"]];
 	STAssertTrue([self assertDataOfFile:@"object_0.amf0" 
@@ -179,8 +172,7 @@
 //		@"Dictionary data is not equal");
 //}
 
-- (void)testTypedObject
-{
+- (void)testTypedObject{
 	ASObject *obj = [ASObject asObjectWithDictionary:
 		[NSDictionary dictionaryWithObject:@"hello" forKey:@"baz"]];
 	obj.type = @"org.pyamf.spam";
@@ -192,8 +184,7 @@
 		@"Typed object data is not equal");
 }
 
-- (void)testRegisteredTypedObject
-{
+- (void)testRegisteredTypedObject{
 	Spam *spam = [[Spam alloc] init];
 	spam.baz = @"hello";
 	
@@ -214,8 +205,7 @@
 	[spam release];
 }
 
-- (void)testForceAMF3
-{
+- (void)testForceAMF3{
 	ASObject *obj = [ASObject asObjectWithDictionary:
 		[NSDictionary dictionaryWithObject:@"y" forKey:@"x"]];
 	obj.type = @"spam.eggs";
@@ -224,8 +214,7 @@
 		isEqualTo:obj], @"forceAMF3 test failed");
 }
 
-- (void)testExternalizableObjectNotSupported
-{
+- (void)testExternalizableObjectNotSupported{
 	FlexArrayCollection *obj = [[FlexArrayCollection alloc] initWithSource:
 		[NSArray arrayWithObjects:@"a", @"b", @"c", nil]];
 	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF0Encoding], 

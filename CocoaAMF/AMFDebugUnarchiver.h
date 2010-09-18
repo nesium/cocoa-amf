@@ -12,23 +12,19 @@
 #import "FlexDataTypes.h"
 
 
-@interface AMFDebugUnarchiver : AMFUnarchiver
-{
+@interface AMFDebugUnarchiver : AMFUnarchiver{
 }
 @end
 
-@interface AMF0DebugUnarchiver : AMF0Unarchiver
-{
+@interface AMF0DebugUnarchiver : AMF0Unarchiver{
 }
 @end
 
-@interface AMF3DebugUnarchiver : AMF3Unarchiver
-{
+@interface AMF3DebugUnarchiver : AMF3Unarchiver{
 }
 @end
 
-@interface AMFDebugDataNode : NSObject
-{
+@interface AMFDebugDataNode : NSObject{
 	AMFEncoding version;
 	int type;
 	NSObject *data;
@@ -42,7 +38,6 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, readonly) NSArray *children;
 @property (nonatomic, retain) NSString *objectClassName;
-
 - (NSString *)AMFClassName;
 - (BOOL)hasChildren;
 - (NSUInteger)numChildren;

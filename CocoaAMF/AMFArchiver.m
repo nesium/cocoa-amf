@@ -347,10 +347,14 @@ static uint16_t g_options = 0;
 			!([m_currentObjectToSerialize.type isEqual:[FlexArrayCollection AMFClassAlias]] || 
 				([m_currentObjectToWrite isMemberOfClass:[ASObject class]] && 
 				[[(ASObject *)m_currentObjectToWrite type] isEqual:[FlexArrayCollection AMFClassAlias]]))){
-			// looks funny, but convices gcc that we really have a FlexArrayCollection here
-			[self _encodeCustomObject:[[(FlexArrayCollection *)[FlexArrayCollection alloc] 
-				initWithSource:(NSArray *)value] autorelease]];
-			return;
+			// the cast looks funny, but convices gcc that we really have a FlexArrayCollection here
+			value = [[(FlexArrayCollection *)[FlexArrayCollection alloc] 
+				initWithSource:(NSArray *)value] autorelease];
+			// if we're on write it out, otherwise just let it slip through
+			if (m_currentObjectToSerialize == nil){
+				[self _encodeCustomObject:value];
+				return;
+			}
 		}
 		
 		if (m_currentObjectToSerialize != nil){
@@ -853,7 +857,11 @@ not allow externalizable objects (non-keyed archiving)!"];
 
 - (void)_encodeNumber:(NSNumber *)value omitType:(BOOL)omitType{
 	if ([[value className] isEqualToString:@"NSCFBoolean"]){
-		[self encodeUnsignedChar:([value boolValue] ? kAMF3TrueType : kAMF3FalseType)];
+		if (omitType){
+			[self encodeUnsignedChar:([value boolValue] ? 1 : 0)];
+		}else{
+			[self encodeUnsignedChar:([value boolValue] ? kAMF3TrueType : kAMF3FalseType)];
+		}
 		return;
 	}
 	if (strcmp([value objCType], "f") == 0 || 

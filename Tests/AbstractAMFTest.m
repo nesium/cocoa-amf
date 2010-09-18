@@ -13,8 +13,7 @@
 
 @implementation AbstractAMFTest
 
-- (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj
-{
+- (BOOL)assertDataOfFile:(NSString *)path isEqualTo:(id)obj{
 	AMFEncoding version;
 	path = [self fullPathForTestFile:path version:&version];
 	id deserializedObj = [AMFUnarchiver unarchiveObjectWithFile:path encoding:version];
@@ -23,24 +22,21 @@
 	return isEqual;
 }
 
-- (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path
-{
+- (BOOL)assertEncodedObject:(id)obj isEqualToContentsOfFile:(NSString *)path{
 	AMFEncoding version;
 	path = [self fullPathForTestFile:path version:&version];
 
 	NSData *data = [AMFArchiver archivedDataWithRootObject:obj encoding:version];
 	BOOL isEqual = [[NSData dataWithContentsOfFile:path] isEqual:data];
 	
-	if (!isEqual)
-	{
+	if (!isEqual){
 		[data writeToFile:[[@"~/Desktop" stringByExpandingTildeInPath] stringByAppendingPathComponent:
 			[path lastPathComponent]] atomically:NO];
 	}
 	return isEqual;
 }
 
-- (AMFUnarchiver *)unarchiverForPath:(NSString *)path
-{
+- (AMFUnarchiver *)unarchiverForPath:(NSString *)path{
 	AMFEncoding version;
 	path = [self fullPathForTestFile:path version:&version];
 	AMFUnarchiver *unarchiver = [[AMFUnarchiver alloc] 
@@ -48,10 +44,8 @@
 	return [unarchiver autorelease];
 }
 
-- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFEncoding *)version
-{
-	if (version != nil)
-	{
+- (NSString *)fullPathForTestFile:(NSString *)file version:(AMFEncoding *)version{
+	if (version != nil){
 		*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
 			? kAMF0Encoding : kAMF3Encoding;
 	}
@@ -68,29 +62,24 @@
 @implementation Spam
 @synthesize baz;
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[baz release];
 	[super dealloc];
 }
 
-- (BOOL)isEqual:(id)obj
-{
+- (BOOL)isEqual:(id)obj{
 	if (![obj isMemberOfClass:[Spam class]]) return NO;
 	return [[(Spam *)obj baz] isEqual:baz];
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super init])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super init]){
 		self.baz = [coder decodeObjectForKey:@"baz"];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[coder encodeObject:baz forKey:@"baz"];
 }
 

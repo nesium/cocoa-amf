@@ -12,8 +12,7 @@
 #import "NSObject-iPhoneExtensions.h"
 #endif
 
-typedef enum _FlexCommandMessageOperationType
-{
+typedef enum _FlexCommandMessageOperationType{
 	kFlexCommandMessageSubscribeOperation = 0, 
 	kFlexCommandMessageUnsubscribeOperation = 1, 
 	kFlexCommandMessagePollOperation = 2, 
@@ -30,8 +29,7 @@ typedef enum _FlexCommandMessageOperationType
 } FlexCommandMessageOperationType;
 
 
-@interface FlexArrayCollection : NSObject <NSCoding>
-{
+@interface FlexArrayCollection : NSObject <NSCoding>{
 	NSArray *source;
 }
 @property (nonatomic, retain) NSArray *source;
@@ -41,8 +39,7 @@ typedef enum _FlexCommandMessageOperationType
 @end
 
 
-@interface FlexObjectProxy : NSObject <NSCoding>
-{
+@interface FlexObjectProxy : NSObject <NSCoding>{
 	NSObject *object;
 }
 @property (nonatomic, retain) NSObject *object;
@@ -51,8 +48,7 @@ typedef enum _FlexCommandMessageOperationType
 @end
 
 
-@interface FlexAbstractMessage : NSObject <NSCoding>
-{
+@interface FlexAbstractMessage : NSObject <NSCoding>{
 	NSObject *body;
 	NSString *clientId;
 	NSString *destination;
@@ -72,30 +68,26 @@ typedef enum _FlexCommandMessageOperationType
 @end
 
 
-@interface FlexAsyncMessage : FlexAbstractMessage
-{
+@interface FlexAsyncMessage : FlexAbstractMessage{
 	NSString *correlationId;
 }
 @property (nonatomic, retain) NSString *correlationId;
 @end
 
 
-@interface FlexCommandMessage : FlexAsyncMessage
-{
+@interface FlexCommandMessage : FlexAsyncMessage{
 	FlexCommandMessageOperationType operation;
 }
 @property (nonatomic, assign) FlexCommandMessageOperationType operation;
 @end
 
 
-@interface FlexAcknowledgeMessage : FlexAsyncMessage
-{
+@interface FlexAcknowledgeMessage : FlexAsyncMessage{
 }
 @end
 
 
-@interface FlexErrorMessage : FlexAcknowledgeMessage
-{
+@interface FlexErrorMessage : FlexAcknowledgeMessage{
 	NSObject *extendedData;
 	NSString *faultCode;
 	NSString *faultDetail;
@@ -111,8 +103,7 @@ typedef enum _FlexCommandMessageOperationType
 @end
 
 
-@interface FlexRemotingMessage : FlexAbstractMessage
-{
+@interface FlexRemotingMessage : FlexAbstractMessage{
 	NSString *operation;
 	NSString *source;
 }

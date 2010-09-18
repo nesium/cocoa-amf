@@ -16,10 +16,8 @@
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
-- (id)init
-{
-	if (self = [super init])
-	{
+- (id)init{
+	if (self = [super init]){
 		m_properties = nil;
 		m_data = nil;
 		m_type = nil;
@@ -28,8 +26,7 @@
 	return self;
 }
 
-+ (ASObject *)asObjectWithDictionary:(NSDictionary *)dict
-{
++ (ASObject *)asObjectWithDictionary:(NSDictionary *)dict{
 	ASObject *obj = [[[ASObject alloc] init] autorelease];
 	NSMutableDictionary *mutableCopy = [dict mutableCopy];
 	obj.properties = mutableCopy;
@@ -37,18 +34,15 @@
 	return obj;
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[m_type release];
 	[m_properties release];
 	[m_data release];
 	[super dealloc];
 }
 
-- (BOOL)isEqual:(id)obj
-{
-	if (![obj isKindOfClass:[ASObject class]])
-	{
+- (BOOL)isEqual:(id)obj{
+	if (![obj isKindOfClass:[ASObject class]]){
 		return NO;
 	}
 	ASObject *asObj = (ASObject *)obj;
@@ -64,35 +58,29 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (void)setValue:(id)value forKey:(NSString *)key
-{
+- (void)setValue:(id)value forKey:(NSString *)key{
 	if (m_properties == nil)
 		m_properties = [[NSMutableDictionary alloc] init];
 	[m_properties setValue:value forKey:key];
 }
 
-- (id)valueForKey:(NSString *)key
-{
+- (id)valueForKey:(NSString *)key{
 	return [m_properties valueForKey:key];
 }
 
-- (void)addObject:(id)obj
-{
-	if (m_data == nil)
-	{
+- (void)addObject:(id)obj{
+	if (m_data == nil){
 		m_data = [[NSMutableArray alloc] init];
 		m_isExternalizable = YES;
 	}
 	[m_data addObject:obj];
 }
 
-- (NSUInteger)count
-{
+- (NSUInteger)count{
 	return m_isExternalizable ? [m_data count] : [m_properties count];
 }
 
-- (NSString *)description
-{
+- (NSString *)description{
 	return [NSString stringWithFormat:@"<%@ = 0x%08X | type: %@>\n%@\ndata: %@", 
 		[self class], (long)self, m_type, m_properties, m_data];
 }

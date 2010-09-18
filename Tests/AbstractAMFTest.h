@@ -12,9 +12,7 @@
 #import "AMFArchiver.h"
 
 
-@interface AbstractAMFTest : SenTestCase 
-{
-
+@interface AbstractAMFTest : SenTestCase{
 }
 - (NSString *)fullPathForTestFile:(NSString *)file version:(AMFEncoding *)version;
 - (AMFUnarchiver *)unarchiverForPath:(NSString *)path;
@@ -23,8 +21,7 @@
 @end
 
 
-@interface Spam : NSObject <NSCoding>
-{
+@interface Spam : NSObject <NSCoding>{
 	NSString *baz;
 	NSString *x;
 }

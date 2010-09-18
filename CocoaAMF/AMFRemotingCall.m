@@ -24,10 +24,8 @@ static uint32_t g_responseCount = 1;
 #pragma mark -
 #pragma mark Initialization & Deallocation
 
-- (id)init
-{
-	if (self = [super init])
-	{
+- (id)init{
+	if (self = [super init]){
 		m_receivedData = nil;
 		m_connection = nil;
 		m_delegate = nil;
@@ -45,10 +43,8 @@ static uint32_t g_responseCount = 1;
 }
 
 - (id)initWithURL:(NSURL *)url service:(NSString *)service method:(NSString *)method 
-	arguments:(NSObject *)arguments
-{
-	if (self = [self init])
-	{
+	arguments:(NSObject *)arguments{
+	if (self = [self init]){
 		self.URL = url;
 		self.service = service;
 		self.method = method;
@@ -58,15 +54,13 @@ static uint32_t g_responseCount = 1;
 }
 
 + (AMFRemotingCall *)remotingCallWithURL:(NSURL *)url service:(NSString *)service 
-	method:(NSString *)method arguments:(NSObject *)arguments
-{
+	method:(NSString *)method arguments:(NSObject *)arguments{
 	AMFRemotingCall *remotingCall = [[AMFRemotingCall alloc] initWithURL:url service:service 
 		method:method arguments:arguments];
 	return [remotingCall autorelease];
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[m_connection release];
 	[m_request release];
 	[m_service release];
@@ -82,10 +76,8 @@ static uint32_t g_responseCount = 1;
 #pragma mark -
 #pragma mark Public methods
 
-- (void)start
-{
-	if (m_isLoading)
-	{
+- (void)start{
+	if (m_isLoading){
 		return;
 	}
 
@@ -108,34 +100,28 @@ static uint32_t g_responseCount = 1;
 	m_isLoading = YES;
 }
 
-- (void)setURL:(NSURL *)url
-{
+- (void)setURL:(NSURL *)url{
 	[m_request setURL:url];
 }
 
-- (NSURL *)URL
-{
+- (NSURL *)URL{
 	return [m_request URL];
 }
 
-- (void)addValue:(NSString *)value forHTTPHeaderField:(NSString *)field
-{
+- (void)addValue:(NSString *)value forHTTPHeaderField:(NSString *)field{
 	[m_request addValue:value forHTTPHeaderField:field];
 }
 
-- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field
-{
+- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field{
 	[m_request setValue:value forHTTPHeaderField:field];
 }
 
-- (NSString *)valueForHTTPHeaderField:(NSString *)field
-{
+- (NSString *)valueForHTTPHeaderField:(NSString *)field{
 	return [m_request valueForHTTPHeaderField:field];
 }
 
 - (void)setValue:(NSObject *)value forAMFHeaderField:(NSString *)field 
-	mustUnderstand:(BOOL)mustUnderstand
-{
+	mustUnderstand:(BOOL)mustUnderstand{
 	if (m_amfHeaders == nil)
 		m_amfHeaders = [[NSMutableDictionary alloc] init];
 	[m_amfHeaders setValue:[AMFMessageHeader messageHeaderWithName:field data:value 
@@ -147,13 +133,11 @@ static uint32_t g_responseCount = 1;
 #pragma mark -
 #pragma mark Private methods
 
-- (NSString *)_nextResponseURI
-{
+- (NSString *)_nextResponseURI{
 	return [NSString stringWithFormat:@"/%d", g_responseCount++];
 }
 
-- (void)_cleanup
-{
+- (void)_cleanup{
 	[m_connection release];
 	m_connection = nil;
 	[m_receivedData release];
@@ -167,18 +151,14 @@ static uint32_t g_responseCount = 1;
 #pragma mark -
 #pragma mark NSURLConnection Delegate methods
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{	
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{	
 	if ([[[(NSHTTPURLResponse *)response allHeaderFields] objectForKey:@"Content-Type"] 
-		rangeOfString:@"application/x-amf"].location == NSNotFound)
-	{
+		rangeOfString:@"application/x-amf"].location == NSNotFound){
 		m_error = [[NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFInvalidResponseErrorCode userInfo:[NSDictionary dictionaryWithObject:
 				[NSString stringWithFormat:@"The server returned no application/x-amf data at URL %@.", 
 					[[response URL] absoluteString]] forKey:NSLocalizedDescriptionKey]] retain];
-	}
-	else if ([(NSHTTPURLResponse *)response statusCode] != 200)
-	{
+	}else if ([(NSHTTPURLResponse *)response statusCode] != 200){
 		m_error = [[NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFServerErrorErrorCode userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 				[NSString stringWithFormat:@"The server returned status code %d at URL %@.", 
@@ -187,36 +167,28 @@ static uint32_t g_responseCount = 1;
 					[(NSHTTPURLResponse *)response statusCode]], kAMFServerStatusCodeKey, nil]] retain];
 	}
 	
-	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveResponse:)])
-	{
+	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveResponse:)]){
 		objc_msgSend(m_delegate, @selector(remotingCall:didReceiveResponse:), self, response);
 	}
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
 	[m_receivedData appendData:data];
-	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveData:)])
-	{
+	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveData:)]){
 		objc_msgSend(m_delegate, @selector(remotingCall:didReceiveData:), self, data);
 	}
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	if (!m_error && [m_receivedData length] == 0)
-	{
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+	if (!m_error && [m_receivedData length] == 0){
 		m_error = [[NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFInvalidResponseErrorCode userInfo:[NSDictionary dictionaryWithObject:
 				@"The server returned zero bytes of data" forKey:NSLocalizedDescriptionKey]] retain];
 	}
 	
-	if (m_error)
-	{
+	if (m_error){
 		objc_msgSend(m_delegate, @selector(remotingCall:didFailWithError:), self, m_error);
-	}
-	else
-	{
+	}else{
 		AMFActionMessage *message = [[AMFActionMessage alloc] initWithData:m_receivedData];
 		NSObject *data = [[message.bodies objectAtIndex:0] data];
 		objc_msgSend(m_delegate, @selector(remotingCallDidFinishLoading:receivedObject:), 
@@ -227,18 +199,15 @@ static uint32_t g_responseCount = 1;
 	m_isLoading = NO;
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
 	objc_msgSend(m_delegate, @selector(remotingCall:didFailWithError:), self, error);
 	[self _cleanup];
 	m_isLoading = NO;
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request 
-	redirectResponse:(NSURLResponse *)redirectResponse
-{
-	if ([m_delegate respondsToSelector:@selector(remotingCall:willSendRequest:redirectResponse:)])
-	{
+	redirectResponse:(NSURLResponse *)redirectResponse{
+	if ([m_delegate respondsToSelector:@selector(remotingCall:willSendRequest:redirectResponse:)]){
 		return (NSURLRequest *)objc_msgSend(m_delegate, 
 			@selector(remotingCall:willSendRequest:redirectResponse:), self, request, 
 			redirectResponse);

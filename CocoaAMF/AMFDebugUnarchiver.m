@@ -23,8 +23,7 @@
 
 @implementation AMFDebugUnarchiver
 
-- (id)initForReadingWithData:(NSData *)data encoding:(AMFEncoding)encoding
-{
+- (id)initForReadingWithData:(NSData *)data encoding:(AMFEncoding)encoding{
 	[[self class] setClass:NULL forClassName:[FlexCommandMessage AMFClassAlias]];
 	[[self class] setClass:NULL forClassName:[FlexAcknowledgeMessage AMFClassAlias]];
 	[[self class] setClass:NULL forClassName:[FlexRemotingMessage AMFClassAlias]];
@@ -44,15 +43,11 @@
 
 @implementation AMF0DebugUnarchiver
 
-- (NSObject *)_decodeObjectWithType:(AMF0Type)type
-{
-	if (type == kAMF0AVMPlusObjectType)
-	{
+- (NSObject *)_decodeObjectWithType:(AMF0Type)type{
+	if (type == kAMF0AVMPlusObjectType){
 		return [AMFDebugUnarchiver unarchiveObjectWithData:[m_data subdataWithRange:
 			(NSRange){m_position, [m_data length] - m_position}] encoding:kAMF3Encoding];
-	}
-	else
-	{
+	}else{
 		AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
 		node.version = kAMF0Encoding;
 		node.type = type;
@@ -65,8 +60,7 @@
 
 @implementation AMF3DebugUnarchiver
 
-- (NSObject *)_decodeObjectWithType:(AMF3Type)type
-{
+- (NSObject *)_decodeObjectWithType:(AMF3Type)type{
 	AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
 	node.version = kAMF3Encoding;
 	node.type = type;
@@ -83,58 +77,43 @@
 
 @synthesize version, type, data, children, name, objectClassName;
 
-- (id)init
-{
-	if (self = [super init])
-	{
+- (id)init{
+	if (self = [super init]){
 		children = nil;
 	}
 	return self;
 }
 
-- (void)setData:(NSObject *)theData
-{
+- (void)setData:(NSObject *)theData{
 	NSArray *newChildren = nil;
-	if ([theData isMemberOfClass:[ASObject class]])
-	{
+	if ([theData isMemberOfClass:[ASObject class]]){
 		self.objectClassName = [(ASObject *)theData type];
 		theData = [(ASObject *)theData properties];
-	}
-	else if ([theData isMemberOfClass:[FlexArrayCollection class]])
-	{
+	}else if ([theData isMemberOfClass:[FlexArrayCollection class]]){
 		self.objectClassName = @"ArrayCollection";
 		newChildren = [(AMFDebugDataNode *)[(FlexArrayCollection *)theData source] children];
 		theData = nil;
-	}
-	else if ([theData isMemberOfClass:[FlexObjectProxy class]])
-	{
+	}else if ([theData isMemberOfClass:[FlexObjectProxy class]]){
 		self.objectClassName = @"ObjectProxy";
 		newChildren = [(AMFDebugDataNode *)[(FlexObjectProxy *)theData object] children];
 		theData = nil;
 	}
 
-	if ([theData isKindOfClass:[NSArray class]])
-	{
+	if ([theData isKindOfClass:[NSArray class]]){
 		newChildren = [NSMutableArray array];
 		int index = 0;
-		for (AMFDebugDataNode *node in (NSArray *)theData)
-		{
+		for (AMFDebugDataNode *node in (NSArray *)theData){
 			node.name = [NSString stringWithFormat:@"%d", index++];
 			[(NSMutableArray *)newChildren addObject:node];
 		}
-	}	
-	else if ([theData isKindOfClass:[NSDictionary class]])
-	{
+	}else if ([theData isKindOfClass:[NSDictionary class]]){
 		newChildren = [NSMutableArray array];
-		for (NSString *key in (NSDictionary *)theData)
-		{
+		for (NSString *key in (NSDictionary *)theData){
 			AMFDebugDataNode *node = [(NSDictionary *)theData objectForKey:key];
 			node.name = key;
 			[(NSMutableArray *)newChildren addObject:node];
 		}
-	}
-	else if (theData != nil)
-	{
+	}else if (theData != nil){
 		[theData retain];
 		[data release];
 		data = theData;
@@ -145,18 +124,15 @@
 	children = [newChildren copy];
 }
 
-- (BOOL)hasChildren
-{
+- (BOOL)hasChildren{
 	return [children count] > 0;
 }
 
-- (NSUInteger)numChildren
-{
+- (NSUInteger)numChildren{
 	return [children count];
 }
 
-- (NSString *)AMFClassName
-{
+- (NSString *)AMFClassName{
 	if (objectClassName != nil)
 		return objectClassName;
 	
@@ -165,8 +141,7 @@
 		: NSStringFromAMF3TypeForDisplay(type);
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[children release];
 	[data release];
 	[name release];
@@ -174,8 +149,7 @@
 	[super dealloc];
 }
 
-- (NSString *)description
-{
+- (NSString *)description{
 	return [NSString stringWithFormat:@"<%@ = 0x%08x> version: %d type: %@ name: %@ data: %@, children: %@", 
 		[self className], (long)self, version, [self AMFClassName], name, data, children];
 }

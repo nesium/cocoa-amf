@@ -10,8 +10,7 @@
 
 @implementation WrongSerializedCustomObject
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[coder encodeObject:@"foo"];
 	[coder encodeObject:@"foo" forKey:@"bar"];
 }
@@ -20,41 +19,33 @@
 
 @implementation PlainStringEncoder
 
-- (id)init
-{
-	if (self = [super init])
-	{
+- (id)init{
+	if (self = [super init]){
 		m_string = [@"Hello World" retain];
 	}
 	return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	[m_string release];
 	[super dealloc];
 }
 
-- (BOOL)isEqual:(id)obj
-{
-	if (![obj isMemberOfClass:[self class]])
-	{
+- (BOOL)isEqual:(id)obj{
+	if (![obj isMemberOfClass:[self class]]){
 		return NO;
 	}
 	return [((PlainStringEncoder *)obj)->m_string isEqual:m_string];
 }
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-	if (self = [super init])
-	{
+- (id)initWithCoder:(NSCoder *)coder{
+	if (self = [super init]){
 		m_string = [[(AMFUnarchiver *)coder decodeUTFBytes:11] retain];
 	}
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[(AMFArchiver *)coder encodeUTFBytes:m_string];
 }
 @end
@@ -62,8 +53,7 @@
 
 @implementation ExternalizableDataEncoder
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder{
 	[coder encodeObject:@"a"];
 	NSMutableData *data = [NSMutableData data];
 	uint16_t i = 0xffff;
@@ -127,8 +117,7 @@
 
 @implementation AMF3Test
 
-- (void)testNumber
-{
+- (void)testNumber{
 	NSNumber *num = [NSNumber numberWithInt:0];
 	STAssertTrue([self assertDataOfFile:@"number_0.amf3" 
 		isEqualTo:num], @"Numbers do not match");
@@ -256,8 +245,7 @@
 		@"Number data is not equal");
 }
 
-- (void)testBoolean
-{
+- (void)testBoolean{
 	STAssertTrue([self assertDataOfFile:@"boolean_0.amf3" 
 		isEqualTo:[NSNumber numberWithBool:YES]], @"Booleans do not match");
 		
@@ -271,10 +259,9 @@
 		isEqualToContentsOfFile:@"boolean_1.amf3"], @"Boolean data is not equal");
 }
 
-- (void)testNull
-{
+- (void)testNull{
 	STAssertTrue([self assertDataOfFile:@"null_0.amf3" 
-		isEqualTo:[NSNull null]], @"Could not read null value");
+		isEqualTo:nil], @"Could not read null value");
 		
 	STAssertTrue([self assertEncodedObject:[NSNull null] isEqualToContentsOfFile:@"null_0.amf3"], 
 		@"Null data is not equal");
@@ -283,8 +270,7 @@
 		@"Nil data is not equal");
 }
 
-- (void)testString
-{
+- (void)testString{
 	NSString *str = @"hello";
 	STAssertTrue([self assertDataOfFile:@"string_0.amf3" 
 		isEqualTo:str], @"Strings do not match");
@@ -303,8 +289,7 @@
 		@"Could not decode Latin1 string");
 }
 
-- (void)testArray
-{
+- (void)testArray{
 	NSArray *arr = [NSArray arrayWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:1], 
 		[NSNumber numberWithInt:2], [NSNumber numberWithInt:3], nil];
 	STAssertTrue([self assertDataOfFile:@"array_0.amf3" 
@@ -314,8 +299,7 @@
 		@"Array data is not equal");
 }
 
-- (void)testDictionary
-{
+- (void)testDictionary{
 	NSDictionary *dict = [NSDictionary dictionaryWithObject:@"eggs" forKey:@"spam"];
 	STAssertTrue([self assertDataOfFile:@"dictionary_0.amf3" 
 		isEqualTo:dict], @"Dictionaries do not match");
@@ -333,8 +317,7 @@
 //		@"Dictionary data is not equal");
 }
 
-- (void)testRegisteredTypedObject
-{
+- (void)testRegisteredTypedObject{
 	Spam *spam = [[Spam alloc] init];
 	spam.baz = @"hello";
 	
@@ -355,8 +338,7 @@
 	[spam release];
 }
 
-- (void)testFlexDataTypes
-{
+- (void)testFlexDataTypes{
 	FlexArrayCollection *coll = [[FlexArrayCollection alloc] initWithSource:
 		[NSArray arrayWithObjects:
 			@"bla", 
@@ -373,8 +355,7 @@
 	[coll release];
 }
 
-- (void)testOptions
-{
+- (void)testOptions{
 	NSArray *arr = [NSArray arrayWithObjects:
 		@"bla",
 		[NSArray arrayWithObjects:
@@ -392,16 +373,14 @@
 	[AMFArchiver setOptions:0];
 }
 
-- (void)testKeyedNonKeyedIntegrity
-{
+- (void)testKeyedNonKeyedIntegrity{
 	WrongSerializedCustomObject *obj = [[WrongSerializedCustomObject alloc] init];
 	STAssertThrows([AMFArchiver archivedDataWithRootObject:obj encoding:kAMF3Encoding], 
 		@"Keyed/non-keyed archiving was mixed without an exception");
 	[obj release];
 }
 
-- (void)testExternalizable
-{
+- (void)testExternalizable{
 	PlainStringEncoder *obj = [[PlainStringEncoder alloc] init];
 	STAssertTrue([self assertDataOfFile:@"plainstringexternalizable_0.amf3" isEqualTo:obj], 
 		@"Could not deserialize utf bytes");
@@ -410,8 +389,7 @@
 	[obj release];
 }
 
-- (void)testExternalizableData
-{
+- (void)testExternalizableData{
 	ExternalizableDataEncoder *obj = [[ExternalizableDataEncoder alloc] init];
 	STAssertTrue([self assertEncodedObject:obj isEqualToContentsOfFile:@"externalizabledata.amf3"], 
 		@"Could not serialize externalizable data properly");
