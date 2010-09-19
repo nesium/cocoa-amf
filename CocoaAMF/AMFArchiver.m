@@ -495,12 +495,13 @@ static uint16_t g_options = 0;
 	m_bytes[m_position++] = value & 0xFF;
 }
 
-- (void)encodeUnsignedInt29:(uint32_t)value{
+- (void)encodeUnsignedInt29:(int32_t)value{
 	if (m_currentObjectToSerialize != nil){
-		[m_currentObjectToSerialize addObject:[NSNumber numberWithUnsignedInt:value]];
+		[m_currentObjectToSerialize addObject:[NSNumber numberWithInt:value]];
 		[self _ensureIntegrityOfSerializedObject];
 		return;
 	}
+	value &= 0x1fffffff;
 	if (value < 0x80){
 		[self _ensureLength:1];
 		m_bytes[m_position++] = value;
@@ -749,7 +750,13 @@ not allow externalizable objects (non-keyed archiving)!"];
 }
 
 - (void)encodeBool:(BOOL)value{
-	[self encodeUnsignedChar:(value ? kAMF3TrueType : kAMF3FalseType)];
+	if (m_currentObjectToSerialize != nil){
+		[m_currentObjectToSerialize addObject:[_AMFNumber numberWithNSNumber:
+			[NSNumber numberWithBool:value]]];
+		[self _ensureIntegrityOfSerializedObject];
+		return;
+	}
+	[self encodeUnsignedChar:(value ? 1 : 0)];
 }
 
 

@@ -316,4 +316,11 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[super dealloc];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, operation: %@, messageId: %@ \
+timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
+	destination, operation, messageId, timeToLive, timestamp, headers, body];
+}
+
 @end

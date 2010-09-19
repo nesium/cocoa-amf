@@ -452,7 +452,8 @@ static uint16_t g_options = 0;
 - (void)_ensureLength:(unsigned)length{
 	if (m_position + length > [m_data length]){
 		[NSException raise:@"NSUnarchiverBadArchiveException"
-			format:@"%@ attempt to read beyond length", [self className]];
+			format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %d", 
+			[self className], m_position, length, [m_data length]];
 	}
 }
 
@@ -508,7 +509,6 @@ static uint16_t g_options = 0;
 #pragma mark Private methods
 
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type{
-	NSLog(@"%@ (%d)", NSStringFromAMF0Type(type), type);
 	id value = nil;
 	switch (type){
 		case kAMF0NumberType:
@@ -554,7 +554,7 @@ static uint16_t g_options = 0;
 			break;
 			
 		case kAMF0NullType:
-			value = nil;
+			value = [NSNull null];
 			break;
 			
 		case kAMF0DateType:
@@ -570,7 +570,7 @@ static uint16_t g_options = 0;
 			break;
 			
 		case kAMF0UndefinedType:
-			value = nil;
+			value = [NSNull null];
 			break;
 			
 		case kAMF0UnsupportedType:
@@ -588,7 +588,6 @@ static uint16_t g_options = 0;
 		default:
 			[self _cannotDecodeType:"Unknown type"];
 	}
-	NSLog(@"%@", value);
 	return value;
 }
 
@@ -762,7 +761,7 @@ static uint16_t g_options = 0;
 }
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type{
-	NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
+	//NSLog(@"%@ (%d)", NSStringFromAMF3Type(type), type);
 	id value = nil;
 	switch (type){
 		case kAMF3StringType:
@@ -797,11 +796,11 @@ static uint16_t g_options = 0;
 			break;
 			
 		case kAMF3UndefinedType:
-			return nil;
+			return [NSNull null];
 			break;
 			
 		case kAMF3NullType:
-			return nil;
+			return [NSNull null];
 			break;
 			
 		case kAMF3XMLType:
@@ -821,7 +820,7 @@ static uint16_t g_options = 0;
 			[self _cannotDecodeType:"Unknown type"];
 			break;
 	}
-	NSLog(@"%@", value);
+	//NSLog(@"%@", value);
 	return value;
 }
 

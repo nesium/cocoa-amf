@@ -66,7 +66,7 @@
 - (void)encodeUnsignedChar:(uint8_t)value;
 - (void)encodeUnsignedInt:(uint32_t)value;
 - (void)encodeUnsignedShort:(uint16_t)value;
-- (void)encodeUnsignedInt29:(uint32_t)value;
+- (void)encodeUnsignedInt29:(int32_t)value;
 - (void)encodeDataObject:(NSData *)value;
 - (void)encodeMultiByteString:(NSString *)value encoding:(NSStringEncoding)encoding;
 - (void)encodeObject:(NSObject *)value;
