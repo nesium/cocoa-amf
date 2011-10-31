@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/message.h>
 #import "AMF.h"
 #import "ASObject.h"
 #import "FlexDataTypes.h"

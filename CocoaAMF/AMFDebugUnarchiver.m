@@ -8,15 +8,15 @@
 
 #import "AMFDebugUnarchiver.h"
 
-@interface AMFUnarchiver (Protected)
+@interface AMFUnarchiver ()
 - (id)initForReadingWithData:(NSData *)data;
 @end
 
-@interface AMF0Unarchiver (Protected)
+@interface AMF0Unarchiver ()
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type;
 @end
 
-@interface AMF3Unarchiver (Protected)
+@interface AMF3Unarchiver ()
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type;
 @end
 
@@ -31,10 +31,10 @@
 
 	NSZone *temp = [self zone];  // Must not call methods after release
 	[self release];              // Placeholder no longer needed
-
-	return (encoding == kAMF0Encoding)
+	
+	return (AMFDebugUnarchiver *)((encoding == kAMF0Encoding)
 		? [[AMF0DebugUnarchiver allocWithZone:temp] initForReadingWithData:data]
-		: [[AMF3DebugUnarchiver allocWithZone:temp] initForReadingWithData:data];
+		: [[AMF3DebugUnarchiver allocWithZone:temp] initForReadingWithData:data]);
 }
 
 @end

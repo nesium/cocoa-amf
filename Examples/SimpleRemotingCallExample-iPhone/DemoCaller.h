@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/message.h>
 #import "AMFRemotingCall.h"
 
 @protocol DemoCallerDelegate;

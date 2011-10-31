@@ -44,7 +44,7 @@
 {
 	m_remotingCall.method = @"add";
 	m_remotingCall.arguments = [NSArray arrayWithObjects:[NSNumber numberWithInt:2], 
-		[NSNumber numberWithInt:3], nil];
+		[NSNumber numberWithInt:3], [NSNumber numberWithBool:YES], nil];
 	[m_remotingCall start];
 }
 

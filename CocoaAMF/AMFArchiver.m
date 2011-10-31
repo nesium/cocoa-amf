@@ -10,7 +10,9 @@
 
 @class AMF3TraitsInfo;
 
-@interface AMFArchiver (Private)
+@interface AMFArchiver ()
+- (id)initForWritingWithMutableData:(NSMutableData *)data;
+
 - (void)_ensureLength:(unsigned)length;
 - (void)_ensureIntegrityOfSerializedObject;
 - (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
@@ -27,10 +29,10 @@
 - (void)_encodeNull;
 @end
 
-@interface AMF0Archiver (Private)
+@interface AMF0Archiver ()
 @end
 
-@interface AMF3Archiver (Private)
+@interface AMF3Archiver ()
 - (void)_encodeTraits:(AMF3TraitsInfo *)traits;
 - (void)_encodeData:(NSData *)value;
 - (void)_encodeMixedArray:(NSDictionary *)value;
@@ -542,6 +544,41 @@ and non-keyed archiving on the same object!"];
 	}
 }
 
+- (void)_encodeDate:(NSDate *)value{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)_encodeArray:(NSArray *)value{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)_encodeDictionary:(NSDictionary *)value{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)_encodeNumber:(NSNumber *)value omitType:(BOOL)omitType{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)_encodeASObject:(ASObject *)value{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)_encodeString:(NSString *)value omitType:(BOOL)omitType{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)_encodeNull{
+	// overridden in subclasses
+	[self doesNotRecognizeSelector:_cmd];
+}
+
 - (void)_encodeCustomObject:(id)value{
 	ASObject *lastObj = m_currentObjectToSerialize;
 	ASObject *obj = m_currentObjectToSerialize = [[[ASObject alloc] init] autorelease];
@@ -696,7 +733,8 @@ not allow externalizable objects (non-keyed archiving)!"];
 }
 
 - (void)_encodeNumber:(NSNumber *)value omitType:(BOOL)omitType{
-	if ([[value className] isEqualToString:@"NSCFBoolean"]){
+	if ([[value className] isEqualToString:@"__NSCFBoolean"] || 
+		[[value className] isEqualToString:@"NSCFBoolean"]){
 		if (!omitType)
 			[self encodeUnsignedChar:kAMF0BooleanType];
 		[self encodeBool:[value boolValue]];
@@ -863,7 +901,8 @@ not allow externalizable objects (non-keyed archiving)!"];
 }
 
 - (void)_encodeNumber:(NSNumber *)value omitType:(BOOL)omitType{
-	if ([[value className] isEqualToString:@"NSCFBoolean"]){
+	if ([[value className] isEqualToString:@"__NSCFBoolean"] || 
+		[[value className] isEqualToString:@"NSCFBoolean"]){
 		if (omitType){
 			[self encodeUnsignedChar:([value boolValue] ? 1 : 0)];
 		}else{

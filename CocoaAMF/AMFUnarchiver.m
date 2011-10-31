@@ -9,14 +9,16 @@
 #import "AMFUnarchiver.h"
 
 
-@interface AMFUnarchiver (Protected)
+@interface AMFUnarchiver ()
+- (id)initForReadingWithData:(NSData *)data;
+
 - (void)_ensureLength:(unsigned)length;
 - (void)_cannotDecodeType:(const char *)type;
 - (id)_objectReferenceAtIndex:(uint32_t)index;
 - (NSNumber *)_decodeNumberForKey:(NSString *)key;
 @end
 
-@interface AMF0Unarchiver (Protected)
+@interface AMF0Unarchiver ()
 - (NSObject *)_decodeObjectWithType:(AMF0Type)type;
 - (NSArray *)_decodeArray;
 - (NSObject *)_decodeTypedObject;
@@ -28,7 +30,7 @@
 - (NSObject *)_decodeReference;
 @end
 
-@interface AMF3Unarchiver (Protected)
+@interface AMF3Unarchiver ()
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type;
 - (NSObject *)_decodeASObject;
 - (NSObject *)_decodeArray;
