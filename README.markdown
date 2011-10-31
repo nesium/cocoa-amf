@@ -16,13 +16,6 @@ If you want to send custom classes from Cocoa make sure to implement the NSCodin
 
 While deserializing, if no class with the classname of the received object is found, CocoaAMF creates an instance of ASObject which will contain all attributes of that object and its classname as the ivar 'type'.
 
-### iPhone Support
-
-01/11/09 I have added an example for remoting calls from the iPhone. See the XCode project CocoaAMF-iPhone.
-
-Usage of the iPhone as an AMF Server is still untested.
-
-
 ### Todo
 
 - Full test coverage
@@ -30,7 +23,7 @@ Usage of the iPhone as an AMF Server is still untested.
 
 ### Contact
 
-If you have any questions or ideas, let me know at mb@nesium.com.
+Sorry, I'm not actively maintaining the project right now!
 
 
 ### Thanks
