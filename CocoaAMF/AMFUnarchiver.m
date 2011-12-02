@@ -958,6 +958,7 @@ static uint16_t g_options = 0;
 	}
 	uint32_t length = (ref >> 1);
 	NSData *data = [self decodeBytes:length];
+	[m_objectTable addObject:data];
 	return data;
 }
 
