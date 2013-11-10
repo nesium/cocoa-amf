@@ -48,11 +48,6 @@
 	return self;
 }
 
-- (void)dealloc{
-	[m_headers release];
-	[m_bodies release];
-	[super dealloc];
-}
 
 
 
@@ -75,7 +70,6 @@
 		[headerBa encodeObject:header.data];
 		[ba encodeUnsignedInt:[headerBa.data length]];
 		[ba encodeDataObject:headerBa.data];
-		[headerBa release];
 	}
 	[ba encodeUnsignedShort:[m_bodies count]];
 	for (AMFMessageBody *body in m_bodies){
@@ -89,10 +83,8 @@
 		[bodyBa encodeObject:body.data];
 		[ba encodeUnsignedInt:[bodyBa.data length]];
 		[ba encodeDataObject:bodyBa.data];
-		[bodyBa release];
 	}
-	NSData *data = [[ba.data retain] autorelease];
-	[ba release];
+	NSData *data = ba.data;
 	
 	return data;
 }
@@ -118,7 +110,6 @@
 	body.responseURI = responseURI;
 	body.data = data;
 	[m_bodies addObject:body];
-	[body release];
 }
 
 - (void)addHeaderWithName:(NSString *)name mustUnderstand:(BOOL)mustUnderstand data:(id)data{
@@ -127,7 +118,6 @@
 	header.mustUnderstand = mustUnderstand;
 	header.data = data;
 	[m_headers addObject:header];
-	[header release];
 }
 
 - (void)mergeActionMessage:(AMFActionMessage *)message{
@@ -136,8 +126,8 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | version: %d | headers: %d bodies: %d>\nheaders:\n%@\nbodies:\n%@", 
-		[self class], (long)self, m_version, [m_headers count], [m_bodies count], 
+	return [NSString stringWithFormat:@"<%@ = %p | version: %d | headers: %d bodies: %d>\nheaders:\n%@\nbodies:\n%@",
+		[self class], self, m_version, [m_headers count], [m_bodies count],
 		m_headers, m_bodies];
 }
 
@@ -161,7 +151,6 @@
 		[ba decodeUnsignedInt];
 		header.data = [ba decodeObject];
 		[headers addObject:header];
-		[header release];
 	}
 	m_headers = [headers copy];
 	
@@ -174,10 +163,8 @@
 		[ba decodeUnsignedInt];
 		body.data = [ba decodeObject];
 		[bodies addObject:body];
-		[body release];
 	}
 	m_bodies = [bodies copy];
-	[ba release];
 }
 
 @end
@@ -204,7 +191,7 @@
 	header.name = name;
 	header.data = data;
 	header.mustUnderstand = mustUnderstand;
-	return [header autorelease];
+	return header;
 }
 
 - (id)init{
@@ -216,15 +203,10 @@
 	return self;
 }
 
-- (void)dealloc{
-	[m_name release];
-	[m_data release];
-	[super dealloc];
-}
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | name: %@ | mustUnderstand: %d>\n%@", 
-		[self class], (long)self, m_name, m_mustUnderstand, m_data];
+	return [NSString stringWithFormat:@"<%@ = %p | name: %@ | mustUnderstand: %d>\n%@",
+		[self class], self, m_name, m_mustUnderstand, m_data];
 }
 
 @end
@@ -253,16 +235,10 @@
 	return self;
 }
 
-- (void)dealloc{
-	[m_targetURI release];
-	[m_responseURI release];
-	[m_data release];
-	[super dealloc];
-}
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | targetURI: %@ | responseURI: %@>\n%@", 
-		[self class], (long)self, m_targetURI, m_responseURI, m_data];
+	return [NSString stringWithFormat:@"<%@ = %p | targetURI: %@ | responseURI: %@>\n%@",
+		[self class], self, m_targetURI, m_responseURI, m_data];
 }
 
 @end

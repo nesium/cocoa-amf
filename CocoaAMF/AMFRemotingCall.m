@@ -57,19 +57,9 @@ static uint32_t g_responseCount = 1;
 	method:(NSString *)method arguments:(NSObject *)arguments{
 	AMFRemotingCall *remotingCall = [[AMFRemotingCall alloc] initWithURL:url service:service 
 		method:method arguments:arguments];
-	return [remotingCall autorelease];
+	return remotingCall;
 }
 
-- (void)dealloc{
-	[m_connection release];
-	[m_request release];
-	[m_service release];
-	[m_method release];
-	[m_arguments release];
-	[m_error release];
-	[m_amfHeaders release];
-	[super dealloc];
-}
 
 
 
@@ -91,7 +81,6 @@ static uint32_t g_responseCount = 1;
 		message.headers = [m_amfHeaders allValues];
 	
 	[m_request setHTTPBody:[message data]];
-	[message release];
 	
 	m_error = nil;
 	m_receivedData = [[NSMutableData alloc] init];
@@ -138,11 +127,8 @@ static uint32_t g_responseCount = 1;
 }
 
 - (void)_cleanup{
-	[m_connection release];
 	m_connection = nil;
-	[m_receivedData release];
 	m_receivedData = nil;
-	[m_error release];
 	m_error = nil;
 }
 
@@ -154,17 +140,17 @@ static uint32_t g_responseCount = 1;
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{	
 	if ([[[(NSHTTPURLResponse *)response allHeaderFields] objectForKey:@"Content-Type"] 
 		rangeOfString:@"application/x-amf"].location == NSNotFound){
-		m_error = [[NSError errorWithDomain:kAMFRemotingCallErrorDomain 
+		m_error = [NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFInvalidResponseErrorCode userInfo:[NSDictionary dictionaryWithObject:
 				[NSString stringWithFormat:@"The server returned no application/x-amf data at URL %@.", 
-					[[response URL] absoluteString]] forKey:NSLocalizedDescriptionKey]] retain];
+					[[response URL] absoluteString]] forKey:NSLocalizedDescriptionKey]];
 	}else if ([(NSHTTPURLResponse *)response statusCode] != 200){
-		m_error = [[NSError errorWithDomain:kAMFRemotingCallErrorDomain 
+		m_error = [NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFServerErrorErrorCode userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 				[NSString stringWithFormat:@"The server returned status code %d at URL %@.", 
 					[(NSHTTPURLResponse *)response statusCode], [[response URL] absoluteString]], 
 				NSLocalizedDescriptionKey, [NSNumber numberWithInt:
-					[(NSHTTPURLResponse *)response statusCode]], kAMFServerStatusCodeKey, nil]] retain];
+					[(NSHTTPURLResponse *)response statusCode]], kAMFServerStatusCodeKey, nil]];
 	}
 	
 	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveResponse:)]){
@@ -181,9 +167,9 @@ static uint32_t g_responseCount = 1;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
 	if (!m_error && [m_receivedData length] == 0){
-		m_error = [[NSError errorWithDomain:kAMFRemotingCallErrorDomain 
+		m_error = [NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFInvalidResponseErrorCode userInfo:[NSDictionary dictionaryWithObject:
-				@"The server returned zero bytes of data" forKey:NSLocalizedDescriptionKey]] retain];
+				@"The server returned zero bytes of data" forKey:NSLocalizedDescriptionKey]];
 	}
 	
 	if (m_error){
@@ -193,7 +179,6 @@ static uint32_t g_responseCount = 1;
 		NSObject *data = [[message.bodies objectAtIndex:0] data];
 		objc_msgSend(m_delegate, @selector(remotingCallDidFinishLoading:receivedObject:), 
 			self, data);
-		[message release];
 	}
 	[self _cleanup];
 	m_isLoading = NO;

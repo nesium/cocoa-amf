@@ -29,15 +29,15 @@
 	NSMutableData *m_receivedData;
 	BOOL m_isLoading;
 	NSError *m_error;
-	NSObject <AMFRemotingCallDelegate> *m_delegate;
+	NSObject <AMFRemotingCallDelegate> *__weak m_delegate;
 	NSMutableDictionary *m_amfHeaders;
 }
 
-@property (nonatomic, retain) NSURL *URL;
-@property (nonatomic, retain) NSString *service;
-@property (nonatomic, retain) NSString *method;
-@property (nonatomic, retain) NSObject *arguments;
-@property (nonatomic, assign) NSObject <AMFRemotingCallDelegate> *delegate;
+@property (nonatomic, strong) NSURL *URL;
+@property (nonatomic, strong) NSString *service;
+@property (nonatomic, strong) NSString *method;
+@property (nonatomic, strong) NSObject *arguments;
+@property (nonatomic, weak) NSObject <AMFRemotingCallDelegate> *delegate;
 @property (nonatomic, assign) AMFEncoding amfVersion; // AMF3 is used by default
 
 + (AMFRemotingCall *)remotingCallWithURL:(NSURL *)url service:(NSString *)service 

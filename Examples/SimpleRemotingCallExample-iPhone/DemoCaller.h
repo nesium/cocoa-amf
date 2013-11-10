@@ -15,10 +15,10 @@
 @interface DemoCaller : NSObject <AMFRemotingCallDelegate>
 {
 	AMFRemotingCall *m_remotingCall;
-	NSObject <DemoCallerDelegate> *m_delegate;
+	NSObject <DemoCallerDelegate> *__weak m_delegate;
 }
 
-@property (nonatomic, assign) NSObject <DemoCallerDelegate> *delegate;
+@property (nonatomic, weak) NSObject <DemoCallerDelegate> *delegate;
 
 - (void)callAddMethod;
 - (void)callHelloMethod;

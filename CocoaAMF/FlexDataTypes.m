@@ -40,17 +40,13 @@
 		[source isEqual:[obj source]];
 }
 
-- (void)dealloc{
-	[source release];
-	[super dealloc];
-}
 
 - (NSUInteger)count{
 	return [source count];
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
+	return [NSString stringWithFormat:@"<%@ = %p> %@", [self className], self, source];
 }
 
 @end
@@ -90,10 +86,6 @@
 		[object isEqual:[obj object]];
 }
 
-- (void)dealloc{
-	[object release];
-	[super dealloc];
-}
 @end
 
 
@@ -141,19 +133,11 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, messageId: %@ \
-timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
+	return [NSString stringWithFormat:@"<%@ = %p> clientId: %@, destination: %@, messageId: %@ \
+timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], self, clientId,
 	destination, messageId, timeToLive, timestamp, headers, body];
 }
 
-- (void)dealloc{
-	[body release];
-	[clientId release];
-	[destination release];
-	[headers release];
-	[messageId release];
-	[super dealloc];
-}
 
 @end
 
@@ -181,10 +165,6 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[coder encodeObject:correlationId forKey:@"correlationId"];
 }
 
-- (void)dealloc{
-	[correlationId release];
-	[super dealloc];
-}
 
 @end
 
@@ -245,7 +225,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	errorMsg.faultString = [error domain];
 	errorMsg.faultDetail = [error localizedDescription];
 	errorMsg.extendedData = [error userInfo];
-	return [errorMsg autorelease];
+	return errorMsg;
 }
 
 - (id)initWithCoder:(NSCoder *)coder{
@@ -268,18 +248,10 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[coder encodeObject:rootCause forKey:@"rootCause"];
 }
 
-- (void)dealloc{
-	[extendedData release];
-	[faultCode release];
-	[faultDetail release];
-	[faultString release];
-	[rootCause release];
-	[super dealloc];
-}
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> faultCode: %@, faultDetail: %@, faultString: %@", 
-		[self className], (long)self, faultCode, faultDetail, faultString];
+	return [NSString stringWithFormat:@"<%@ = %p> faultCode: %@, faultDetail: %@, faultString: %@",
+		[self className], self, faultCode, faultDetail, faultString];
 }
 
 @end
@@ -310,16 +282,11 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 	[coder encodeObject:source forKey:@"source"];
 }
 
-- (void)dealloc{
-	[operation release];
-	[source release];
-	[super dealloc];
-}
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, operation: %@, messageId: %@ \
-timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
+	return [NSString stringWithFormat:@"<%@ = %p> clientId: %@, destination: %@, operation: %@, messageId: %@ \
+timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], self, clientId,
 	destination, operation, messageId, timeToLive, timestamp, headers, body];
 }
 

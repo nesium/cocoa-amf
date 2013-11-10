@@ -23,11 +23,6 @@
 	m_caller.delegate = self;
 }
 
-- (void)dealloc
-{
-	[m_caller release];
-	[super dealloc];
-}
 
 - (IBAction)callAddMethod:(id)sender
 {

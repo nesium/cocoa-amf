@@ -21,8 +21,8 @@
 	BOOL m_useDebugUnarchiver;
 }
 @property (nonatomic, assign) AMFEncoding version;
-@property (nonatomic, retain) NSArray *headers;
-@property (nonatomic, retain) NSArray *bodies;
+@property (nonatomic, strong) NSArray *headers;
+@property (nonatomic, strong) NSArray *bodies;
 
 - (id)initWithData:(NSData *)data;
 - (id)initWithDataUsingDebugUnarchiver:(NSData *)data;
@@ -44,9 +44,9 @@
 	BOOL m_mustUnderstand;
 	NSObject *m_data;
 }
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) BOOL mustUnderstand;
-@property (nonatomic, retain) NSObject *data;
+@property (nonatomic, strong) NSObject *data;
 
 + (AMFMessageHeader *)messageHeaderWithName:(NSString *)name data:(NSObject *)data 
 	mustUnderstand:(BOOL)mustUnderstand;
@@ -58,7 +58,7 @@
 	NSString *m_responseURI;
 	NSObject *m_data;
 }
-@property (nonatomic, retain) NSString *targetURI;
-@property (nonatomic, retain) NSString *responseURI;
-@property (nonatomic, retain) NSObject *data;
+@property (nonatomic, strong) NSString *targetURI;
+@property (nonatomic, strong) NSString *responseURI;
+@property (nonatomic, strong) NSObject *data;
 @end

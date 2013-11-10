@@ -29,8 +29,8 @@
 	[[self class] setClass:NULL forClassName:[FlexRemotingMessage AMFClassAlias]];
 	[[self class] setClass:NULL forClassName:[FlexErrorMessage AMFClassAlias]];
 
-	NSZone *temp = [self zone];  // Must not call methods after release
-	[self release];              // Placeholder no longer needed
+	NSZone *temp = nil;  // Must not call methods after release
+	              // Placeholder no longer needed
 	
 	return (AMFDebugUnarchiver *)((encoding == kAMF0Encoding)
 		? [[AMF0DebugUnarchiver allocWithZone:temp] initForReadingWithData:data]
@@ -48,7 +48,7 @@
 		return [AMFDebugUnarchiver unarchiveObjectWithData:[m_data subdataWithRange:
 			(NSRange){m_position, [m_data length] - m_position}] encoding:kAMF3Encoding];
 	}else{
-		AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
+		AMFDebugDataNode *node = [[AMFDebugDataNode alloc] init];
 		node.version = kAMF0Encoding;
 		node.type = type;
 		node.data = [super _decodeObjectWithType:type];
@@ -61,7 +61,7 @@
 @implementation AMF3DebugUnarchiver
 
 - (NSObject *)_decodeObjectWithType:(AMF3Type)type{
-	AMFDebugDataNode *node = [[[AMFDebugDataNode alloc] init] autorelease];
+	AMFDebugDataNode *node = [[AMFDebugDataNode alloc] init];
 	node.version = kAMF3Encoding;
 	node.type = type;
 	node.data = [super _decodeObjectWithType:type];
@@ -114,13 +114,10 @@
 			[(NSMutableArray *)newChildren addObject:node];
 		}
 	}else if (theData != nil){
-		[theData retain];
-		[data release];
 		data = theData;
 		return;
 	}
 	
-	[children release];
 	children = [newChildren copy];
 }
 
@@ -141,17 +138,10 @@
 		: NSStringFromAMF3TypeForDisplay(type);
 }
 
-- (void)dealloc{
-	[children release];
-	[data release];
-	[name release];
-	[objectClassName release];
-	[super dealloc];
-}
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> version: %d type: %@ name: %@ data: %@, children: %@", 
-		[self className], (long)self, version, [self AMFClassName], name, data, children];
+	return [NSString stringWithFormat:@"<%@ = %p> version: %d type: %@ name: %@ data: %@, children: %@",
+		[self className], self, version, [self AMFClassName], name, data, children];
 }
 
 @end
