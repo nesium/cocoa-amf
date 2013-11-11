@@ -4,27 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AMFClient.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
-		<key>CocoaAMF.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>SharedObject Browser.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>SimpleRemotingCallExample.xcscheme</key>
+		<key>CocoaAMF (Device 4.0).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Tests.xcscheme</key>
+		<key>CocoaAMF-iPhone.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
@@ -32,27 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2C2E74CD117138BE009D94C8</key>
+		<key>1D6058900D05DD3D006BFB54</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2C73A9050F1967E200EA16AD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2C8500910EDF39560058EBE0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2CB5B48B0F16C7D200C71818</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8D1107260486CEB800E47090</key>
+		<key>2CEB28381203818500887DED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
