@@ -106,11 +106,11 @@
 	NSUInteger m_count;
 	NSMutableArray *m_properties;
 }
-@property (nonatomic, retain) NSString *className;
+@property (nonatomic) NSString *className;
 @property (nonatomic, assign) BOOL dynamic;
 @property (nonatomic, assign) BOOL externalizable;
 @property (nonatomic, assign) NSUInteger count;
-@property (nonatomic, retain) NSMutableArray *properties;
+@property (nonatomic) NSMutableArray *properties;
 
 - (void)addProperty:(NSString *)property;
 @end

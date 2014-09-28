@@ -29,11 +29,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[m_remotingCall release];
-	[super dealloc];
-}
 
 
 

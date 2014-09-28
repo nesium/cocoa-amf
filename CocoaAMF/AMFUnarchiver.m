@@ -76,8 +76,8 @@ static uint16_t g_options = 0;
 }
 
 - (id)initForReadingWithData:(NSData *)data encoding:(AMFEncoding)encoding{
-	NSZone *temp = [self zone];  // Must not call methods after release
-	[self release];              // Placeholder no longer needed
+	NSZone *temp = nil;  // Must not call methods after release
+	              // Placeholder no longer needed
 	return (encoding == kAMF0Encoding)
 		? [[AMF0Unarchiver allocWithZone:temp] initForReadingWithData:data]
 		: [[AMF3Unarchiver allocWithZone:temp] initForReadingWithData:data];
@@ -85,7 +85,7 @@ static uint16_t g_options = 0;
 
 - (id)initForReadingWithData:(NSData *)data{
 	if (self = [super init]){
-		m_data = [data retain];
+		m_data = data;
 		m_bytes = [data bytes];
 		m_objectTable = [[NSMutableArray alloc] init];
 		m_registeredClasses = [[NSMutableDictionary alloc] init];
@@ -100,9 +100,8 @@ static uint16_t g_options = 0;
 		[NSException raise:@"AMFInvalidArchiveOperationException" format:@"Invalid data"];
 	}
 	AMFUnarchiver *byteArray = [[[self class] alloc] initForReadingWithData:data encoding:encoding];
-	id object = [[byteArray decodeObject] retain];
-	[byteArray release];
-	return [object autorelease];
+	id object = [byteArray decodeObject];
+	return object;
 }
 
 + (id)unarchiveObjectWithFile:(NSString *)path encoding:(AMFEncoding)encoding{
@@ -110,12 +109,6 @@ static uint16_t g_options = 0;
 	return [[self class] unarchiveObjectWithData:data encoding:encoding];
 }
 
-- (void)dealloc{
-	[m_data release];
-	[m_objectTable release];
-	[m_registeredClasses release];
-	[super dealloc];
-}
 
 
 
@@ -268,8 +261,7 @@ static uint16_t g_options = 0;
 		}
 		break;
 		case '@':{
-			id *obj = data;
-			*obj = [self decodeObject];
+            [self decodeObject];
 		}
 		break;
 		default:
@@ -400,11 +392,11 @@ static uint16_t g_options = 0;
 	if (result == nil){
 		result = [[NSString alloc] initWithData:stringBytes encoding:NSISOLatin1StringEncoding];
 	}
-	return [result autorelease];
+	return result;
 }
 
 - (NSString *)decodeMultiByteString:(uint32_t)length encoding:(NSStringEncoding)encoding{
-	return [[[NSString alloc] initWithData:[self decodeBytes:length] encoding:encoding] autorelease];
+	return [[NSString alloc] initWithData:[self decodeBytes:length] encoding:encoding];
 }
 
 
@@ -440,7 +432,7 @@ static uint16_t g_options = 0;
 	desObject = [desObject awakeAfterUsingCoder:self];
 	m_currentDeserializedObject = lastDeserializedObject;
 	
-	return [desObject autorelease];
+	return desObject;
 }
 
 - (NSNumber *)_decodeNumberForKey:(NSString *)key{
@@ -454,8 +446,8 @@ static uint16_t g_options = 0;
 - (void)_ensureLength:(unsigned)length{
 	if (m_position + length > [m_data length]){
 		[NSException raise:@"NSUnarchiverBadArchiveException"
-			format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %d", 
-			[self className], m_position, length, [m_data length]];
+			format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %lu", 
+			[self className], m_position, length, (unsigned long)[m_data length]];
 	}
 }
 
@@ -491,9 +483,6 @@ static uint16_t g_options = 0;
 	return self;
 }
 
-- (void)dealloc{
-	[super dealloc];
-}
 
 
 
@@ -532,7 +521,6 @@ static uint16_t g_options = 0;
 				encoding:kAMF3Encoding];
 			value = [amf3Unarchiver decodeObject];
 			m_position += [m_data length] - m_position - [amf3Unarchiver bytesAvailable];
-			[amf3Unarchiver release];
 			break;
 		}
 		case kAMF0StrictArrayType:
@@ -603,7 +591,6 @@ static uint16_t g_options = 0;
 			[array addObject:obj];
 		}
 	}
-	[array release];
 	return array;
 }
 
@@ -627,10 +614,9 @@ static uint16_t g_options = 0;
 	
 	NSObject *desObject = [self _deserializeObject:object];
 	if (desObject == object){
-		return [object autorelease];
+		return object;
 	}
 	[m_objectTable replaceObjectAtIndex:[m_objectTable indexOfObject:object] withObject:desObject];
-	[object release];
 	return desObject;
 }
 
@@ -669,7 +655,6 @@ static uint16_t g_options = 0;
 	uint32_t size = [self decodeUnsignedInt];
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:size];
 	[m_objectTable addObject:dict];
-	[dict release];
 	
 	NSString *propertyName = [self decodeUTF];
 	AMF0Type type = [self decodeUnsignedChar];
@@ -708,11 +693,6 @@ static uint16_t g_options = 0;
 	return self;
 }
 
-- (void)dealloc{
-	[m_stringTable release];
-	[m_traitsTable release];
-	[super dealloc];
-}
 
 
 
@@ -859,16 +839,14 @@ static uint16_t g_options = 0;
 	
 	if (![object isMemberOfClass:[ASObject class]]){
 		NSDictionary *dictCopy = [object copy];
-		[object release];
-		return [dictCopy autorelease];
+		return dictCopy;
 	}
 	
 	NSObject *desObject = [self _deserializeObject:(ASObject *)object];
 	if (desObject == object){
-		return [object autorelease];
+		return object;
 	}
 	[m_objectTable replaceObjectAtIndex:[m_objectTable indexOfObject:object] withObject:desObject];
-	[object release];
 	return desObject;
 }
 
@@ -930,7 +908,6 @@ static uint16_t g_options = 0;
 		[info addProperty:[self decodeUTF]];
 	}
 	[m_traitsTable addObject:info];
-	[info release];
 	return info;
 }
 
@@ -1003,11 +980,6 @@ static uint16_t g_options = 0;
 	return self;
 }
 
-- (void)dealloc{
-	[m_className release];
-	[m_properties release];
-	[super dealloc];
-}
 
 
 
@@ -1040,9 +1012,9 @@ static uint16_t g_options = 0;
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | className: %@ | dynamic: %d \
-| externalizable: %d | count: %d>", 
-		[self class], (long)self, m_className, m_dynamic, m_externalizable, m_count];
+	return [NSString stringWithFormat:@"<%@ = %p | className: %@ | dynamic: %d \
+| externalizable: %d | count: %lu>", 
+		[self class], self, m_className, m_dynamic, m_externalizable, (unsigned long)m_count];
 }
 
 @end

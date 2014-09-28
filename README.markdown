@@ -1,34 +1,130 @@
 # CocoaAMF
 
-### Description
+CocoaAMF is a library for use by iOS applications that need to make remote requests to a server in [AMF](http://en.wikipedia.org/wiki/Action_Message_Format) format.
 
-CocoaAMF is a set of classes which can make AMF0 and AMF3 remoting calls or act as a server to handle AMF requests.
+This is a fork of [nesium/cocoa-amf](https://github.com/nesium/cocoa-amf), simplified and updated for ARC, Xcode 6 and iOS 8.
 
+## Installation
 
-### Examples
+### Manual installation
+- Clone or download the repository
+- Drag the `CocoaAMF/CocoaAMF` folder into your project.
 
-For sending a remoting call see SimpleRemotingCallExample.
-For setting up a server see ServerExample.
+## Usage
 
-For testing an existing AMF server a more complex tool is provided, namely AMFClient, so be sure to check it out!
+### API invocation
 
-If you want to send custom classes from Cocoa make sure to implement the NSCoding protocol. You can encode keyed and non-keyed, where the latter means you're encoding an [externalizable](http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/utils/IExternalizable.html) class.
+Sample code for making a single remote call:
 
-While deserializing, if no class with the classname of the received object is found, CocoaAMF creates an instance of ASObject which will contain all attributes of that object and its classname as the ivar 'type'.
+```objective-c
+@interface MyClass : ... <AMFRemotingCallDelegate>
+...
+@end
 
-### Todo
+@implementation MyClass
+...
+- (void)remoteCall {
+    NSURL *url = [NSURL URLWithString:"https://www.myserver.com/amf-api"];
+    AMFRemotingCall *call = [[AMFRemotingCall alloc] initWithURL:url
+                                               			 service:@"MyService"
+                                               			  method:@"mymethod"
+                                             		   arguments:[NSArray arrayWithObjects:myarg, nil]];
+    call.delegate = self;
+	[call start];
+}
 
-- Full test coverage
+- (void)remotingCallDidFinishLoading:(AMFRemotingCall *)remotingCall 
+					  receivedObject:(NSObject *)object {
+	// Handle response here
+}
 
+- (void)remotingCall:(AMFRemotingCall *)remotingCall
+	didFailWithError:(NSError *)error {
+	// Handle error here
+}
+...
+@end
+```
 
-### Contact
+If you plan to make multiple remote calls to the same server and/or endpoint, you can initialize `AMFRemotingCall` just once and re-use it for each invocation:
 
-Sorry, I'm not actively maintaining the project right now!
+```objective-c
+AMFRemotingCall *call;
 
+- (id)init {
+	...
+	call = [[AMFRemotingCall alloc] init];
+	call.URL = [NSURL URLWithString:@"https://www.myserver.com/amf-api"];
+	call.delegate = self;
+	...
+}
 
-### Thanks
+- (void)remoteCall1 {
+	call.service = @"MyService1";
+	call.method = @"mymethod1";
+	call.arguments = [NSArray arrayWithObjects:myarg1, nil];
+	[call start];
+}
 
-- Deusty Designs for CocoaAsyncSocket (<http://code.google.com/p/cocoaasyncsocket/>)
-- Binary God for BGHUDAppKit (<http://code.google.com/p/bghudappkit/>)
-- Jonathan Wight for TouchJSON (<http://code.google.com/p/touchcode/>)
-- The PyAMF Team for PyAMF (<http://pyamf.org/>) and therefor letting me have a reference and unit tests which I can steal shamelessly
+- (void)remoteCall2 {
+	call.service = @"MyService2";
+	call.method = @"mymethod2";
+	call.arguments = [NSArray arrayWithObjects:myarg2, nil];
+	[call start];
+}
+
+```
+
+For a sample iOS application, see `Examples\SimpleRemotingCallExample`.
+
+### Serialization
+
+CocoaAMF uses the NSCoding protocol to serialize and deserialize objects. Here's a sample implementation of this protocol for a class `MyClass` with two properties: a number and a string.
+
+```objective-c
+@interface MyClass : NSObject <NSCoding> {
+    NSNumber *property1;
+    NSString *property2;
+}
+
+@property (nonatomic) NSNumber *property1;
+@property (nonatomic) NSString *property2;
+
+@end
+
+@implementation MyClass
+
+@synthesize property1;
+@synthesize property2;
+
+- (id)initWithCoder:(NSCoder *)coder {
+	if( self = [self init] ) {
+        NSObject *obj = [coder decodeObject];
+		self.property1 = [obj valueForKey:@"property1"];
+		self.property2 = [obj valueForKey:@"property2"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeObject:property1 forKey:@"property1"];
+	[encoder encodeObject:property2 forKey:@"property2"];
+}
+
+@end
+```
+
+Next, associate your class with the remote classname. The following code associates `MyClass` to the remote class `com.mycompany.MyClass` and vice-versa:
+
+```objective-c
+[AMFUnarchiver setClass:[MyClass class] forClassName:@"com.mycompany.MyClass"];
+[AMFArchiver setClassName:@"com.mycompany.MyClass" forClass:[MyClass class]];
+```
+
+A good place to do these associations is during application initialization, before you make any remote calls.
+
+When deserializing, if no class with the classname of the received object is found, CocoaAMF creates an instance of ASObject which will contain all attributes of that object and its classname as the ivar 'type'.
+
+## Credits
+
+This version of CocoaAMF was created by [Arun Nair](http://nairteashop.org) as a fork of [Marc Bauer's CocoaAMF library](https://github.com/nesium/cocoa-amf). If you use this code in your project, attribution is appreciated.

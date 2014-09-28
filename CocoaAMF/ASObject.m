@@ -27,19 +27,12 @@
 }
 
 + (ASObject *)asObjectWithDictionary:(NSDictionary *)dict{
-	ASObject *obj = [[[ASObject alloc] init] autorelease];
+	ASObject *obj = [[ASObject alloc] init];
 	NSMutableDictionary *mutableCopy = [dict mutableCopy];
 	obj.properties = mutableCopy;
-	[mutableCopy release];
 	return obj;
 }
 
-- (void)dealloc{
-	[m_type release];
-	[m_properties release];
-	[m_data release];
-	[super dealloc];
-}
 
 - (BOOL)isEqual:(id)obj{
 	if (![obj isKindOfClass:[ASObject class]]){
@@ -81,8 +74,8 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | type: %@>\n%@\ndata: %@", 
-		[self class], (long)self, m_type, m_properties, m_data];
+	return [NSString stringWithFormat:@"<%@ = %p | type: %@>\n%@\ndata: %@", 
+		[self class], self, m_type, m_properties, m_data];
 }
 
 @end
