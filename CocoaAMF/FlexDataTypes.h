@@ -32,7 +32,7 @@ typedef enum _FlexCommandMessageOperationType{
 @interface FlexArrayCollection : NSObject <NSCoding>{
 	NSArray *source;
 }
-@property (nonatomic, strong) NSArray *source;
+@property (nonatomic) NSArray *source;
 + (NSString *)AMFClassAlias;
 - (id)initWithSource:(NSArray *)obj;
 - (NSUInteger)count;
@@ -42,7 +42,7 @@ typedef enum _FlexCommandMessageOperationType{
 @interface FlexObjectProxy : NSObject <NSCoding>{
 	NSObject *object;
 }
-@property (nonatomic, strong) NSObject *object;
+@property (nonatomic) NSObject *object;
 + (NSString *)AMFClassAlias;
 - (id)initWithObject:(NSObject *)obj;
 @end
@@ -57,11 +57,11 @@ typedef enum _FlexCommandMessageOperationType{
 	NSTimeInterval timeToLive;
 	NSTimeInterval timestamp;
 }
-@property (nonatomic, strong) NSObject *body;
-@property (nonatomic, strong) NSString *clientId;
-@property (nonatomic, strong) NSString *destination;
-@property (nonatomic, strong) NSDictionary *headers;
-@property (nonatomic, strong) NSString *messageId;
+@property (nonatomic) NSObject *body;
+@property (nonatomic) NSString *clientId;
+@property (nonatomic) NSString *destination;
+@property (nonatomic) NSDictionary *headers;
+@property (nonatomic) NSString *messageId;
 @property (nonatomic, assign) NSTimeInterval timeToLive;
 @property (nonatomic, assign) NSTimeInterval timestamp;
 + (NSString *)AMFClassAlias;
@@ -71,7 +71,7 @@ typedef enum _FlexCommandMessageOperationType{
 @interface FlexAsyncMessage : FlexAbstractMessage{
 	NSString *correlationId;
 }
-@property (nonatomic, strong) NSString *correlationId;
+@property (nonatomic) NSString *correlationId;
 @end
 
 
@@ -94,11 +94,11 @@ typedef enum _FlexCommandMessageOperationType{
 	NSString *faultString;
 	NSObject *rootCause;
 }
-@property (nonatomic, strong) NSObject *extendedData;
-@property (nonatomic, strong) NSString *faultCode;
-@property (nonatomic, strong) NSString *faultDetail;
-@property (nonatomic, strong) NSString *faultString;
-@property (nonatomic, strong) NSObject *rootCause;
+@property (nonatomic) NSObject *extendedData;
+@property (nonatomic) NSString *faultCode;
+@property (nonatomic) NSString *faultDetail;
+@property (nonatomic) NSString *faultString;
+@property (nonatomic) NSObject *rootCause;
 + (FlexErrorMessage *)errorMessageWithError:(NSError *)error;
 @end
 
@@ -107,6 +107,6 @@ typedef enum _FlexCommandMessageOperationType{
 	NSString *operation;
 	NSString *source;
 }
-@property (nonatomic, strong) NSString *operation;
-@property (nonatomic, strong) NSString *source;
+@property (nonatomic) NSString *operation;
+@property (nonatomic) NSString *source;
 @end

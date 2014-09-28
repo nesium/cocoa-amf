@@ -2,7 +2,7 @@
 
 CocoaAMF is a library for use by iOS applications that need to make remote requests to a server in [AMF](http://en.wikipedia.org/wiki/Action_Message_Format) format.
 
-This is a fork of [nesium/cocoa-amf](https://github.com/nesium/cocoa-amf), simplified and updated for ARC, Xcode 5 and iOS 7.
+This is a fork of [nesium/cocoa-amf](https://github.com/nesium/cocoa-amf), simplified and updated for ARC, Xcode 6 and iOS 8.
 
 ## Installation
 

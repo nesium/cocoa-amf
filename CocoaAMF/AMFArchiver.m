@@ -15,7 +15,7 @@
 
 - (void)_ensureLength:(unsigned)length;
 - (void)_ensureIntegrityOfSerializedObject;
-- (void)_appendBytes:(const void *)bytes length:(NSUInteger)length;
+- (void)_appendBytes:(const void *)bytes length:(unsigned int)length;
 - (void)_setCollectionWriteContext:(NSObject *)obj;
 - (void)_restoreCollectionWriteContext;
 
@@ -41,21 +41,21 @@
 @interface _AMFStringData : NSObject{
 	NSData *data;
 }
-@property (nonatomic, strong) NSData *data;
+@property (nonatomic) NSData *data;
 + (_AMFStringData *)stringDataWithData:(NSData *)theData;
 @end
 
 @interface _AMFPlainData : NSObject{
 	NSData *data;
 }
-@property (nonatomic, strong) NSData *data;
+@property (nonatomic) NSData *data;
 + (_AMFPlainData *)plainDataWithData:(NSData *)theData;
 @end
 
 @interface _AMFNumber : NSObject{
 	NSNumber *value;
 }
-@property (nonatomic, strong) NSNumber *value;
+@property (nonatomic) NSNumber *value;
 + (_AMFNumber *)numberWithNSNumber:(NSNumber *)number;
 @end
 
@@ -152,25 +152,25 @@ static uint16_t g_options = 0;
 
 - (void)setClassName:(NSString *)codedName forClass:(Class)cls{
 	if (codedName == nil)
-		[m_registeredClasses removeObjectForKey:cls];
+		[m_registeredClasses removeObjectForKey:NSStringFromClass(cls)];
 	else
-		[m_registeredClasses setObject:codedName forKey:(id <NSCopying>)cls];
+		[m_registeredClasses setObject:codedName forKey:NSStringFromClass(cls)];
 }
 
 + (void)setClassName:(NSString *)codedName forClass:(Class)cls{
 	if (!g_registeredClasses) g_registeredClasses = [[NSMutableDictionary alloc] init];
 	if (codedName == nil)
-		[g_registeredClasses removeObjectForKey:cls];
+		[g_registeredClasses removeObjectForKey:NSStringFromClass(cls)];
 	else
-		[g_registeredClasses setObject:codedName forKey:(id <NSCopying>)cls];
+		[g_registeredClasses setObject:codedName forKey:NSStringFromClass(cls)];
 }
 
 - (NSString *)classNameForClass:(Class)cls{
-	return [m_registeredClasses objectForKey:cls];
+	return [m_registeredClasses objectForKey:NSStringFromClass(cls)];
 }
 
 + (NSString *)classNameForClass:(Class)cls{
-	return [g_registeredClasses objectForKey:cls];
+	return [g_registeredClasses objectForKey:NSStringFromClass(cls)];
 }
 
 + (void)setOptions:(uint16_t)options{
@@ -202,7 +202,7 @@ static uint16_t g_options = 0;
 }
 
 - (void)encodeInt64:(int64_t)value forKey:(NSString *)key{
-	[m_currentObjectToSerialize setValue:[NSNumber numberWithInteger:value] forKey:key];
+	[m_currentObjectToSerialize setValue:[NSNumber numberWithLongLong:value] forKey:key];
 	[self _ensureIntegrityOfSerializedObject];
 }
 
@@ -247,7 +247,7 @@ static uint16_t g_options = 0;
 	}
 	[m_data appendData:value];
 	m_bytes = [m_data mutableBytes];
-	m_position = [m_data length];
+	m_position = (uint32_t)[m_data length];
 }
 
 - (void)encodeDouble:(double)value{
@@ -390,7 +390,7 @@ static uint16_t g_options = 0;
 		}
 		[self encodeUnsignedChar:kAMF3ByteArrayType];
 		NSData *d = [(_AMFPlainData *)value data];
-		[self encodeUnsignedInt29:(([d length] << 1) | 1)];
+		[self encodeUnsignedInt29:(((uint32_t)[d length] << 1) | 1)];
 		[self encodeDataObject:d];
 	}else if ([value isKindOfClass:[_AMFNumber class]]){
 		if (m_currentObjectToSerialize != nil){
@@ -402,7 +402,7 @@ static uint16_t g_options = 0;
 	}else if ([value isKindOfClass:[NSData class]] && m_currentObjectToSerialize == nil){
 		[self encodeUnsignedChar:kAMF3ByteArrayType];
 		NSData *d = (NSData *)value;
-		[self encodeUnsignedInt29:(([d length] << 1) | 1)];
+		[self encodeUnsignedInt29:(((uint32_t)[d length] << 1) | 1)];
 		[self encodeDataObject:d];
 	}else{
 		if (m_currentObjectToSerialize != nil){
@@ -520,7 +520,7 @@ static uint16_t g_options = 0;
 #pragma mark -
 #pragma mark Private methods
 
-- (void)_ensureLength:(unsigned)length{
+- (void)_ensureLength:(unsigned int)length{
 	[m_data setLength:[m_data length] + length];
 	m_bytes = [m_data mutableBytes];
 }
@@ -592,10 +592,10 @@ and non-keyed archiving on the same object!"];
 	}
 }
 
-- (void)_appendBytes:(const void*)bytes length:(NSUInteger)length{
+- (void)_appendBytes:(const void*)bytes length:(unsigned int)length{
 	[self _ensureLength:length];
 	uint8_t *chars = (uint8_t *)bytes;
-	for (NSUInteger i = 0; i < length; i++)
+	for (unsigned int i = 0; i < length; i++)
 		m_bytes[m_position++] = chars[i];
 }
 
@@ -626,7 +626,7 @@ and non-keyed archiving on the same object!"];
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
 	if ([data length] > 0xFFFF){
-		[self encodeUnsignedInt:[data length]];
+		[self encodeUnsignedInt:(uint32_t)[data length]];
 	}else{
 		[self encodeUnsignedShort:[data length]];
 	}
@@ -649,7 +649,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 	NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
 	if ([stringData length] > 0xFFFF){
 		omitType ?: [self encodeUnsignedChar:kAMF0LongStringType];
-		[self encodeUnsignedInt:[stringData length]];
+		[self encodeUnsignedInt:(uint32_t)[stringData length]];
 	}else{
 		omitType ?: [self encodeUnsignedChar:kAMF0StringType];
 		[self encodeUnsignedShort:[stringData length]];
@@ -665,7 +665,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 	}
 	[m_objectTable addObject:value];
 	[self encodeUnsignedChar:kAMF0StrictArrayType];
-	[self encodeUnsignedInt:[value count]];
+	[self encodeUnsignedInt:(uint32_t)[value count]];
 	for (id obj in value){
 		[self encodeObject:obj];
 	}
@@ -768,7 +768,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 		return;
 	}
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
-	[self encodeUnsignedInt29:[data length]];
+	[self encodeUnsignedInt29:(int32_t)[data length]];
 	[self encodeDataObject:data];
 }
 
@@ -797,11 +797,11 @@ not allow externalizable objects (non-keyed archiving)!"];
 - (void)_encodeArray:(NSArray *)value{
 	[self encodeUnsignedChar:kAMF3ArrayType];
 	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound){
-		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:((int32_t)[m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
-	[self encodeUnsignedInt29:(([value count] << 1) | 1)];
+	[self encodeUnsignedInt29:(((int32_t)[value count] << 1) | 1)];
 	[self encodeUnsignedChar:((0 << 1) | 1)];
 	for (NSObject *obj in value){
 		[self encodeObject:obj];
@@ -817,12 +817,12 @@ not allow externalizable objects (non-keyed archiving)!"];
 		return;
 	}
 	if ([m_stringTable containsObject:value]){
-		[self encodeUnsignedInt29:([m_stringTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:((int32_t)[m_stringTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_stringTable addObject:value];
 	NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
-	[self encodeUnsignedInt29:(([data length] << 1) | 1)];
+	[self encodeUnsignedInt29:(((int32_t)[data length] << 1) | 1)];
 	[self encodeDataObject:data];
 }
 
@@ -839,7 +839,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 - (void)_encodeMixedArray:(NSDictionary *)value{
 	[self encodeUnsignedChar:kAMF3ArrayType];
 	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound){
-		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:((int32_t)[m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	
@@ -854,7 +854,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 			[NSException raise:NSInternalInconsistencyException 
 				format:@"Cannot encode dictionary with key of class %@", [key className]];
 	}
-	[self encodeUnsignedInt29:(([numericKeys count] << 1) | 1)];
+	[self encodeUnsignedInt29:(((int32_t)[numericKeys count] << 1) | 1)];
 	for (NSString *key in stringKeys){
 		[self _encodeString:key omitType:YES];
 		[self encodeObject:[value objectForKey:key]];
@@ -868,7 +868,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 - (void)_encodeDate:(NSDate *)value{
 	[self encodeUnsignedChar:kAMF3DateType];
 	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound){
-		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:((int32_t)[m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
@@ -878,7 +878,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 
 - (void)_encodeData:(NSData *)value{
 	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound){
-		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:((int32_t)[m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
@@ -913,7 +913,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 - (void)_encodeASObject:(ASObject *)value{
 	[self encodeUnsignedChar:kAMF3ObjectType];
 	if ([m_objectTable indexOfObjectIdenticalTo:value] != NSNotFound){
-		[self encodeUnsignedInt29:([m_objectTable indexOfObject:value] << 1)];
+		[self encodeUnsignedInt29:((int32_t)[m_objectTable indexOfObject:value] << 1)];
 		return;
 	}
 	[m_objectTable addObject:value];
@@ -952,7 +952,7 @@ not allow externalizable objects (non-keyed archiving)!"];
 
 - (void)_encodeTraits:(AMF3TraitsInfo *)traits{
 	if ([m_traitsTable containsObject:traits]){
-		[self encodeUnsignedInt29:(([m_traitsTable indexOfObject:traits] << 2) | 1)];
+		[self encodeUnsignedInt29:(((int32_t)[m_traitsTable indexOfObject:traits] << 2) | 1)];
 		return;
 	}
 	[m_traitsTable addObject:traits];

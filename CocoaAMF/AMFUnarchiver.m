@@ -255,14 +255,13 @@ static uint16_t g_options = 0;
 		case '*':{
 			const char **cString = data;
 			NSString *string = [self decodeUTF];
-			*cString = NSZoneMalloc(NSDefaultMallocZone(),
+			*cString = NSZoneMalloc(NSDefaultMallocZone(), 
 				[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding] + 1);
 			*cString = [string cStringUsingEncoding:NSUTF8StringEncoding];
 		}
 		break;
 		case '@':{
-            __autoreleasing id *obj = (__autoreleasing id *)data;
-            *obj = [self decodeObject];
+            [self decodeObject];
 		}
 		break;
 		default:
@@ -447,8 +446,8 @@ static uint16_t g_options = 0;
 - (void)_ensureLength:(unsigned)length{
 	if (m_position + length > [m_data length]){
 		[NSException raise:@"NSUnarchiverBadArchiveException"
-			format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %d", 
-			[self className], m_position, length, [m_data length]];
+			format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %lu", 
+			[self className], m_position, length, (unsigned long)[m_data length]];
 	}
 }
 
@@ -1014,8 +1013,8 @@ static uint16_t g_options = 0;
 
 - (NSString *)description{
 	return [NSString stringWithFormat:@"<%@ = %p | className: %@ | dynamic: %d \
-| externalizable: %d | count: %d>", 
-		[self class], self, m_className, m_dynamic, m_externalizable, m_count];
+| externalizable: %d | count: %lu>", 
+		[self class], self, m_className, m_dynamic, m_externalizable, (unsigned long)m_count];
 }
 
 @end

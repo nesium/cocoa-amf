@@ -147,21 +147,21 @@ static uint32_t g_responseCount = 1;
 	}else if ([(NSHTTPURLResponse *)response statusCode] != 200){
 		m_error = [NSError errorWithDomain:kAMFRemotingCallErrorDomain 
 			code:kAMFServerErrorErrorCode userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-				[NSString stringWithFormat:@"The server returned status code %d at URL %@.", 
-					[(NSHTTPURLResponse *)response statusCode], [[response URL] absoluteString]], 
-				NSLocalizedDescriptionKey, [NSNumber numberWithInt:
+				[NSString stringWithFormat:@"The server returned status code %ld at URL %@.", 
+					(long)[(NSHTTPURLResponse *)response statusCode], [[response URL] absoluteString]], 
+				NSLocalizedDescriptionKey, [NSNumber numberWithLong:
 					[(NSHTTPURLResponse *)response statusCode]], kAMFServerStatusCodeKey, nil]];
 	}
 	
 	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveResponse:)]){
-		objc_msgSend(m_delegate, @selector(remotingCall:didReceiveResponse:), self, response);
+		((void(*)(id, SEL, id, id))objc_msgSend)(m_delegate, @selector(remotingCall:didReceiveResponse:), self, response);
 	}
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
 	[m_receivedData appendData:data];
 	if ([m_delegate respondsToSelector:@selector(remotingCall:didReceiveData:)]){
-		objc_msgSend(m_delegate, @selector(remotingCall:didReceiveData:), self, data);
+		((void(*)(id, SEL, id, id))objc_msgSend)(m_delegate, @selector(remotingCall:didReceiveData:), self, data);
 	}
 }
 
@@ -173,11 +173,11 @@ static uint32_t g_responseCount = 1;
 	}
 	
 	if (m_error){
-		objc_msgSend(m_delegate, @selector(remotingCall:didFailWithError:), self, m_error);
+		((void(*)(id, SEL, id, id))objc_msgSend)(m_delegate, @selector(remotingCall:didFailWithError:), self, m_error);
 	}else{
 		AMFActionMessage *message = [[AMFActionMessage alloc] initWithData:m_receivedData];
 		NSObject *data = [[message.bodies objectAtIndex:0] data];
-		objc_msgSend(m_delegate, @selector(remotingCallDidFinishLoading:receivedObject:), 
+		((void(*)(id, SEL, id, id))objc_msgSend)(m_delegate, @selector(remotingCallDidFinishLoading:receivedObject:),
 			self, data);
 	}
 	[self _cleanup];
@@ -185,7 +185,7 @@ static uint32_t g_responseCount = 1;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-	objc_msgSend(m_delegate, @selector(remotingCall:didFailWithError:), self, error);
+	((void(*)(id, SEL, id, id))objc_msgSend)(m_delegate, @selector(remotingCall:didFailWithError:), self, error);
 	[self _cleanup];
 	m_isLoading = NO;
 }
@@ -193,7 +193,7 @@ static uint32_t g_responseCount = 1;
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request 
 	redirectResponse:(NSURLResponse *)redirectResponse{
 	if ([m_delegate respondsToSelector:@selector(remotingCall:willSendRequest:redirectResponse:)]){
-		return (NSURLRequest *)objc_msgSend(m_delegate, 
+		return ((NSURLRequest *(*)(id, SEL, id, id, id))objc_msgSend)(m_delegate,
 			@selector(remotingCall:willSendRequest:redirectResponse:), self, request, 
 			redirectResponse);
 	}

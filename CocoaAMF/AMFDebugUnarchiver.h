@@ -34,10 +34,10 @@
 }
 @property (nonatomic, assign) AMFEncoding version;
 @property (nonatomic, assign) int type;
-@property (nonatomic, strong) NSObject *data;
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic) NSObject *data;
+@property (nonatomic) NSString *name;
 @property (nonatomic, readonly) NSArray *children;
-@property (nonatomic, strong) NSString *objectClassName;
+@property (nonatomic) NSString *objectClassName;
 - (NSString *)AMFClassName;
 - (BOOL)hasChildren;
 - (NSUInteger)numChildren;

@@ -221,7 +221,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], sel
 
 + (FlexErrorMessage *)errorMessageWithError:(NSError *)error{
 	FlexErrorMessage *errorMsg = [[FlexErrorMessage alloc] init];
-	errorMsg.faultCode = [NSString stringWithFormat:@"%d", [error code]];
+	errorMsg.faultCode = [NSString stringWithFormat:@"%ld", (long)[error code]];
 	errorMsg.faultString = [error domain];
 	errorMsg.faultDetail = [error localizedDescription];
 	errorMsg.extendedData = [error userInfo];
@@ -286,7 +286,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], sel
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@ = %p> clientId: %@, destination: %@, operation: %@, messageId: %@ \
-timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], self, clientId,
+timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], self, clientId, 
 	destination, operation, messageId, timeToLive, timestamp, headers, body];
 }
 

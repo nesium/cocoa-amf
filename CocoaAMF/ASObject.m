@@ -74,7 +74,7 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = %p | type: %@>\n%@\ndata: %@",
+	return [NSString stringWithFormat:@"<%@ = %p | type: %@>\n%@\ndata: %@", 
 		[self class], self, m_type, m_properties, m_data];
 }
 
