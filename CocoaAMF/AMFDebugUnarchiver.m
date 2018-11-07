@@ -150,7 +150,7 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> version: %d type: %@ name: %@ data: %@, children: %@", 
+    return [NSString stringWithFormat:@"<%@ = 0x%08lx> version: %d type: %@ name: %@ data: %@, children: %@", 
 		[self className], (long)self, version, [self AMFClassName], name, data, children];
 }
 

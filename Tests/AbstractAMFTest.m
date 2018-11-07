@@ -49,10 +49,7 @@
 		*version = [[[file pathExtension] lowercaseString] isEqual:@"amf0"] 
 			? kAMF0Encoding : kAMF3Encoding;
 	}
-	NSString *testDataPath = [[[[NSBundle bundleForClass:[self class]] bundlePath] 
-		stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[TEST_DATA_PATH 
-			stringByAppendingPathComponent:[file pathExtension]] 
-			stringByAppendingPathComponent:file]];
+	NSString *testDataPath = [[[[NSBundle bundleForClass:[self class]] bundlePath] stringByAppendingPathComponent:@"Contents/Resources/"] stringByAppendingPathComponent:file];
 	return testDataPath;
 }
 

@@ -6,7 +6,6 @@
 //  Copyright 2009 Fork Unstable Media GmbH. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
 #import "AbstractAMFTest.h"
 #import "ASObject.h"
 #import "AMFArchiver.h"

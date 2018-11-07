@@ -6,13 +6,10 @@
 //  Copyright 2009 nesiumdotcom. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
-#import "AMF.h"
-#import "AMFUnarchiver.h"
-#import "AMFArchiver.h"
+@import XCTest;
+@import CocoaAMF;
 
-
-@interface AbstractAMFTest : SenTestCase{
+@interface AbstractAMFTest : XCTestCase {
 }
 - (NSString *)fullPathForTestFile:(NSString *)file version:(AMFEncoding *)version;
 - (AMFUnarchiver *)unarchiverForPath:(NSString *)path;

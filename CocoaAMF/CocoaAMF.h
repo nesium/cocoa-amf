@@ -1,17 +1,24 @@
-/*
- *  CocoaAMF.h
- *  CocoaAMF
- *
- *  Created by Marc Bauer on 11.04.10.
- *  Copyright 2010 nesiumdotcom. All rights reserved.
- *
- */
+//
+//  CocoaAMF.h
+//  CocoaAMF
+//
+//  Created by James Hartt on 07/11/2018.
+//
+
+#import <Cocoa/Cocoa.h>
+
+//! Project version number for CocoaAMF.
+FOUNDATION_EXPORT double CocoaAMFVersionNumber;
+
+//! Project version string for CocoaAMF.
+FOUNDATION_EXPORT const unsigned char CocoaAMFVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <CocoaAMF/PublicHeader.h>
 
 #import "AMF.h"
-#import "AMFUnarchiver.h"
-#import "AMFArchiver.h"
 #import "AMFActionMessage.h"
-#import "AMFRemotingCall.h"
+#import "AMFArchiver.h"
+#import "AMFDebugUnarchiver.h"
+#import "AMFUnarchiver.h"
 #import "ASObject.h"
 #import "FlexDataTypes.h"
-#import "NSObject-AMFExtensions.h"

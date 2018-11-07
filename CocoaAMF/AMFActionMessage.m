@@ -73,7 +73,7 @@
 			[headerBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
 		[headerBa encodeObject:header.data];
-		[ba encodeUnsignedInt:[headerBa.data length]];
+		[ba encodeUnsignedInt:(uint32_t)[headerBa.data length]];
 		[ba encodeDataObject:headerBa.data];
 		[headerBa release];
 	}
@@ -87,7 +87,7 @@
 			[bodyBa encodeUnsignedChar:kAMF0AVMPlusObjectType];
 		}
 		[bodyBa encodeObject:body.data];
-		[ba encodeUnsignedInt:[bodyBa.data length]];
+		[ba encodeUnsignedInt:(uint32_t)[bodyBa.data length]];
 		[ba encodeDataObject:bodyBa.data];
 		[bodyBa release];
 	}
@@ -136,8 +136,8 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | version: %d | headers: %d bodies: %d>\nheaders:\n%@\nbodies:\n%@", 
-		[self class], (long)self, m_version, [m_headers count], [m_bodies count], 
+    return [NSString stringWithFormat:@"<%@ = 0x%08lX | version: %d | headers: %lu bodies: %lu>\nheaders:\n%@\nbodies:\n%@", 
+            [self class], (long)self, m_version, (unsigned long)[m_headers count], (unsigned long)[m_bodies count], 
 		m_headers, m_bodies];
 }
 
@@ -223,7 +223,7 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | name: %@ | mustUnderstand: %d>\n%@", 
+    return [NSString stringWithFormat:@"<%@ = 0x%08lX | name: %@ | mustUnderstand: %d>\n%@", 
 		[self class], (long)self, m_name, m_mustUnderstand, m_data];
 }
 
@@ -261,7 +261,7 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | targetURI: %@ | responseURI: %@>\n%@", 
+    return [NSString stringWithFormat:@"<%@ = 0x%08lX | targetURI: %@ | responseURI: %@>\n%@", 
 		[self class], (long)self, m_targetURI, m_responseURI, m_data];
 }
 
