@@ -50,7 +50,7 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> %@", [self className], (long)self, source];
+    return [NSString stringWithFormat:@"<%@ = 0x%08lx> %@", [self className], (long)self, source];
 }
 
 @end
@@ -141,7 +141,7 @@
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, messageId: %@ \
+    return [NSString stringWithFormat:@"<%@ = 0x%08lx> clientId: %@, destination: %@, messageId: %@ \
 timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
 	destination, messageId, timeToLive, timestamp, headers, body];
 }
@@ -241,7 +241,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 + (FlexErrorMessage *)errorMessageWithError:(NSError *)error{
 	FlexErrorMessage *errorMsg = [[FlexErrorMessage alloc] init];
-	errorMsg.faultCode = [NSString stringWithFormat:@"%d", [error code]];
+    errorMsg.faultCode = [NSString stringWithFormat:@"%ld", (long)[error code]];
 	errorMsg.faultString = [error domain];
 	errorMsg.faultDetail = [error localizedDescription];
 	errorMsg.extendedData = [error userInfo];
@@ -278,7 +278,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> faultCode: %@, faultDetail: %@, faultString: %@", 
+    return [NSString stringWithFormat:@"<%@ = 0x%08lx> faultCode: %@, faultDetail: %@, faultString: %@", 
 		[self className], (long)self, faultCode, faultDetail, faultString];
 }
 
@@ -318,7 +318,7 @@ timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (lo
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = 0x%08x> clientId: %@, destination: %@, operation: %@, messageId: %@ \
+    return [NSString stringWithFormat:@"<%@ = 0x%08lx> clientId: %@, destination: %@, operation: %@, messageId: %@ \
 timeToLive: %f, timestamp: %f,\nheaders:\n%@,\nbody:\n%@", [self className], (long)self, clientId, 
 	destination, operation, messageId, timeToLive, timestamp, headers, body];
 }

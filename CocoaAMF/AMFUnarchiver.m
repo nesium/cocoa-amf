@@ -454,8 +454,8 @@ static uint16_t g_options = 0;
 - (void)_ensureLength:(unsigned)length{
 	if (m_position + length > [m_data length]){
 		[NSException raise:@"NSUnarchiverBadArchiveException"
-			format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %d", 
-			[self className], m_position, length, [m_data length]];
+                    format:@"%@ attempt to read beyond length. Position: %d, Requested Length: %d, Total Length: %lu",
+         [self className], m_position, length, (unsigned long)[m_data length]];
 	}
 }
 
@@ -1040,9 +1040,9 @@ static uint16_t g_options = 0;
 }
 
 - (NSString *)description{
-	return [NSString stringWithFormat:@"<%@ = 0x%08X | className: %@ | dynamic: %d \
-| externalizable: %d | count: %d>", 
-		[self class], (long)self, m_className, m_dynamic, m_externalizable, m_count];
+    return [NSString stringWithFormat:@"<%@ = 0x%08lX | className: %@ | dynamic: %d \
+            | externalizable: %d | count: %lu>",
+            [self class], (long)self, m_className, m_dynamic, m_externalizable, (unsigned long)m_count];
 }
 
 @end
